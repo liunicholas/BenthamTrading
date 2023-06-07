@@ -14,12 +14,12 @@ data5min = yf.download(tickers='^SPX', period='1d', interval='5m')
 p_buyside_liquidity = daydata["High"][0]
 p_sellside_liquidity = daydata["Low"][0]
 
-tp1_open = datetime(2023, 6, 7, 10, 0, 0)
-tp1_close = datetime(2023, 6, 7, 11, 0, 0)
+tp1_open = datetime(2023, 6, 6, 10, 0, 0)
+tp1_close = datetime(2023, 6, 6, 11, 0, 0)
 
-tp2_open = datetime(2023, 6, 7, 14, 0, 0)
+tp2_open = datetime(2023, 6, 6, 14, 0, 0)
 
-tp2_close = datetime(2023, 6, 7, 15, 0, 0)
+tp2_close = datetime(2023, 6, 6, 15, 0, 0)
 
 fivemin = '00:05:00'
 format = '%H:%M:%S'
@@ -59,7 +59,7 @@ print(p_swing_high)
 
 green_fvg = []
 for i, row in data5min.iterrows():
-    if i.time() < tp1_close.time() and i.time() > p_swing_high.time():
+    if i.time() < tp1_close.time() and i.time() > tp1_open.time() and i.time() > p_swing_high.time():
         if data5min["High"][i - timedelta(minutes=5)] < data5min["Low"][i + timedelta(minutes=5)]:
             green_fvg.append([i, data5min["High"][i - timedelta(minutes=5)], data5min["Low"][i + timedelta(minutes=5)]])
 
