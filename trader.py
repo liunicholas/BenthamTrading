@@ -69,3 +69,16 @@ entry = p_green_fvg[2]
 possible_entry_time = p_green_fvg[0] + timedelta(minutes=10)
 print(entry)
 print(possible_entry_time)
+
+takePrice = entry + 10
+
+lowest_i = -1
+lowest_dist = 100000000
+
+#TODO: Fix for previous day swings
+# for s in swing_high:
+#     if (data5min["High"][s] - takePrice) < lowest_dist and (data5min["High"][s] - takePrice) > 0:
+#         lowest_dist = data5min["High"][s] - takePrice
+#         lowest_i = s
+
+# print(data5min["High"][lowest_i], "take profit")
