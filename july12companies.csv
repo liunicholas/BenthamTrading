@@ -1,0 +1,101 @@
+Rank,Parent Name,Ticker,Penalty Total Dollars,Number of Records
+1,Bank of America,BAC,"$82,764,013,078",219
+2,JPMorgan Chase,JPM,"$35,819,302,225",162
+3,BP,BP,"$29,196,927,856",283
+4,Citigroup,C,"$25,454,366,764",125
+5,Volkswagen,VOW3,"$23,780,184,935",58
+6,Wells Fargo,WFC,"$21,358,750,745",184
+7,Deutsche Bank,DBK,"$18,286,625,302",61
+8,UBS,UBS,"$16,792,860,910",83
+9,Goldman Sachs,GS,"$16,365,468,987",44
+10,Royal Bank of Scotland,NWG,"$13,473,904,000",28
+11,BNP Paribas,BNP,"$12,132,582,950",17
+12,Credit Suisse,CSGN,"$10,410,557,626",32
+13,Morgan Stanley,MS,"$9,837,250,227",149
+14,Purdue Pharma,,"$9,124,272,787",10
+15,GlaxoSmithKline,GSK,"$7,822,200,258",34
+16,HSBC,HSBC,"$6,510,744,407",59
+17,Barclays,BCS,"$5,959,876,671",34
+18,Facebook,META,"$5,774,343,600",8
+19,Merck,MRK,"$5,615,085,581",80
+20,Occidental Petroleum,OXY,"$5,434,195,772",233
+21,American Electric Power,AEP,"$4,797,300,802",61
+22,Pfizer,PFE,"$4,660,896,333",71
+23,Johnson & Johnson,JNJ,"$4,248,447,763",58
+24,Boeing,BA,"$3,859,899,021",109
+25,American International Group,AIG,"$3,214,099,727",210
+26,AbbVie,ABBV,"$3,203,142,507",49
+27,Duke Energy,DUK,"$2,830,424,718",109
+28,Teva Pharmaceutical Industries,TEVA,"$2,735,215,328",53
+29,ZTE,,"$2,592,360,064",4
+30,Ocwen Financial,OCN,"$2,558,242,932",34
+31,Novartis,NOVN,"$2,526,283,570",39
+32,Verizon Communications,VZ,"$2,497,815,677",172
+33,SAC Capital,,"$2,401,747,463",2
+34,Daimler,MBG,"$2,298,303,729",63
+35,Societe Generale,GLE,"$2,144,632,050",23
+36,Enron,,"$2,085,725,327",14
+37,General Electric,GE,"$2,065,153,361",146
+38,Walmart,WMT,"$2,054,869,961",430
+39,Standard Chartered,,"$1,959,563,443",13
+40,Reckitt Benckiser,RKT,"$1,810,045,391",18
+41,Tenet Healthcare,THC,"$1,799,375,619",45
+42,Marsh & McLennan,MMC,"$1,795,528,137",28
+43,Ningbo Joyson Electronic,,"$1,794,329,460",9
+44,Mallinckrodt,,"$1,755,367,478",20
+45,Kinder Morgan,KMI,"$1,748,533,043",283
+46,"Corinthian Colleges, Inc.",,"$1,737,755,601",5
+47,Commerzbank,CBK,"$1,722,841,796",8
+48,Truist Financial,TFC,"$1,702,361,907",44
+49,Eli Lilly,LLY,"$1,641,330,176",25
+50,NRG Energy,NRG,"$1,639,306,952",54
+51,Exxon Mobil,XOM,"$1,589,063,132",444
+52,Toyota,TM,"$1,577,928,188",42
+53,Dominion Energy,D,"$1,564,179,099",102
+54,Bristol-Myers Squibb,BMY,"$1,554,939,820",37
+55,HCA Healthcare,HCA,"$1,549,090,541",34
+56,Bank of New York Mellon,BK,"$1,518,656,006",33
+57,AT&T,T,"$1,516,594,444",287
+58,Marathon Petroleum,MPC,"$1,495,853,996",310
+59,S&P Global,SPGI,"$1,452,305,058",6
+60,Transocean,RIG,"$1,446,734,859",8
+61,Takeda Pharmaceutical,4502,"$1,333,531,447",23
+62,Credit Agricole,ACA,"$1,329,220,085",12
+63,MF Global,,"$1,324,000,000",3
+64,UniCredit,UCG,"$1,312,536,632",8
+65,PG&E Corp.,PCG,"$1,281,604,682",49
+66,U.S. Bancorp,USB,"$1,281,184,759",37
+67,Royal Dutch Shell,SHEL,"$1,274,523,970",387
+68,T-Mobile US,TMUS,"$1,263,540,617",79
+69,Rabobank,,"$1,220,536,259",8
+70,FirstEnergy,FE,"$1,209,932,014",60
+71,Viatris,VTRS,"$1,186,843,370",47
+72,Stellantis,STLAM,"$1,176,184,375",108
+73,CVS Health,CVS,"$1,168,555,151",439
+74,DaVita HealthCare Partners,DVA,"$1,165,768,138",18
+75,AstraZeneca,AZN,"$1,148,775,284",21
+76,Equifax,EFX,"$1,147,541,883",17
+77,General Motors,GM,"$1,145,285,198",103
+78,State Street Corp.,STT,"$1,098,869,174",17
+79,Valero Energy,VLO,"$1,094,191,068",257
+80,Ericsson,ERIC,"$1,062,141,083",8
+81,Alliant Energy,LNT,"$1,027,605,768",14
+82,Mitsubishi Group,MSBHF,"$1,019,279,371",173
+83,WEC Energy Group,WEC,"$999,576,966",24
+84,Chevron,CVX,"$983,723,792",475
+85,Encompass Health,EHC,"$978,169,693",18
+86,Royal Bank of Canada,RY,"$969,449,083",26
+87,Bechtel,,"$934,993,338",33
+88,Koch Industries,,"$922,630,772",401
+89,AmerisourceBergen,ABC,"$915,502,274",20
+90,Amgen,AMGN,"$912,614,069",20
+91,Bank Hapoalim,POLI,"$904,323,317",4
+92,3M Company,MMM,"$883,186,462",90
+93,Moody's,MCO,"$880,758,879",7
+94,LG,LG,"$875,964,973",34
+95,Alphabet Inc.,GOOGL,"$874,710,959",19
+96,MetLife,MET,"$871,614,985",74
+97,Fresenius,FRE,"$865,948,427",28
+98,Mosaic,MOS,"$854,170,455",79
+99,Mobile TeleSystems PJSC,,"$850,000,000",2
+100,Vistra Energy,VST,"$849,678,251",60
