@@ -2,8 +2,7 @@ from datetime import datetime, time, timedelta, date
 import pytz
 
 new_york_tz = pytz.timezone('America/New_York')
-exchange_openclose = {
-    "^SPX": [time(hour=9, minute=30), time(hour=16)], }
+exchange_openclose = {"^spx": [time(hour=9, minute=30), time(hour=16)], }
 
 OVERRIDE = True
 OVERRIDE_TIME = datetime(year=2023, month=6, day=8, hour=10, minute=59)
@@ -16,14 +15,17 @@ def get_today():
     
     return today
 
-def is_market_open(derivative):
+def time_during_day(datetime, time):
+    return datetime.combine(datetime.date(), parse_hour_minute(time)).astimezone(new_york_tz)
+
+def is_market_open(security):
     holidays = [datetime(2023, 6, 16).date(), datetime(2023, 7, 4).date(),
                 datetime(2023, 9, 4).date(), datetime(2023, 10, 9).date(),
                 datetime(2023, 11, 11).date(), datetime(2023, 11, 23).date(),
                 datetime(2023, 12, 25).date()]
     
-    start_time = exchange_openclose[derivative][0]
-    end_time = exchange_openclose[derivative][1]
+    start_time = exchange_openclose[security][0]
+    end_time = exchange_openclose[security][1]
     # current = datetime.now(new_york_tz)
     current = get_today()
 
