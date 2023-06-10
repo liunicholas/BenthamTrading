@@ -8,13 +8,14 @@ import pytz
 
 
 def get_primary_liquidity():
-    current_time = datetime.now(trading_clock.new_york_tz)
+    # current_time = datetime.now(trading_clock.new_york_tz)
+    current_time = trading_clock.get_today()
     dataForLiquidity = yf.download(tickers='^spx', start=current_time.date() - timedelta(days=1), end=current_time.date(), interval='1d')
 
     pSellsideLiquidity = dataForLiquidity.loc[:, "Low"][0]
     pBuysideLiquidity = dataForLiquidity.loc[:, "High"][0]
-    print(f"buyside liquidity: {pBuysideLiquidity}")
-    print(f"sellside liquidity: {pSellsideLiquidity}")
+    # print(f"buyside liquidity: {pBuysideLiquidity}")
+    # print(f"sellside liquidity: {pSellsideLiquidity}")
     
     return pBuysideLiquidity, pSellsideLiquidity
 
@@ -33,10 +34,10 @@ def get_buyside_sellside_breaches(data, pBuysideLiquidity, pSellsideLiquidity):
 
     for i, row in todaysData.iterrows():
         if row["Low"] < pSellsideLiquidity:
-            print(f"primary sellside liquidity breached at {i} at {row['Low']}")
+            # print(f"primary sellside liquidity breached at {i} at {row['Low']}")
             sellside_breaches[i] = row['Low']
         if row["High"] > pBuysideLiquidity:
-            print(f"primary buyside liquidity breached at {i} at {row['High']}")
+            # print(f"primary buyside liquidity breached at {i} at {row['High']}")
             buyside_breaches[i] = row['High']
 
     return sellside_breaches, buyside_breaches
@@ -51,8 +52,7 @@ def get_swing_lows(data):
             postTime = i + timedelta(minutes=10)
             # check for swing low
             if dayData.loc[currTime, "Low"] < dayData.loc[preTime, "Low"] and dayData.loc[currTime, "Low"] < dayData.loc[postTime, "Low"]:
-                print(
-                    f"swing low at {currTime} at {dayData.loc[currTime, 'Low']}")
+                # print(f"swing low at {currTime} at {dayData.loc[currTime, 'Low']}")
                 swingLows[i] = dayData.loc[currTime, 'Low']
     
     swingLowHelper(data["oneDayAgoData"])
@@ -68,18 +68,17 @@ def get_swing_highs(data):
             preTime = i
             currTime = i + timedelta(minutes=5)
             postTime = i + timedelta(minutes=10)
-            # check for swing low
-            if dayData.loc[currTime, "Low"] < dayData.loc[preTime, "Low"] and dayData.loc[currTime, "Low"] < dayData.loc[postTime, "Low"]:
-                print(
-                    f"swing low at {currTime} at {dayData.loc[currTime, 'Low']}")
-                swingHighs[i] = dayData.loc[currTime, 'Low']
+            # check for swing high
+            if dayData.loc[currTime, "High"] > dayData.loc[preTime, "High"] and dayData.loc[currTime, "High"] > dayData.loc[postTime, "High"]:
+                # print(f"swing low at {currTime} at {dayData.loc[currTime, 'Low']}")
+                swingHighs[i] = dayData.loc[currTime, 'High']
 
     swingHighHelper(data["oneDayAgoData"])
     swingHighHelper(data["todaysData"])
 
     return swingHighs
 
-def search_green_fvg(swing_highs, data):
+def search_green_fvg(swing_highs, data, openTime, closeTime):
     # between 10-11 after swing high
 
     p_swing_high = next(iter(swing_highs.items()))[0]  # get the time
@@ -91,7 +90,7 @@ def search_green_fvg(swing_highs, data):
         timeMid = i - timedelta(minutes=5)
         timeRight = i
         
-        if trading_clock.datetime_is_between(timeRight, "10:00", "11:00") and timeLeft >= p_swing_high:
+        if trading_clock.datetime_is_between(timeRight, openTime, closeTime) and timeLeft >= p_swing_high:
             if todaysData["High"][timeLeft] < todaysData["Low"][timeRight]:
     
                 green_fvgs[timeRight] = {"entry":todaysData["Low"][timeRight], "stop":todaysData["High"][timeLeft]}
@@ -99,7 +98,7 @@ def search_green_fvg(swing_highs, data):
     return green_fvgs
 
 
-def search_red_fvg(swing_lows, data):
+def search_red_fvg(swing_lows, data, openTime, closeTime):
     # between 10-11 after swing low
 
     p_swing_low = next(iter(swing_lows.items()))[0] # get the time
@@ -111,7 +110,7 @@ def search_red_fvg(swing_lows, data):
         timeMid = i - timedelta(minutes=5)
         timeRight = i
 
-        if trading_clock.datetime_is_between(timeRight, "10:00", "11:00") and timeLeft >= p_swing_low:
+        if trading_clock.datetime_is_between(timeRight, openTime, closeTime) and timeLeft >= p_swing_low:
             if todaysData["Low"][timeLeft] > todaysData["High"][timeRight]:
                 red_fvgs[timeRight] = {"entry": todaysData["High"][timeRight], "stop": todaysData["Low"][timeLeft]}
 
@@ -133,17 +132,18 @@ def find_candidate_trades(red_FVGs, green_FVGs, swing_highs, swing_lows):
             for potential in swing_lows:
                 if potential < fvg and swing_lows[potential] < pSwingThreshold:
                     if pSwingThreshold-swing_lows[potential] < pSwingThreshold-takeProfitPrice:
-                        takeProfitPrice = swing_highs[potential]
+                        takeProfitPrice = swing_lows[potential]
                         takeProfitTime = potential
 
             if takeProfitPrice != float("inf"):
                 positionSize = 250 / ((stopLimit-entryPrice)*10)
 
-                tradeOrder = util.TradeOrder(fvg, entryPrice, stopLimit, takeProfitPrice, positionSize)
+                tradeOrder = util.TradeOrder(FVGtime, entryPrice, stopLimit, takeProfitPrice, positionSize)
                 candidateTrades.append(tradeOrder)
 
     if green_FVGs:
         for fvg in green_FVGs:
+            print("here")
             FVGtime = fvg + timedelta(minutes=5)
             entryPrice = green_FVGs[fvg]["entry"]
             stopLimit = green_FVGs[fvg]["stop"]
@@ -161,7 +161,7 @@ def find_candidate_trades(red_FVGs, green_FVGs, swing_highs, swing_lows):
             if takeProfitPrice != float("inf"):
                 positionSize = 250 / ((entryPrice-stopLimit)*10)
 
-                tradeOrder = util.TradeOrder(fvg, entryPrice, stopLimit, takeProfitPrice, positionSize)
+                tradeOrder = util.TradeOrder(FVGtime, entryPrice, stopLimit, takeProfitPrice, positionSize)
                 candidateTrades.append(tradeOrder)
     
     return candidateTrades
@@ -173,57 +173,74 @@ def run_day():
     primary_buyside_liquidity, primary_sellside_liquidity = get_primary_liquidity()
     
     while trading_clock.is_market_open("^SPX"):
-        current_time = datetime.now(trading_clock.new_york_tz)
+        # current_time = datetime.now(trading_clock.new_york_tz)
+        current_time = trading_clock.get_today()
         data = get_data(current_time)
+
+        candidateTrades = []
         
         if trading_clock.datetime_is_between(current_time, "10:00", "11:00"): #AM Session
             sellside_breaches, buyside_breaches = get_buyside_sellside_breaches(
                 data, primary_buyside_liquidity, primary_sellside_liquidity)
+            
             CHECK_GREEN_FVG = False
             CHECK_RED_FVG = False
 
             swing_lows = {}
             swing_highs = {}
 
-            if sellside_breaches:
+            red_FVGs = {}
+            green_FVGs = {}
+
+            if buyside_breaches:
+                # print("here buyside breach")
                 swing_lows = get_swing_lows(data)
-                for breach in sellside_breaches:
-                    if breach <= datetime.combine(current_time.date(), time(10, 00, 00)).replace(tzinfo=pytz.UTC):
+                for breach in buyside_breaches:
+                    if breach <= datetime.combine(current_time.date(), time(10, 00, 00)).astimezone(trading_clock.new_york_tz):
                         for swingLow in swing_lows:
                             if swingLow > breach:
                                 CHECK_RED_FVG = True
             
-            if buyside_breaches:
-                swing_highs = get_swing_lows(data)
-                for breach in buyside_breaches:
-                    if breach <= datetime.combine(current_time.date(), time(10, 00, 00)).replace(tzinfo=pytz.UTC):
+            if sellside_breaches:
+                print("here sellside breach")
+                # print(sellside_breaches)
+                swing_highs = get_swing_highs(data)
+                # print(swing_highs)
+                for breach in sellside_breaches:
+                    # print("test")
+                    # print(breach)
+                    # print(datetime.combine(current_time.date(),
+                    #       time(10, 00, 00)).astimezone(trading_clock.new_york_tz))
+                    if breach <= datetime.combine(current_time.date(), time(10, 00, 00)).astimezone(trading_clock.new_york_tz):
+                        # print("here")
                         for swingHigh in swing_highs:
                             if swingHigh > breach:
                                 CHECK_GREEN_FVG = True
-            
-            red_FVGs = {}
-            green_FVGs = {}
 
             if CHECK_RED_FVG:
-                red_FVGs = search_red_fvg(swing_lows, data)
+                # print("here red FVG")
+                red_FVGs = search_red_fvg(swing_lows, data, "10:00", "11:00")
                 # if red_FVGs:
             
             if CHECK_GREEN_FVG:
-                green_FVGs = search_green_fvg(swing_highs, data)
+                # print("here green FVG")
+                green_FVGs = search_green_fvg(swing_highs, data, "10:00", "11:00")
                 # if green_FVGs:
             
             # entry, stop limit, take profit, position size
             candidateTrades = find_candidate_trades(red_FVGs, green_FVGs, swing_highs, swing_lows)
+            print(candidateTrades)
             
             with open(f"logs/candidate_trades_{current_time.date()}_AM.txt", "w") as f:
                 f.write("Proprietary Information of Bentham Trading ")
                 f.write(current_time.date().strftime("%Y-%m-%d"))
                 for candidate in candidateTrades:
-                    f.write(str(candidateTrades))
+                    f.write(str(candidate))
             
         if trading_clock.datetime_is_between(current_time, "14:00", "15:00"): #PM Session
             sellside_breaches, buyside_breaches = get_buyside_sellside_breaches(
                 data, primary_buyside_liquidity, primary_sellside_liquidity)
+            
             CHECK_GREEN_FVG = False
             CHECK_RED_FVG = False
 
@@ -233,7 +250,7 @@ def run_day():
             if sellside_breaches:
                 swing_lows = get_swing_lows(data)
                 for breach in sellside_breaches:
-                    if breach <= datetime.combine(current_time.date(), time(14, 00, 00)).replace(tzinfo=pytz.UTC):
+                    if breach <= datetime.combine(current_time.date(), time(14, 00, 00)).astimezone(trading_clock.new_york_tz):
                         for swingLow in swing_lows:
                             if swingLow > breach:
                                 CHECK_RED_FVG = True
@@ -241,20 +258,17 @@ def run_day():
             if buyside_breaches:
                 swing_highs = get_swing_lows(data)
                 for breach in buyside_breaches:
-                    if breach <= datetime.combine(current_time.date(), time(14, 00, 00)).replace(tzinfo=pytz.UTC):
+                    if breach <= datetime.combine(current_time.date(), time(14, 00, 00)).astimezone(trading_clock.new_york_tz):
                         for swingHigh in swing_highs:
                             if swingHigh > breach:
                                 CHECK_GREEN_FVG = True
 
-            red_FVGs = {}
-            green_FVGs = {}
-
             if CHECK_RED_FVG:
-                red_FVGs = search_red_fvg(swing_lows, data)
+                red_FVGs = search_red_fvg(swing_lows, data, "14:00", "15:00")
                 # if red_FVGs:
 
             if CHECK_GREEN_FVG:
-                green_FVGs = search_green_fvg(swing_highs, data)
+                green_FVGs = search_green_fvg(swing_highs, data, "14:00", "15:00")
                 # if green_FVGs:
 
             # entry, stop limit, take profit, position size
@@ -265,7 +279,7 @@ def run_day():
                 f.write("Proprietary Information of Bentham Trading")
                 f.write(current_time.date().strftime("%Y-%m-%d"))
                 for candidate in candidateTrades:
-                    f.write(str(candidateTrades))
+                    f.write(str(candidate))
         
         managePortfolio(candidateTrades)
 

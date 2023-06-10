@@ -5,36 +5,16 @@ new_york_tz = pytz.timezone('America/New_York')
 exchange_openclose = {
     "^SPX": [time(hour=9, minute=30), time(hour=16)], }
 
-OVERRIDE = False
-OVERRIDE_TIME = datetime(year=2023, month=6, day=8, hour=9, minute=30)
+OVERRIDE = True
+OVERRIDE_TIME = datetime(year=2023, month=6, day=8, hour=10, minute=59)
 
+def get_today():
+    today = datetime.now(new_york_tz)
 
-def get_today(today=datetime.now(new_york_tz).date()):
-    year = today.year
-    month = today.month
-    day = today.day
-
-    return year, month, day
-
-
-def get_yesterday(today=datetime.now(new_york_tz).date()):
-    yesterday = today - timedelta(days=1)
-
-    year = yesterday.year
-    month = yesterday.month
-    day = yesterday.day
-
-    return year, month, day
-
-
-def get_tomorrow(today=datetime.now(new_york_tz).date()):
-    tomorrow = today + timedelta(days=1)
-
-    year = tomorrow.year
-    month = tomorrow.month
-    day = tomorrow.day
-
-    return year, month, day
+    if OVERRIDE:
+        today = OVERRIDE_TIME
+    
+    return today
 
 def is_market_open(derivative):
     holidays = [datetime(2023, 6, 16).date(), datetime(2023, 7, 4).date(),
@@ -44,10 +24,8 @@ def is_market_open(derivative):
     
     start_time = exchange_openclose[derivative][0]
     end_time = exchange_openclose[derivative][1]
-    current = datetime.now(new_york_tz)
-    
-    if OVERRIDE:
-        current = OVERRIDE_TIME
+    # current = datetime.now(new_york_tz)
+    current = get_today()
 
     current_time = current.time()
     current_date = current.date()
