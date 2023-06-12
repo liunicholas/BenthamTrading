@@ -1,16 +1,13 @@
 Proprietary Information of Bentham Trading 2023-06-08
-TradeOrder - Time Found: 2023-06-08 10:10:00-04:00, Entry Price: 4268.87
-             Stop Limit: 4267.35986328125, Take Profit: 4281.6201171875
-                 Position Size: 16.55350792111219
-TradeOrder - Time Found: 2023-06-08 10:15:00-04:00, Entry Price: 4270.42
-             Stop Limit: 4269.35009765625, Take Profit: 4281.6201171875
-                 Position Size: 23.368324965769055
 TradeOrder - Time Found: 2023-06-08 10:50:00-04:00, Entry Price: 4277.92
              Stop Limit: 4276.4599609375, Take Profit: 4288.9599609375
                  Position Size: 17.123745819397993
+
 TradeOrder - Time Found: 2023-06-08 11:00:00-04:00, Entry Price: 4280.39
              Stop Limit: 4280.27978515625, Take Profit: 4293.68994140625
                  Position Size: 226.5486725663717
+
 TradeOrder - Time Found: 2023-06-08 11:05:00-04:00, Entry Price: 4281.14
              Stop Limit: 4280.91015625, Take Profit: 4293.68994140625
                  Position Size: 108.70488322717623
+
