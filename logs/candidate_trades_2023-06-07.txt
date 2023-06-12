@@ -1,0 +1,67 @@
+BUYSIDE liquidity line at time 2023-06-06 16:00:00 at price level 4288.330078125
+SELLSIDE liquidity line at time 2023-06-06 16:00:00 at price level 4263.08984375
+[BREACH] BUYSIDE at time 2023-06-07 09:30:00-04:00 at price level 4293.0
+[BREACH] BUYSIDE at time 2023-06-07 09:35:00-04:00 at price level 4296.97998046875
+[BREACH] BUYSIDE at time 2023-06-07 09:40:00-04:00 at price level 4298.64013671875
+[BREACH] BUYSIDE at time 2023-06-07 09:45:00-04:00 at price level 4298.60009765625
+[INFO 2023-06-07 09:40:00-04:00] Not a valid swing high or low
+[BREACH] BUYSIDE at time 2023-06-07 09:50:00-04:00 at price level 4299.18994140625
+[BREACH] BUYSIDE at time 2023-06-07 09:55:00-04:00 at price level 4295.52978515625
+[INFO 2023-06-07 09:50:00-04:00] Not a valid swing high or low
+[BREACH] BUYSIDE at time 2023-06-07 10:00:00-04:00 at price level 4296.259765625
+[BREACH] BUYSIDE at time 2023-06-07 10:05:00-04:00 at price level 4293.10986328125
+[SWING] LOW at time 2023-06-07 10:00:00-04:00 at price level 4287.72998046875
+[BREACH] BUYSIDE at time 2023-06-07 10:10:00-04:00 at price level 4293.68994140625
+[BREACH] BUYSIDE at time 2023-06-07 10:15:00-04:00 at price level 4290.81982421875
+[INFO 2023-06-07 10:10:00-04:00] Not a valid swing high or low
+[BREACH] BUYSIDE at time 2023-06-07 10:20:00-04:00 at price level 4289.580078125
+[FVG] RED at time 2023-06-07 10:20:00-04:00 at entry 4289.580078125 and stop loss 4289.75
+[TRADE ORDER]: 
+             Time Found: 2023-06-07 10:25:00-04:00, Entry Price: 4289.58
+             Stop Limit: 4289.75, Take Profit: 4278.7001953125
+                 Position Size: 1471.2643678160919
+
+
+[BREACH] BUYSIDE at time 2023-06-07 10:30:00-04:00 at price level 4288.9599609375
+[SWING] LOW at time 2023-06-07 10:25:00-04:00 at price level 4282.5498046875
+[INFO 2023-06-07 10:30:00-04:00] Not a valid swing high or low
+[FVG] RED at time 2023-06-07 10:40:00-04:00 at entry 4281.759765625 and stop loss 4283.5400390625
+[TRADE ORDER]: 
+             Time Found: 2023-06-07 10:45:00-04:00, Entry Price: 4281.76
+             Stop Limit: 4283.5400390625, Take Profit: 4271.080078125
+                 Position Size: 140.42786615469007
+
+
+[SWING] LOW at time 2023-06-07 10:50:00-04:00 at price level 4274.7099609375
+[INFO 2023-06-07 11:05:00-04:00] Not a valid swing high or low
+[SWING] LOW at time 2023-06-07 11:15:00-04:00 at price level 4275.56005859375
+[INFO 2023-06-07 11:30:00-04:00] Not a valid swing high or low
+[SWING] LOW at time 2023-06-07 11:40:00-04:00 at price level 4276.18017578125
+[SWING] LOW at time 2023-06-07 11:55:00-04:00 at price level 4270.93017578125
+[INFO 2023-06-07 12:05:00-04:00] Not a valid swing high or low
+[SWING] LOW at time 2023-06-07 12:10:00-04:00 at price level 4273.31982421875
+[SWING] LOW at time 2023-06-07 12:25:00-04:00 at price level 4269.169921875
+[INFO 2023-06-07 12:45:00-04:00] Not a valid swing high or low
+[SWING] LOW at time 2023-06-07 12:55:00-04:00 at price level 4269.33984375
+[SWING] LOW at time 2023-06-07 13:05:00-04:00 at price level 4268.16015625
+[INFO 2023-06-07 13:10:00-04:00] Not a valid swing high or low
+[SWING] LOW at time 2023-06-07 13:20:00-04:00 at price level 4264.330078125
+[INFO 2023-06-07 13:25:00-04:00] Not a valid swing high or low
+[SWING] LOW at time 2023-06-07 13:35:00-04:00 at price level 4263.9599609375
+[INFO 2023-06-07 13:45:00-04:00] Not a valid swing high or low
+[SWING] LOW at time 2023-06-07 13:50:00-04:00 at price level 4264.89013671875
+[INFO 2023-06-07 14:05:00-04:00] Not a valid swing high or low
+[SWING] LOW at time 2023-06-07 14:10:00-04:00 at price level 4268.81982421875
+[INFO 2023-06-07 14:20:00-04:00] Not a valid swing high or low
+[FVG] RED at time 2023-06-07 14:35:00-04:00 at entry 4270.6298828125 and stop loss 4270.85009765625
+[SWING] LOW at time 2023-06-07 14:35:00-04:00 at price level 4265.919921875
+[INFO 2023-06-07 14:40:00-04:00] Not a valid swing high or low
+[SWING] LOW at time 2023-06-07 14:50:00-04:00 at price level 4267.240234375
+[INFO 2023-06-07 15:05:00-04:00] Not a valid swing high or low
+[FVG] RED at time 2023-06-07 15:10:00-04:00 at entry 4270.3701171875 and stop loss 4270.56982421875
+[SWING] LOW at time 2023-06-07 15:10:00-04:00 at price level 4266.759765625
+[INFO 2023-06-07 15:20:00-04:00] Not a valid swing high or low
+[SWING] LOW at time 2023-06-07 15:25:00-04:00 at price level 4268.2998046875
+[INFO 2023-06-07 15:30:00-04:00] Not a valid swing high or low
+[SWING] LOW at time 2023-06-07 15:40:00-04:00 at price level 4264.89013671875
+[INFO 2023-06-07 15:50:00-04:00] Not a valid swing high or low
