@@ -24,6 +24,12 @@ def override(ot=OVERRIDE_TIME):
     
     print(f"Time Overridden to {OVERRIDE_TIME}")
 
+def turn_off_override():
+    global OVERRIDE
+    OVERRIDE = False
+
+    print("OVERRIDE is now False")
+
 def get_generator(gt=GENERATOR_RANGE):
     global GENERATOR_RANGE
 

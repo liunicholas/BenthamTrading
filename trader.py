@@ -6,6 +6,7 @@ import trading_clock as tc
 from datetime import datetime, date, time, timedelta
 from silver_bullet import *
 import pytz
+import os
 
 def get_data(current_time):
     current_date = current_time.date()
@@ -50,13 +51,59 @@ def get_previous_day_swings(current_time=tc.get_today()):
     
     return takeProfitSwingLows, takeProfitSwingHighs
 
+def run_cycle(current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs):
+    data = get_data(current_time)
+
+    # only iterate through procedure on new data
+    if ((last_known_data_point is None) or (last_known_data_point != data["todaysData"].index[-1])) and (data["todaysData"]):
+
+        # iterate through liquidity lines
+        for liquidity_line in liquidity_lines:
+            liquidity_line.breach_list.append(data["todaysData"][-1])
+
+            # iterate through breaches in each liquidity line if swings can form
+            if len(data["todaysData"]) >= 3:
+                middleCandleTime = data["todaysData"].index[-2]
+
+                for breach in liquidity_line.breach_list:
+                    breach.swing_list.append(data["todaysData"][-3:])
+
+                    # iterate through swings in each breach
+                    for swing in breach.swing_list:
+                        swing.FVG_list.append(data["todaysData"][-3:])
+
+                        # iterate through FVGs in each swing
+                        for FVG in swing.FVG_list:
+                            candidate_trades.append(
+                                FVG, takeProfitSwingLows, takeProfitSwingHighs)
+
+        last_known_data_point = data["todaysData"].index[-1]
+
+    # separate function for take profit points
+    if len(data["todaysData"]) >= 3:
+        middleCandleTime = data["todaysData"].index[-2]
+        if Swing.isSwingHigh(data["todaysData"][-3:]):
+            swingHigh = Swing(
+                middleCandleTime, data["todaysData"].iloc[-2]["todaysData"], "HIGH")
+            takeProfitSwingHighs.append(swingHigh)
+
+        if Swing.isSwingLow(data["todaysData"][-3:]):
+            swingLow = Swing(
+                middleCandleTime, data["todaysData"].iloc[-2]["todaysData"], "LOW")
+            takeProfitSwingLows.append(swingLow)
+
+    return last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs
+
 def managePortfolio(candidate_trades):
     pass
     
 def run_day(CATCH_UP):
     takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings()
 
-    liquidity_lines = LiquidityLine.get_primary_liquidity()
+    with open(f"logs/candidate_trades_{tc.get_today().date()}.txt", "w") as f:
+        f.write("Proprietary Information of Bentham Trading ")
+
+    liquidity_lines = get_primary_liquidity()
     candidate_trades = CandidateTrades()
     last_known_data_point = None
 
@@ -67,63 +114,23 @@ def run_day(CATCH_UP):
 
         for simulated_time in this_generator:
             tc.override(simulated_time)
-            current_time = simulated_time
+            current_time = tc.get_today()
+            last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs)
 
+            if not os.path.exists(f"logs/candidate_trades_{tc.get_today().date()}.txt"):
+                with open(f"logs/candidate_trades_{tc.get_today().date()}.txt", "w") as f:
+                    f.write("Proprietary Information of Bentham Trading ")
+
+        tc.turn_off_override()
+
+    else:
+        with open(f"logs/candidate_trades_{tc.get_today().date()}.txt", "w") as f:
+            f.write("Proprietary Information of Bentham Trading ")                                                                                                                
     
     while tc.is_market_open(security):
         current_time = tc.get_today()
-        data = get_data(current_time)
-        
-        # only iterate through procedure on new data
-        if ((last_known_data_point is None) or (last_known_data_point != data["todaysData"].index[-1])) and (data["todaysData"]):
-
-            # iterate through liquidity lines
-            for liquidity_line in liquidity_lines:
-                liquidity_line.breach_list.append(data["todaysData"][-1])
-            
-                # iterate through breaches in each liquidity line if swings can form
-                if len(data["todaysData"]) >= 3:
-                    middleCandleTime = data["todaysData"].index[-2]
-                    
-                    for breach in liquidity_line.breach_list:
-                        breach.swing_list.append(data["todaysData"][-3:])
-                        
-                        for swing in breach.swing_list:
-                            swing.FVG_list.append(data["todaysData"][-3:])
-                        
-
-        # separate function for take profit points
-        if len(data["todaysData"]) >= 3:
-            middleCandleTime = data["todaysData"].index[-2]
-            if Swing.isSwingHigh(data["todaysData"][-3:]):
-                swingHigh = Swing(middleCandleTime, data["todaysData"].iloc[-2]["todaysData"], "HIGH")
-                takeProfitSwingHighs.append(swingHigh)
-            
-            if Swing.isSwingLow(data["todaysData"][-3:]):
-                swingLow = Swing(middleCandleTime, data["todaysData"].iloc[-2]["todaysData"], "LOW")
-                takeProfitSwingLows.append(swingLow)
-
-            
-        # find trades
-        if tc.datetime_is_between(current_time, "10:00", "11:00"): #AM Session
-            candidate_trades = find_candidate_trades(candidate_trades, liquidity_lines)
-            
-            # with open(f"logs/candidate_trades_{current_time.date()}_AM.txt", "w") as f:
-            #     f.write("Proprietary Information of Bentham Trading ")
-            #     f.write(current_time.date().strftime("%Y-%m-%d"))
-            #     f.write("\n")
-            #     for candidate in candidateTrades:
-            #         f.write(str(candidate))
-            
-        if tc.datetime_is_between(current_time, "14:00", "15:00"): #PM Session
-            candidateTrades = find_candidate_trades(candidate_trades, liquidity_lines)
-
-            # with open(f"logs/candidate_trades_{current_time.date()}_PM.txt", "w") as f:
-            #     f.write("Proprietary Information of Bentham Trading")
-            #     f.write(current_time.date().strftime("%Y-%m-%d"))
-            #     f.write("\n")
-            #     for candidate in candidateTrades:
-            #         f.write(str(candidate))
+        last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(current_time, last_known_data_point, liquidity_lines,
+                  candidate_trades, takeProfitSwingLows, takeProfitSwingHighs)
         
         # check on portfolio every iteration
         managePortfolio(candidate_trades)
@@ -146,7 +153,6 @@ def main():
             if not PRINTED_MARKET_CLOSED:
                 print("MARKET CLOSED")
                 PRINTED_MARKET_CLOSED = True
-    
 
 if __name__ == "__main__":
     main()
