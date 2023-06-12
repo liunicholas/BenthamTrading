@@ -16,7 +16,8 @@ end = datetime_range[1]
 this_generator = tc.get_generator([start, end])
 
 tc.override(datetime_range[0])
-takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings()
+takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings(tc.get_today())
+# log(' '.join([str(swing) for swing in takeProfitSwingHighs]))
 
 liquidity_lines = get_primary_liquidity()
 candidate_trades = CandidateTrades()

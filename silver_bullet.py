@@ -14,8 +14,16 @@ max_drawdown = 0.05*50000
 leverage_multiplier = 10
 
 def log(line):
+    def line_exists_in_file(file_path, target_line):
+        with open(file_path, 'r') as file:
+            for line in file:
+                if line.strip() == target_line:
+                    return True
+        return False
+
     with open(f"logs/candidate_trades_{tc.get_today().date()}.txt", "a") as f:
-        f.write(line + "\n")
+        if not line_exists_in_file(f"logs/candidate_trades_{tc.get_today().date()}.txt", line):
+            f.write(line + "\n")
 
 class FVG:
     def __init__(self, time, entry, stop_loss, FVG_type):
@@ -36,25 +44,27 @@ class FVGList(list):
         # After Swing High: Green FVG - 3rd low > 1st high, above swing high pl
         # After Swing Low: Red FVG - 3rd high < 1st low, below swing low pl
 
-        leftCandle = threeCandles.iloc[0]
-        middleCandle = threeCandles.iloc[1]
-        rightCandle = threeCandles.iloc[2]
-
-        if tc.datetime_is_between(leftCandle.index, trading_period_1_open, trading_period_1_close) or tc.datetime_is_between(leftCandle.index, trading_period_2_open, trading_period_2_close):
+        leftCandle = threeCandles[0:1]
+        middleCandle = threeCandles[1:2]
+        rightCandle = threeCandles[2:3]
+        
+        if tc.datetime_is_between(leftCandle.index.item(), trading_period_1_open, trading_period_1_close) or tc.datetime_is_between(leftCandle.index.item(), trading_period_2_open, trading_period_2_close):
             if self.swing.swing_type == "HIGH":
-                if leftCandle["High"] < rightCandle["Low"]:
-                    if (leftCandle.index >= self.swing.time):
-                        if (leftCandle["Close"] > self.swing.price_level) or (middleCandle["Close"] > self.swing.price_level) or (rightCandle["Close"] > self.swing.price_level):
-                            green_fvg = FVG(rightCandle.index, rightCandle["Low"], leftCandle["High"], "GREEN")
+                if leftCandle["High"][-1] < rightCandle["Low"][-1]:
+                    if (leftCandle.index.item() >= self.swing.time):
+                        if (leftCandle["Close"][-1] > self.swing.price_level) or (middleCandle["Close"][-1] > self.swing.price_level) or (rightCandle["Close"][-1] > self.swing.price_level):
+                            green_fvg = FVG(rightCandle.index.item(
+                            ), rightCandle["Low"][-1], leftCandle["High"][-1], "GREEN")
                             super().append(green_fvg)
                             print(green_fvg)
                             log(str(green_fvg))
 
             elif self.swing.swing_type == "LOW":
-                if leftCandle["Low"] > rightCandle["High"]:
-                    if (leftCandle.index >= self.swing.time):
-                        if (leftCandle["Close"] < self.swing.price_level) or (middleCandle["Close"] < self.swing.price_level) or (rightCandle["Close"] < self.swing.price_level):
-                            red_fvg = FVG(rightCandle.index, rightCandle["High"], leftCandle["Low"], "RED")
+                if leftCandle["Low"][-1] > rightCandle["High"][-1]:
+                    if (leftCandle.index.item() >= self.swing.time):
+                        if (leftCandle["Close"][-1] < self.swing.price_level) or (middleCandle["Close"][-1] < self.swing.price_level) or (rightCandle["Close"][-1] < self.swing.price_level):
+                            red_fvg = FVG(rightCandle.index.item(
+                            ), rightCandle["High"][-1], leftCandle["Low"][-1], "RED")
                             super().append(red_fvg)
                             print(red_fvg)
                             log(str(red_fvg))
@@ -68,36 +78,37 @@ class Swing:
         self.FVG_list = FVGList(self)
     
     def isSwingHigh(threeCandles):
-        leftCandle = threeCandles.iloc[0]
-        middleCandle = threeCandles.iloc[1]
-        rightCandle = threeCandles.iloc[2]
+        leftCandle = threeCandles[0:1]
+        middleCandle = threeCandles[1:2]
+        rightCandle = threeCandles[2:3]
 
-        return (leftCandle["High"] <= middleCandle["High"]) and (rightCandle["High"] <= middleCandle["High"])
+        return (leftCandle["High"][-1] <= middleCandle["High"][-1]) and (rightCandle["High"][-1] <= middleCandle["High"][-1])
 
     def isSwingLow(threeCandles):
-        leftCandle = threeCandles.iloc[0]
-        middleCandle = threeCandles.iloc[1]
-        rightCandle = threeCandles.iloc[2]
+        leftCandle = threeCandles[0:1]
+        middleCandle = threeCandles[1:2]
+        rightCandle = threeCandles[2:3]
 
-        return (leftCandle["Low"] >= middleCandle["Low"]) and (rightCandle["Low"] >= middleCandle["Low"])
+        return (leftCandle["Low"][-1] >= middleCandle["Low"][-1]) and (rightCandle["Low"][-1] >= middleCandle["Low"][-1])
 
     def __str__(self):
         return f"[SWING] {self.swing_type} at time {self.time} at price level {self.price_level}"
 
 class SwingList(list):
-    def __init__(self, breach):
+    def __init__(self, breach, *args):
+        super().__init__(*args)
         self.breach = breach
 
     def append(self, threeCandles):
-        middleCandle = threeCandles.iloc[-2]
-        middleCandleTime = middleCandle.index
+        middleCandle = threeCandles[-2:-1]
+        middleCandleTime = middleCandle.index.item()
         swing = -1
 
         if Swing.isSwingHigh(threeCandles):
-            swing = Swing(middleCandleTime, middleCandle["High"], "HIGH")
+            swing = Swing(middleCandleTime, middleCandle["High"][-1], "HIGH")
 
         if Swing.isSwingLow(threeCandles):
-            swing = Swing(middleCandleTime,middleCandle["Low"], "LOW")
+            swing = Swing(middleCandleTime, middleCandle["Low"][-1], "LOW")
 
         if swing != -1:            
             if (swing.time > self.breach.time):
@@ -111,6 +122,7 @@ class SwingList(list):
                     log(str(swing))
                 else:
                     print("[INFO] Not a valid swing high or low")
+                    log(f"[INFO {swing.time}] Not a valid swing high or low")
 
 class Breach:
     def __init__(self, time, price_level, breach_type):
@@ -131,7 +143,6 @@ class BreachList(list):
     def append(self, potential_breach):
         if (self.liquidity_line.liquidity_type == "SELLSIDE") and (potential_breach["Low"][-1] <= self.liquidity_line.price_level):
             breach = Breach(potential_breach.index.item(),potential_breach["Low"][-1], "SELLSIDE")
-            # print(type(breach))
             super().append(breach)
             print(breach)
             log(str(breach))
@@ -173,8 +184,8 @@ class CandidateTrades():
         self.trade_times = []
     
     def append(self, fvg, all_swing_lows, all_swing_highs):
-        if fvg.FVG_type == "RED" and (fvg.time + timedelta(minutes=tc.INTERVAL)) not in self.trade_times:
-            FVG_time = fvg.time + timedelta(minutes=tc.INTERVAL)
+        FVG_time = fvg.time + timedelta(minutes=tc.INTERVAL)
+        if fvg.FVG_type == "RED" and FVG_time not in self.trade_times:
             entry_price = fvg.entry
             stop_limit = fvg.stop_loss
 
@@ -182,21 +193,21 @@ class CandidateTrades():
 
             take_profit_price = float("inf")
             for potential_take_profit in all_swing_lows:
-                if potential_take_profit < FVG_time and all_swing_lows[potential_take_profit] < p_swing_threshold:
-                    if p_swing_threshold-all_swing_lows[potential_take_profit] < p_swing_threshold-take_profit_price:
-                        take_profit_price = all_swing_lows[potential_take_profit]
-
+                if potential_take_profit.time < FVG_time and potential_take_profit.price_level < p_swing_threshold:
+                    if abs(p_swing_threshold-potential_take_profit.price_level) < abs(p_swing_threshold-take_profit_price):
+                        take_profit_price = potential_take_profit.price_level
+            
             if take_profit_price != float("inf"):
                 position_size = max_drawdown / ((stop_limit-entry_price)*leverage_multiplier)     
                 trade_order = TradeOrder(
                     FVG_time, entry_price, stop_limit, take_profit_price, position_size)
                 self.trade_orders.append(trade_order)
+                self.trade_times.append(FVG_time)
                 print(trade_order)
                 log(str(trade_order))
 
-                
-        if fvg.FVG_type == "GREEN" and (fvg.time + timedelta(minutes=tc.INTERVAL)) not in self.trade_times:
-            FVG_time = fvg.time + timedelta(minutes=tc.INTERVAL)
+
+        if fvg.FVG_type == "GREEN" and FVG_time not in self.trade_times:
             entry_price = fvg.entry
             stop_limit = fvg.stop_loss
 
@@ -204,14 +215,15 @@ class CandidateTrades():
 
             take_profit_price = float("inf")
             for potential_take_profit in all_swing_highs:
-                if potential_take_profit < FVG_time and all_swing_highs[potential_take_profit] > p_swing_threshold:
-                    if all_swing_highs[potential_take_profit]-p_swing_threshold < take_profit_price-p_swing_threshold:
-                        take_profit_price = all_swing_highs[potential_take_profit]
+                if potential_take_profit.time < FVG_time and potential_take_profit.price_level > p_swing_threshold:
+                    if abs(potential_take_profit.price_level-p_swing_threshold) < abs(take_profit_price-p_swing_threshold):
+                        take_profit_price = potential_take_profit.price_level
 
             if take_profit_price != float("inf"):
                 position_size = max_drawdown / ((entry_price-stop_limit)*leverage_multiplier)
                 trade_order = TradeOrder(FVG_time, entry_price, stop_limit, take_profit_price, position_size)
                 self.trade_orders.append(trade_order)
+                self.trade_times.append(FVG_time)
                 print(trade_order)
                 log(str(trade_order))
 

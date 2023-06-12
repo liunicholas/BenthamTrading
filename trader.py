@@ -4,6 +4,7 @@ import pandas as pd
 import yfinance as yf
 import trading_clock as tc
 from datetime import datetime, date, time, timedelta
+from time import sleep
 from silver_bullet import *
 import pytz
 import os
@@ -35,30 +36,32 @@ def get_data(current_time):
     return data
 
 def get_previous_day_swings(current_time=tc.get_today()):
+    # print("CT", current_time)
     takeProfitSwingLows, takeProfitSwingHighs = [], []
     yesterdata = get_data(current_time)["oneDayAgoData"]
 
     for i in yesterdata.index[:-2]:
         threeCandles = yesterdata[i:i+timedelta(minutes=tc.INTERVAL*2)]
-        middleCandle = threeCandles.iloc[-2]
-        middleCandleTime = middleCandle.index
+        middleCandle = threeCandles[-2:-1]
+        middleCandleTime = middleCandle.index.item()
 
         if Swing.isSwingHigh(threeCandles):
-            swing = Swing(middleCandleTime, middleCandle["High"], "HIGH")
+            swing = Swing(middleCandleTime, middleCandle["High"][-1], "HIGH")
             takeProfitSwingHighs.append(swing)
 
         if Swing.isSwingLow(threeCandles):
-            swing = Swing(middleCandleTime, middleCandle["Low"], "LOW")
+            swing = Swing(middleCandleTime, middleCandle["Low"][-1], "LOW")
             takeProfitSwingLows.append(swing)
     
     return takeProfitSwingLows, takeProfitSwingHighs
 
 def run_cycle(current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs):
     data = get_data(current_time)
+    sleep(0)
     # print(data["todaysData"])
 
     # only iterate through procedure on new data
-    if ((last_known_data_point is None) or (last_known_data_point != data["todaysData"].index[-1])) and (not data["todaysData"].empty):
+    if ((last_known_data_point is None) or (last_known_data_point < data["todaysData"].index[-1])) and (not data["todaysData"].empty):
 
         # iterate through liquidity lines
         for liquidity_line in liquidity_lines:
