@@ -1,0 +1,2 @@
+BUYSIDE liquidity line at time 2023-06-09 16:00:00 at price level 4322.6201171875
+SELLSIDE liquidity line at time 2023-06-09 16:00:00 at price level 4291.7001953125

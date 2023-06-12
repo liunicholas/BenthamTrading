@@ -107,15 +107,13 @@ def managePortfolio(candidate_trades):
 def run_day(CATCH_UP):
     takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings()
 
-    with open(f"logs/candidate_trades_{tc.get_today().date()}.txt", "w") as f:
-        f.write("Proprietary Information of Bentham Trading ")
-
     liquidity_lines = get_primary_liquidity()
     candidate_trades = CandidateTrades()
     last_known_data_point = None
 
     if CATCH_UP:
-        start = tc.exchange_openclose[security][0]
+        start = tc.localize(datetime.combine(
+            tc.get_today().date(), tc.exchange_openclose[security][0]))
         end = datetime.now(tc.new_york_tz)
         this_generator = tc.get_generator([start,end])
 
@@ -152,7 +150,7 @@ def main():
             PRINTED_MARKET_CLOSED = False
 
             CATCH_UP = False
-            if tc.get_today > tc.exchange_openclose[security][0]:
+            if tc.get_today() > tc.localize(datetime.combine(tc.get_today().date(), tc.exchange_openclose[security][0])):
                 CATCH_UP = True
                 
             run_day(CATCH_UP)
