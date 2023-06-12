@@ -1,0 +1,87 @@
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+[BREACH] SELLSIDE at time Index(['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume'], dtype='object') at price level 4262.47021484375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+[BREACH] SELLSIDE at time Index(['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume'], dtype='object') at price level 4262.47021484375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+[BREACH] SELLSIDE at time Index(['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume'], dtype='object') at price level 4262.47021484375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+[BREACH] SELLSIDE at time Index(['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume'], dtype='object') at price level 4262.47021484375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+[BREACH] SELLSIDE at time Index(['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume'], dtype='object') at price level 4262.47021484375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+[BREACH] SELLSIDE at time DatetimeIndex(['2023-06-08 09:45:00-04:00'], dtype='datetime64[ns, America/New_York]', freq=None) at price level 4262.47021484375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+[BREACH] SELLSIDE at time 2023-06-08 09:45:00-04:00 at price level 4262.47021484375
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+[BREACH] SELLSIDE at time 2023-06-08 09:45:00-04:00 at price level 4262.47021484375
+[BREACH] SELLSIDE at time 2023-06-08 09:50:00-04:00 at price level 4261.77001953125
+[BREACH] SELLSIDE at time 2023-06-08 09:55:00-04:00 at price level 4261.06982421875
+BUYSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4299.18994140625
+SELLSIDE liquidity line at time 2023-06-07 16:00:00 at price level 4263.9599609375
+[BREACH] SELLSIDE at time 2023-06-08 09:45:00-04:00 at price level 4262.47021484375
+[BREACH] SELLSIDE at time 2023-06-08 09:50:00-04:00 at price level 4261.77001953125
+[BREACH] SELLSIDE at time 2023-06-08 09:55:00-04:00 at price level 4261.06982421875

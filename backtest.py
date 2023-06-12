@@ -5,8 +5,8 @@ import yfinance as yf
 import pytz
 import time
 
-datetime_range = [tc.localize(datetime(2023, 6, 8, 6, 25, 0)),
-                  tc.localize(datetime(2023, 6, 8, 16, 5, 0))]
+datetime_range = [tc.localize(datetime(2023, 6, 8, 9, 30, 0)),
+                  tc.localize(datetime(2023, 6, 8, 16, 0, 0))]
 
 # currentTime = datetime_range[0]
 # waitTime = 0
@@ -15,6 +15,7 @@ start = datetime_range[0]
 end = datetime_range[1]
 this_generator = tc.get_generator([start, end])
 
+tc.override(datetime_range[0])
 takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings()
 
 liquidity_lines = get_primary_liquidity()

@@ -12,16 +12,16 @@ def get_data(current_time):
     current_date = current_time.date()
 
     if not tc.OVERRIDE:
-        data = {"twoDayAgoData": yf.download(tickers=security, start=tc.get_delta_trading_date(security, current_date, -2), end=tc.get_delta_trading_date(security, current_date, -1), interval=f'{tc.INTERVAL}m'),
-            "oneDayAgoData": yf.download(tickers=security, start=tc.get_delta_trading_date(security, current_date, -1), end=current_date, interval=f'{tc.INTERVAL}m'),
-            "todaysData": yf.download(tickers=security, start=current_date, end=tc.get_delta_trading_date(security, current_date, 1), interval=f'{tc.INTERVAL}m')
+        data = {"twoDayAgoData": yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(security, current_date, -2), end=tc.get_delta_trading_date(security, current_date, -1), interval=f'{tc.INTERVAL}m'),
+            "oneDayAgoData": yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(security, current_date, -1), end=current_date, interval=f'{tc.INTERVAL}m'),
+            "todaysData": yf.download(progress=False, tickers=security, start=current_date, end=tc.get_delta_trading_date(security, current_date, 1), interval=f'{tc.INTERVAL}m')
             }
     else:
-        data = {"twoDayAgoData": yf.download(tickers=security, start=tc.get_delta_trading_date(security, current_date, -2), end=tc.get_delta_trading_date(security, current_date, -1), interval=f'{tc.INTERVAL}m'),
-        "oneDayAgoData": yf.download(tickers=security, start=tc.get_delta_trading_date(security, current_date, -1), end=current_date, interval=f'{tc.INTERVAL}m'),
-        "todaysData": yf.download(tickers=security, start=current_date, end=tc.get_delta_trading_date(security, current_date, 1), interval=f'{tc.INTERVAL}m')
+        data = {"twoDayAgoData": yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(security, current_date, -2), end=tc.get_delta_trading_date(security, current_date, -1), interval=f'{tc.INTERVAL}m'),
+        "oneDayAgoData": yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(security, current_date, -1), end=current_date, interval=f'{tc.INTERVAL}m'),
+        "todaysData": yf.download(progress=False, tickers=security, start=current_date, end=tc.get_delta_trading_date(security, current_date, 1), interval=f'{tc.INTERVAL}m')
         }
-
+     
         temp = []
         for i, row in data["todaysData"].iterrows():
             if i+timedelta(minutes=tc.INTERVAL) <= tc.OVERRIDE_TIME:
@@ -29,6 +29,8 @@ def get_data(current_time):
 
         if temp:
             data["todaysData"] = pd.concat(temp, axis=1).T
+        else:
+            data["todaysData"] = pd.DataFrame()
 
     return data
 
@@ -53,13 +55,15 @@ def get_previous_day_swings(current_time=tc.get_today()):
 
 def run_cycle(current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs):
     data = get_data(current_time)
+    # print(data["todaysData"])
 
     # only iterate through procedure on new data
-    if ((last_known_data_point is None) or (last_known_data_point != data["todaysData"].index[-1])) and (data["todaysData"]):
+    if ((last_known_data_point is None) or (last_known_data_point != data["todaysData"].index[-1])) and (not data["todaysData"].empty):
 
         # iterate through liquidity lines
         for liquidity_line in liquidity_lines:
-            liquidity_line.breach_list.append(data["todaysData"][-1])
+            # print(data["todaysData"].iloc[-1])
+            liquidity_line.breach_list.append(data["todaysData"][-1:])
 
             # iterate through breaches in each liquidity line if swings can form
             if len(data["todaysData"]) >= 3:
@@ -84,12 +88,12 @@ def run_cycle(current_time, last_known_data_point, liquidity_lines, candidate_tr
         middleCandleTime = data["todaysData"].index[-2]
         if Swing.isSwingHigh(data["todaysData"][-3:]):
             swingHigh = Swing(
-                middleCandleTime, data["todaysData"].iloc[-2]["todaysData"], "HIGH")
+                middleCandleTime, data["todaysData"].iloc[-2]["High"], "HIGH")
             takeProfitSwingHighs.append(swingHigh)
 
         if Swing.isSwingLow(data["todaysData"][-3:]):
             swingLow = Swing(
-                middleCandleTime, data["todaysData"].iloc[-2]["todaysData"], "LOW")
+                middleCandleTime, data["todaysData"].iloc[-2]["Low"], "LOW")
             takeProfitSwingLows.append(swingLow)
 
     return last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs

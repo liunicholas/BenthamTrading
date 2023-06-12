@@ -27,10 +27,9 @@ class FVG:
     def __str__(self):
         return f"[FVG] {self.FVG_type} at time {self.time} at entry {self.entry} and stop loss {self.stop_loss}"
 
-class FVGList:
-    def __init__(self, swing, fl=[]):
+class FVGList(list):
+    def __init__(self, swing):
         self.swing = swing
-        self.FVG_list = fl
     
     def append(self, threeCandles):
         # FVG is during trading period 10-11, 14-15 DONE
@@ -47,7 +46,7 @@ class FVGList:
                     if (leftCandle.index >= self.swing.time):
                         if (leftCandle["Close"] > self.swing.price_level) or (middleCandle["Close"] > self.swing.price_level) or (rightCandle["Close"] > self.swing.price_level):
                             green_fvg = FVG(rightCandle.index, rightCandle["Low"], leftCandle["High"], "GREEN")
-                            self.FVG_list.append(green_fvg)
+                            super().append(green_fvg)
                             print(green_fvg)
                             log(str(green_fvg))
 
@@ -56,10 +55,9 @@ class FVGList:
                     if (leftCandle.index >= self.swing.time):
                         if (leftCandle["Close"] < self.swing.price_level) or (middleCandle["Close"] < self.swing.price_level) or (rightCandle["Close"] < self.swing.price_level):
                             red_fvg = FVG(rightCandle.index, rightCandle["High"], leftCandle["Low"], "RED")
-                            self.FVG_list.append(red_fvg)
+                            super().append(red_fvg)
                             print(red_fvg)
                             log(str(red_fvg))
-
 
 class Swing:
     def __init__(self, time, price_level, swing_type):
@@ -86,9 +84,8 @@ class Swing:
     def __str__(self):
         return f"[SWING] {self.swing_type} at time {self.time} at price level {self.price_level}"
 
-class SwingList:
-    def __init__(self, breach, sl=[]):
-        self.swing_list = sl
+class SwingList(list):
+    def __init__(self, breach):
         self.breach = breach
 
     def append(self, threeCandles):
@@ -105,11 +102,11 @@ class SwingList:
         if swing != -1:            
             if (swing.time > self.breach.time):
                 if (self.breach.breach_type=="SELLSIDE" and swing.swing_type=="HIGH"):
-                    self.swing_list.append(swing)
+                    super().append(swing)
                     print(swing)
                     log(str(swing))
                 elif (self.breach.breach_type=="BUYSIDE" and swing.swing_type=="LOW"):
-                    self.swing_list.append(swing)
+                    super().append(swing)
                     print(swing)
                     log(str(swing))
                 else:
@@ -121,27 +118,27 @@ class Breach:
         self.price_level = price_level
         self.breach_type = breach_type
         
-        self.swings = SwingList(self)
+        self.swing_list = SwingList(self)
     
     def __str__(self):
         return f"[BREACH] {self.breach_type} at time {self.time} at price level {self.price_level}"
     
-class BreachList:
-    def __init__(self, liquidity_line, bl=[]):
-        self.breach_list = bl
+class BreachList(list):
+    def __init__(self, liquidity_line, *args):
+        super().__init__(*args)
         self.liquidity_line = liquidity_line
-    
-    def append(self, potential_take_profit_breach):
-        # append potential_take_profit candles
-        if (self.liquidity_line.liquidty_type == "SELLSIDE") and (potential_take_profit_breach["Low"] <= self.liquidity_line.price_level):
-            breach = Breach(potential_take_profit_breach.index, potential_take_profit_breach["Low"])
-            self.breach_list.append(breach)
+
+    def append(self, potential_breach):
+        if (self.liquidity_line.liquidity_type == "SELLSIDE") and (potential_breach["Low"][-1] <= self.liquidity_line.price_level):
+            breach = Breach(potential_breach.index.item(),potential_breach["Low"][-1], "SELLSIDE")
+            # print(type(breach))
+            super().append(breach)
             print(breach)
             log(str(breach))
 
-        if (self.liquidity_line.liquidty_type == "BUYSIDE") and (potential_take_profit_breach["High"] >= self.liquidity_line.price_level):
-            breach = Breach(potential_take_profit_breach.index, potential_take_profit_breach["High"])
-            self.breach_list.append(breach)
+        if (self.liquidity_line.liquidity_type == "BUYSIDE") and (potential_breach["High"][-1] >= self.liquidity_line.price_level):
+            breach = Breach(potential_breach.index.item(),potential_breach["High"][-1], "BUYSIDE")
+            super().append(breach)
             print(breach)
             log(str(breach))
             
@@ -220,7 +217,7 @@ class CandidateTrades():
 
 def get_primary_liquidity():
     current_time = tc.get_today()
-    dataForLiquidity = yf.download(tickers=security, start=tc.get_delta_trading_date(
+    dataForLiquidity = yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(
         security, current_time.date(), -1), end=current_time.date(), interval='1d')
 
     dummyDatetime = datetime.combine(tc.get_delta_trading_date(
