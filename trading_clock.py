@@ -4,7 +4,6 @@ import pytz
 new_york_tz = pytz.timezone('America/New_York')
 exchange_openclose = {"^spx": [time(hour=9, minute=30), time(hour=16)], }
 
-INTERVAL = 5 # minutes
 OVERRIDE = False
 
 def localize(dt):

@@ -1,2 +1,26 @@
 BUYSIDE liquidity line at time 2023-06-09 16:00:00 at price level 4322.6201171875
 SELLSIDE liquidity line at time 2023-06-09 16:00:00 at price level 4291.7001953125
+[BREACH] BUYSIDE at time 2023-06-12 14:50:00-04:00 at price level 4323.330078125
+[BREACH] BUYSIDE at time 2023-06-12 14:55:00-04:00 at price level 4325.6201171875
+[BREACH] BUYSIDE at time 2023-06-12 15:00:00-04:00 at price level 4327.81005859375
+[BREACH] BUYSIDE at time 2023-06-12 15:05:00-04:00 at price level 4329.580078125
+[INFO 2023-06-12 15:00:00-04:00] Not a valid swing high or low
+[BREACH] BUYSIDE at time 2023-06-12 15:10:00-04:00 at price level 4331.22021484375
+[INFO 2023-06-12 15:05:00-04:00] Not a valid swing high or low
+[BREACH] BUYSIDE at time 2023-06-12 15:15:00-04:00 at price level 4335.64990234375
+[INFO 2023-06-12 15:10:00-04:00] Not a valid swing high or low
+[BREACH] BUYSIDE at time 2023-06-12 15:20:00-04:00 at price level 4334.25
+[INFO 2023-06-12 15:15:00-04:00] Not a valid swing high or low
+[BREACH] BUYSIDE at time 2023-06-12 15:25:00-04:00 at price level 4334.31982421875
+[SWING] LOW at time 2023-06-12 15:20:00-04:00 at price level 4331.97021484375
+[BREACH] BUYSIDE at time 2023-06-12 15:30:00-04:00 at price level 4334.830078125
+[INFO 2023-06-12 15:25:00-04:00] Not a valid swing high or low
+[BREACH] BUYSIDE at time 2023-06-12 15:35:00-04:00 at price level 4334.7001953125
+[SWING] LOW at time 2023-06-12 15:30:00-04:00 at price level 4333.0
+[BREACH] BUYSIDE at time 2023-06-12 15:40:00-04:00 at price level 4336.97021484375
+[BREACH] BUYSIDE at time 2023-06-12 15:45:00-04:00 at price level 4336.8798828125
+[INFO 2023-06-12 15:40:00-04:00] Not a valid swing high or low
+[BREACH] BUYSIDE at time 2023-06-12 15:50:00-04:00 at price level 4338.259765625
+[SWING] LOW at time 2023-06-12 15:45:00-04:00 at price level 4335.0400390625
+[BREACH] BUYSIDE at time 2023-06-12 15:55:00-04:00 at price level 4335.75
+[INFO 2023-06-12 15:50:00-04:00] Not a valid swing high or low

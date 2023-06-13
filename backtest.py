@@ -16,8 +16,11 @@ end = datetime_range[1]
 this_generator = tc.get_generator([start, end])
 
 tc.override(datetime_range[0])
-takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings(tc.get_today())
-# log(' '.join([str(swing) for swing in takeProfitSwingHighs]))
+
+spx_data = SecurityData(security=security)
+spx_data.get_day_data("yesterdata", tc.get_today(), interval=INTERVAL, delta=-1)
+
+takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings(spx_data["yesterdata"])
 
 liquidity_lines = get_primary_liquidity()
 candidate_trades = CandidateTrades()
@@ -30,5 +33,10 @@ for simulated_time in this_generator:
             f.write("Proprietary Information of Bentham Trading ")
 
     current_time = tc.get_today()
-    last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(current_time, last_known_data_point, liquidity_lines,
+
+    if (current_time.minute % 5) == 0:
+        spx_data.get_day_data("todaysData", current_time,
+                              interval=INTERVAL, delta=0)
+        
+    last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(spx_data, current_time, last_known_data_point, liquidity_lines,
                                                                                                                     candidate_trades, takeProfitSwingLows, takeProfitSwingHighs)

@@ -13,6 +13,8 @@ take_profit_margin = 10
 max_drawdown = 0.05*50000
 leverage_multiplier = 10
 
+INTERVAL = 5  # minutes
+
 def log(line):
     def line_exists_in_file(file_path, target_line):
         with open(file_path, 'r') as file:
@@ -184,7 +186,7 @@ class CandidateTrades():
         self.trade_times = []
     
     def append(self, fvg, all_swing_lows, all_swing_highs):
-        FVG_time = fvg.time + timedelta(minutes=tc.INTERVAL)
+        FVG_time = fvg.time + timedelta(minutes=INTERVAL)
         if fvg.FVG_type == "RED" and FVG_time not in self.trade_times:
             entry_price = fvg.entry
             stop_limit = fvg.stop_loss

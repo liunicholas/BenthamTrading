@@ -3,45 +3,19 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 import trading_clock as tc
+from data import *
 from datetime import datetime, date, time, timedelta
 from time import sleep
 from silver_bullet import *
-import pytz
 import os
 
-def get_data(current_time):
-    current_date = current_time.date()
 
-    if not tc.OVERRIDE:
-        data = {"twoDayAgoData": yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(security, current_date, -2), end=tc.get_delta_trading_date(security, current_date, -1), interval=f'{tc.INTERVAL}m'),
-            "oneDayAgoData": yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(security, current_date, -1), end=current_date, interval=f'{tc.INTERVAL}m'),
-            "todaysData": yf.download(progress=False, tickers=security, start=current_date, end=tc.get_delta_trading_date(security, current_date, 1), interval=f'{tc.INTERVAL}m')
-            }
-    else:
-        data = {"twoDayAgoData": yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(security, current_date, -2), end=tc.get_delta_trading_date(security, current_date, -1), interval=f'{tc.INTERVAL}m'),
-        "oneDayAgoData": yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(security, current_date, -1), end=current_date, interval=f'{tc.INTERVAL}m'),
-        "todaysData": yf.download(progress=False, tickers=security, start=current_date, end=tc.get_delta_trading_date(security, current_date, 1), interval=f'{tc.INTERVAL}m')
-        }
-     
-        temp = []
-        for i, row in data["todaysData"].iterrows():
-            if i+timedelta(minutes=tc.INTERVAL) <= tc.OVERRIDE_TIME:
-                temp.append(row)
-
-        if temp:
-            data["todaysData"] = pd.concat(temp, axis=1).T
-        else:
-            data["todaysData"] = pd.DataFrame()
-
-    return data
-
-def get_previous_day_swings(current_time=tc.get_today()):
+def get_previous_day_swings(yesterdata):
     # print("CT", current_time)
     takeProfitSwingLows, takeProfitSwingHighs = [], []
-    yesterdata = get_data(current_time)["oneDayAgoData"]
 
     for i in yesterdata.index[:-2]:
-        threeCandles = yesterdata[i:i+timedelta(minutes=tc.INTERVAL*2)]
+        threeCandles = yesterdata[i:i+timedelta(minutes=INTERVAL*2)]
         middleCandle = threeCandles[-2:-1]
         middleCandleTime = middleCandle.index.item()
 
@@ -55,14 +29,13 @@ def get_previous_day_swings(current_time=tc.get_today()):
     
     return takeProfitSwingLows, takeProfitSwingHighs
 
-def run_cycle(current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs):
-    data = get_data(current_time)
-    sleep(0)
-    # print(data["todaysData"])
-
+def run_cycle(data, current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs):
+    print(f"[INFO] Cycle run at {current_time}")
+    print(data["todaysData"].tail())
     # only iterate through procedure on new data
     if ((last_known_data_point is None) or (last_known_data_point < data["todaysData"].index[-1])) and (not data["todaysData"].empty):
-
+        # if tc.OVERRIDE == False:
+        #     print(f"Live data pulled at {data['todaysData'].index[-1]}")
         # iterate through liquidity lines
         for liquidity_line in liquidity_lines:
             # print(data["todaysData"].iloc[-1])
@@ -105,7 +78,9 @@ def managePortfolio(candidate_trades):
     pass
     
 def run_day(CATCH_UP):
-    takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings()
+    spx_data = SecurityData(security=security)
+    spx_data.get_day_data("yesterdata", tc.get_today(), interval=INTERVAL, delta=-1)
+    takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings(spx_data["yesterdata"])
 
     liquidity_lines = get_primary_liquidity()
     candidate_trades = CandidateTrades()
@@ -120,7 +95,12 @@ def run_day(CATCH_UP):
         for simulated_time in this_generator:
             tc.override(simulated_time)
             current_time = tc.get_today()
-            last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs)
+
+            if (current_time.minute % 5) == 0:  
+                spx_data.get_day_data("todaysData", current_time, interval=INTERVAL, delta=0)
+
+            last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(
+                spx_data, current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs)
 
             if not os.path.exists(f"logs/candidate_trades_{tc.get_today().date()}.txt"):
                 with open(f"logs/candidate_trades_{tc.get_today().date()}.txt", "w") as f:
@@ -132,10 +112,17 @@ def run_day(CATCH_UP):
         with open(f"logs/candidate_trades_{tc.get_today().date()}.txt", "w") as f:
             f.write("Proprietary Information of Bentham Trading ")                                                                                                                
     
+    last_known_minute = last_known_data_point.minute
     while tc.is_market_open(security):
         current_time = tc.get_today()
-        last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(current_time, last_known_data_point, liquidity_lines,
-                  candidate_trades, takeProfitSwingLows, takeProfitSwingHighs)
+        
+        if current_time.second >=0 and current_time.second <= 5 and current_time.minute != last_known_minute:
+            last_known_minute = current_time.minute
+
+            spx_data.get_day_data("todaysData", current_time, interval=INTERVAL, delta=0)
+    
+            last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(
+                spx_data, current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs)
         
         # check on portfolio every iteration
         managePortfolio(candidate_trades)
@@ -146,7 +133,8 @@ def main():
     LIVE = True
     PRINTED_MARKET_CLOSED = False
     while LIVE:
-        if tc.is_market_open(security):
+        current_time = tc.get_today()
+        if tc.is_market_open(security, current_time):
             PRINTED_MARKET_CLOSED = False
 
             CATCH_UP = False
@@ -158,6 +146,7 @@ def main():
             if not PRINTED_MARKET_CLOSED:
                 print("MARKET CLOSED")
                 PRINTED_MARKET_CLOSED = True
+        sleep(60)
 
 if __name__ == "__main__":
     main()
