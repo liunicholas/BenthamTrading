@@ -113,9 +113,8 @@ def run_day(CATCH_UP):
             f.write("Proprietary Information of Bentham Trading ")                                                                                                                
     
     last_known_minute = last_known_data_point.minute
-    while tc.is_market_open(security):
+    while tc.is_market_open(security, current_time=tc.get_today()):
         current_time = tc.get_today()
-        
         if current_time.second >=0 and current_time.second <= 5 and current_time.minute != last_known_minute:
             last_known_minute = current_time.minute
 
@@ -132,21 +131,25 @@ def run_day(CATCH_UP):
 def main():
     LIVE = True
     PRINTED_MARKET_CLOSED = False
+    last_known_minute = None
     while LIVE:
         current_time = tc.get_today()
-        if tc.is_market_open(security, current_time):
-            PRINTED_MARKET_CLOSED = False
+        # if last_known_minute is None:
+        if (last_known_minute is None) or (current_time.second >= 0 and current_time.second <= 5 and current_time.minute != last_known_minute):
+            last_known_minute = current_time.minute
 
-            CATCH_UP = False
-            if tc.get_today() > tc.localize(datetime.combine(tc.get_today().date(), tc.exchange_openclose[security][0])):
-                CATCH_UP = True
-                
-            run_day(CATCH_UP)
-        else:
-            if not PRINTED_MARKET_CLOSED:
-                print("MARKET CLOSED")
-                PRINTED_MARKET_CLOSED = True
-        sleep(60)
+            if tc.is_market_open(security, current_time):
+                PRINTED_MARKET_CLOSED = False
+
+                CATCH_UP = False
+                if tc.get_today() > tc.localize(datetime.combine(tc.get_today().date(), tc.exchange_openclose[security][0])):
+                    CATCH_UP = True
+                    
+                run_day(CATCH_UP)
+            else:
+                if not PRINTED_MARKET_CLOSED:
+                    print("MARKET CLOSED")
+                    PRINTED_MARKET_CLOSED = True
 
 if __name__ == "__main__":
     main()

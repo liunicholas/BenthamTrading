@@ -30,7 +30,7 @@ def turn_off_override():
     print("OVERRIDE is now False")
 
 def get_generator(gt=GENERATOR_RANGE):
-    global GENERATOR_RANGE
+    global GENERATOR_RANGEdatet
 
     GENERATOR_RANGE = gt
 
@@ -55,6 +55,7 @@ def get_today():
 #     return datetime.combine(datetime.date(), parse_hour_minute(time)).astimezone(new_york_tz)
 
 def is_market_open(security, current=get_today()):
+    print(f"[INFO] Checking time {current} for market open")
     holidays = [datetime(2023, 6, 16).date(), datetime(2023, 7, 4).date(),
                 datetime(2023, 9, 4).date(), datetime(2023, 10, 9).date(),
                 datetime(2023, 11, 11).date(), datetime(2023, 11, 23).date(),
