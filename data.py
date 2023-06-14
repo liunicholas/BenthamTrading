@@ -3,6 +3,7 @@ import yfinance as yf
 from twelvedata import TDClient
 from datetime import timedelta, datetime
 import pandas as pd
+from time import sleep
 
 # main key
 twelvedata_api_key = '118aed5a291f4a9fb7c36cfb590db853'
@@ -79,17 +80,9 @@ class SecurityData:
         else:
             security = self.security
 
-        time_data_client = TDClient(apikey=twelvedata_api_key)
-        day_data = time_data_client.time_series(
-            symbol=security,
-            interval=f"{interval}min",
-            timezone=tc.new_york_tz,
-            start_date=start,
-            end_date=end,
-        ).as_pandas()
-
-        if day_data.empty:
-            time_data_client = TDClient(apikey=backup_twelvedata_api_key)
+        GOOD_DATA = False
+        try:
+            time_data_client = TDClient(apikey=twelvedata_api_key)
             day_data = time_data_client.time_series(
                 symbol=security,
                 interval=f"{interval}min",
@@ -97,22 +90,42 @@ class SecurityData:
                 start_date=start,
                 end_date=end,
             ).as_pandas()
-            print("DATA IS FUCKED UP (or there is just no data for the day yet)")
-            exit()
-            
-        day_data.rename(columns={
-            'open': 'Open',
-            'high': 'High',
-            'low': 'Low',
-            'close': 'Close',
-            'volume': 'Volume',
-            }, inplace=True)
-        # day_data.index = day_data.index.tz_localize('UTC')
-        # if not day_data.empty:
-        day_data.index = day_data.index.tz_localize(tc.new_york_tz)
+        except:
+            try:
+                sleep(5)
+                time_data_client = TDClient(apikey=backup_twelvedata_api_key)
+                day_data = time_data_client.time_series(
+                    symbol=security,
+                    interval=f"{interval}min",
+                    timezone=tc.new_york_tz,
+                    start_date=start,
+                    end_date=end,
+                ).as_pandas()
+            except:
+                print("DATA IS FUCKED UP (or there is just no data for the day yet)")
+                exit()
+            else:
+                GOOD_DATA = True
+        else:
+            GOOD_DATA = True
 
-        day_data = day_data.iloc[::-1]
-        return day_data
+        if GOOD_DATA:
+            day_data.rename(columns={
+                'open': 'Open',
+                'high': 'High',
+                'low': 'Low',
+                'close': 'Close',
+                'volume': 'Volume',
+                }, inplace=True)
+            # day_data.index = day_data.index.tz_localize('UTC')
+            # if not day_data.empty:
+            day_data.index = day_data.index.tz_localize(tc.new_york_tz)
+
+            day_data = day_data.iloc[::-1]
+            return day_data
+        
+        else:
+            return pd.DataFrame()
 
 
 if __name__ == "__main__":

@@ -54,8 +54,10 @@ def get_today():
 # def time_during_day(datetime, time):
 #     return datetime.combine(datetime.date(), parse_hour_minute(time)).astimezone(new_york_tz)
 
-def is_market_open(security, current=get_today()):
-    print(f"[INFO] Checking time {current} for market open")
+def is_market_open(security, current=get_today(), VERBOSE=False):
+    if VERBOSE:
+        print(f"[INFO] Checking time {current} for market open")
+
     holidays = [datetime(2023, 6, 16).date(), datetime(2023, 7, 4).date(),
                 datetime(2023, 9, 4).date(), datetime(2023, 10, 9).date(),
                 datetime(2023, 11, 11).date(), datetime(2023, 11, 23).date(),
@@ -91,10 +93,10 @@ def get_next_trading_date(security, date):
 
 def get_delta_trading_date(security, date, delta):
     if delta > 0:
-        for i in range(delta):
+        for _ in range(delta):
             date = get_next_trading_date(security, date)
     elif delta < 0:
-        for i in range(-1*delta):
+        for _ in range(-1*delta):
             date = get_last_trading_date(security, date)
     else:
         date = date
