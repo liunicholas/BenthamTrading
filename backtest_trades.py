@@ -41,13 +41,3 @@ for simulated_time in this_generator:
     last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(spx_data, current_time, last_known_data_point, liquidity_lines,
                                                                                                                     candidate_trades, takeProfitSwingLows, takeProfitSwingHighs)
 
-with open(f"candidate_trades_{start.date()}.txt", "r") as f:
-    for line in f:
-        if line.strip() == "[TRADE ORDER]:":
-            trade_details = []
-            for i in range(3):
-                print()
-
-
-this_generator = tc.get_generator([start, end])
-for simulated_time in this_generator:
