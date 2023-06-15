@@ -96,7 +96,7 @@ def run_day(CATCH_UP):
             tc.override(simulated_time)
             current_time = tc.get_today()
 
-            if (current_time.minute % 5) == 0:  
+            if (current_time.minute % INTERVAL) == 0:  
                 spx_data.get_day_data("todaysData", current_time, interval=INTERVAL, delta=0)
 
             last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(

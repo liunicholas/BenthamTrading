@@ -5,8 +5,8 @@ import yfinance as yf
 import pytz
 import time
 
-datetime_range = [tc.localize(datetime(2023, 6, 8, 9, 30, 0)),
-                  tc.localize(datetime(2023, 6, 8, 16, 0, 0))]
+datetime_range = [tc.localize(datetime(2023, 6, 14, 9, 30, 0)),
+                  tc.localize(datetime(2023, 6, 14, 16, 0, 0))]
 
 # currentTime = datetime_range[0]
 # waitTime = 0
@@ -34,9 +34,20 @@ for simulated_time in this_generator:
 
     current_time = tc.get_today()
 
-    if (current_time.minute % 5) == 0:
+    if (current_time.minute % INTERVAL) == 0:
         spx_data.get_day_data("todaysData", current_time,
                               interval=INTERVAL, delta=0)
         
     last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(spx_data, current_time, last_known_data_point, liquidity_lines,
                                                                                                                     candidate_trades, takeProfitSwingLows, takeProfitSwingHighs)
+
+with open(f"candidate_trades_{start.date()}.txt", "r") as f:
+    for line in f:
+        if line.strip() == "[TRADE ORDER]:":
+            trade_details = []
+            for i in range(3):
+                print()
+
+
+this_generator = tc.get_generator([start, end])
+for simulated_time in this_generator:

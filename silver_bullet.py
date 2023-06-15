@@ -10,10 +10,13 @@ trading_period_2_open = "14:00"
 trading_period_2_close = "15:00"
 take_profit_margin = 10
 
-max_drawdown = 0.05*50000
+portfolio_size = 50000
+max_drawdown = 0.05*portfolio_size
 leverage_multiplier = 10
+margin = 1250
+max_position_size = (portfolio_size/margin)/2
 
-INTERVAL = 5  # minutes
+INTERVAL = 1  # minutes
 
 def log(line):
     def line_exists_in_file(file_path, target_line):
@@ -114,24 +117,25 @@ class SwingList(list):
 
         if swing != -1:            
             if (swing.time > self.breach.time):
-                if (self.breach.breach_type=="SELLSIDE" and swing.swing_type=="HIGH"):
+                if (self.breach.breach_type=="SELLSIDE" and swing.swing_type=="HIGH" and swing.price_level>self.breach.liquidity_line.price_level):
                     super().append(swing)
                     print(swing)
                     log(str(swing))
-                elif (self.breach.breach_type=="BUYSIDE" and swing.swing_type=="LOW"):
+                elif (self.breach.breach_type == "BUYSIDE" and swing.swing_type=="LOW" and swing.price_level < self.breach.liquidity_line.price_level):
                     super().append(swing)
                     print(swing)
                     log(str(swing))
                 else:
                     print("[INFO] Not a valid swing high or low")
-                    log(f"[INFO {swing.time}] Not a valid swing high or low")
+                    # log(f"[INFO {swing.time}] Not a valid swing high or low")
 
 class Breach:
-    def __init__(self, time, price_level, breach_type):
+    def __init__(self, time, liquidity_line, price_level, breach_type):
         self.time = time
         self.price_level = price_level
         self.breach_type = breach_type
-        
+        self.liquidity_line = liquidity_line
+
         self.swing_list = SwingList(self)
     
     def __str__(self):
@@ -144,13 +148,13 @@ class BreachList(list):
 
     def append(self, potential_breach):
         if (self.liquidity_line.liquidity_type == "SELLSIDE") and (potential_breach["Low"][-1] <= self.liquidity_line.price_level):
-            breach = Breach(potential_breach.index.item(),potential_breach["Low"][-1], "SELLSIDE")
+            breach = Breach(potential_breach.index.item(), self.liquidity_line, potential_breach["Low"][-1], "SELLSIDE")
             super().append(breach)
             print(breach)
             log(str(breach))
 
         if (self.liquidity_line.liquidity_type == "BUYSIDE") and (potential_breach["High"][-1] >= self.liquidity_line.price_level):
-            breach = Breach(potential_breach.index.item(),potential_breach["High"][-1], "BUYSIDE")
+            breach = Breach(potential_breach.index.item(),self.liquidity_line,potential_breach["High"][-1], "BUYSIDE")
             super().append(breach)
             print(breach)
             log(str(breach))
@@ -167,18 +171,22 @@ class LiquidityLine:
         return f"{self.liquidity_type} liquidity line at time {self.time} at price level {self.price_level}"
 
 class TradeOrder:
-    def __init__(self, timeFound, entry, stop_limit, take_profit, position_size):
+    def __init__(self, timeFound, entry, stop_limit, take_profit, position_size, trade_type):
         self.time_found = timeFound
         self.entry = entry
         self.stop_limit = stop_limit
         self.take_profit = take_profit
         self.position_size = position_size
+        self.trade_type = trade_type
 
     def __str__(self):
-        return f"[TRADE ORDER]: \n \
-            Time Found: {self.time_found}, Entry Price: {self.entry:0.2f}\n \
-            Stop Limit: {self.stop_limit}, Take Profit: {self.take_profit}\n \
-                Position Size: {self.position_size}\n\n"
+        return f"\n[TRADE ORDER]: \n \
+            Type: {self.trade_type}, \n \
+            Time Found: {self.time_found}, \n \
+            Entry Price: {self.entry:0.2f}, \n \
+            Stop Limit: {self.stop_limit}, \n \
+            Take Profit: {self.take_profit}, \n \
+            Position Size: {self.position_size}\n"
     
 class CandidateTrades():
     def __init__(self):
@@ -200,9 +208,9 @@ class CandidateTrades():
                         take_profit_price = potential_take_profit.price_level
             
             if take_profit_price != float("inf"):
-                position_size = max_drawdown / ((stop_limit-entry_price)*leverage_multiplier)     
+                position_size = min(max_drawdown / ((stop_limit-entry_price)*leverage_multiplier), max_position_size) 
                 trade_order = TradeOrder(
-                    FVG_time, entry_price, stop_limit, take_profit_price, position_size)
+                    FVG_time, entry_price, stop_limit, take_profit_price, position_size, "SHORT")
                 self.trade_orders.append(trade_order)
                 self.trade_times.append(FVG_time)
                 print(trade_order)
@@ -223,7 +231,7 @@ class CandidateTrades():
 
             if take_profit_price != float("inf"):
                 position_size = max_drawdown / ((entry_price-stop_limit)*leverage_multiplier)
-                trade_order = TradeOrder(FVG_time, entry_price, stop_limit, take_profit_price, position_size)
+                trade_order = TradeOrder(FVG_time, entry_price, stop_limit, take_profit_price, position_size, "LONG")
                 self.trade_orders.append(trade_order)
                 self.trade_times.append(FVG_time)
                 print(trade_order)

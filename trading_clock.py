@@ -30,7 +30,7 @@ def turn_off_override():
     print("OVERRIDE is now False")
 
 def get_generator(gt=GENERATOR_RANGE):
-    global GENERATOR_RANGEdatet
+    global GENERATOR_RANGE
 
     GENERATOR_RANGE = gt
 
