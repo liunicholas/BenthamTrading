@@ -32,25 +32,44 @@ class SecurityData:
 
     def get_today_data(self, current_time, interval):
         # backtesting_flag = False
+
+        # only use twelvedata when we actually need the live data
+        today_data_twelvedata = pd.DataFrame()
         if (datetime.now(tc.new_york_tz) - current_time) < timedelta(minutes=30): # 30 second tolerance
             # TODO: if shit breaks, look here because twelve data may only get 2hr 30 min worth of data back
-            today_data = self.get_twelve_data(
+            today_data_twelvedata = self.get_twelve_data(
                 start=current_time.date(), 
                 end=tc.get_delta_trading_date(self.security, current_time.date(), 1), 
                 interval=interval
             )
+
             # #live data
             # if (datetime.now(tc.new_york_tz) - current_time) < timedelta(seconds=30):
             #     backtesting_flag = False
             # # back testing data 
             # else:
             #     backtesting_flag = True
-        else: # back testing data
+        # else: # back testing data
             # backtesting_flag = True
-            today_data = self.get_yfinance_data(start=current_time.date(), end=tc.get_delta_trading_date(
+        
+        today_data_yfinance = self.get_yfinance_data(start=current_time.date(), end=tc.get_delta_trading_date(
                 self.security, current_time.date(), 1), interval=interval)
         
-        # if backtesting_flag:
+        # combine twelvedata and yfinance if necessary
+        #TODO: test if this works
+        if not today_data_twelvedata.empty:
+            twelvedata_first_time = tc.localize(today_data_twelvedata.index[0].to_pydatetime())
+            temp = []
+            for i, row in today_data_yfinance.iterrows():
+                if i < twelvedata_first_time:
+                    temp.append(row)
+            if temp:
+                today_data_yfinance = pd.concat(temp, axis=1).T
+                today_data = pd.concat(
+                    [today_data_yfinance, today_data_twelvedata], ignore_index=True)
+
+        
+        # filter today_data up to the current_time
         temp = []
         for i, row in today_data.iterrows():
             if i+timedelta(minutes=interval) <= current_time:
@@ -63,6 +82,8 @@ class SecurityData:
         return today_data
 
     def get_yfinance_data(self, start, end, interval):
+        # print({start},{end})
+        # print(interval)
         day_data = yf.download(
             progress=False,
             tickers=self.security,
@@ -71,6 +92,10 @@ class SecurityData:
             interval=f'{interval}m'
         )
         day_data = day_data.drop('Adj Close', axis=1)
+
+        if day_data.empty:
+            print("[ERROR] No data found for this query")
+            print("[SUGGESTION] run 'pip install yfinance --upgrade --no-cache-dir'")
         
         return day_data
 

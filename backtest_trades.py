@@ -5,8 +5,8 @@ import yfinance as yf
 import pytz
 import time
 
-datetime_range = [tc.localize(datetime(2023, 6, 14, 9, 30, 0)),
-                  tc.localize(datetime(2023, 6, 14, 16, 0, 0))]
+datetime_range = [tc.localize(datetime(2023, 6, 16, 9, 30, 0)),
+                  tc.localize(datetime(2023, 6, 16, 16, 0, 0))]
 
 # currentTime = datetime_range[0]
 # waitTime = 0
@@ -22,7 +22,7 @@ spx_data.get_day_data("yesterdata", tc.get_today(), interval=INTERVAL, delta=-1)
 
 takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings(spx_data["yesterdata"])
 
-liquidity_lines = get_primary_liquidity()
+liquidity_lines = get_primary_liquidity(tc.get_today())
 candidate_trades = CandidateTrades()
 last_known_data_point = None
 

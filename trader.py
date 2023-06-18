@@ -11,11 +11,14 @@ import os
 
 
 def get_previous_day_swings(yesterdata):
+    # print(yesterdata)
     # print("CT", current_time)
+    # print(yesterdata)
     takeProfitSwingLows, takeProfitSwingHighs = [], []
 
     for i in yesterdata.index[:-2]:
         threeCandles = yesterdata[i:i+timedelta(minutes=INTERVAL*2)]
+        # print(threeCandles)
         middleCandle = threeCandles[-2:-1]
         middleCandleTime = middleCandle.index.item()
 
@@ -82,7 +85,7 @@ def run_day(CATCH_UP):
     spx_data.get_day_data("yesterdata", tc.get_today(), interval=INTERVAL, delta=-1)
     takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings(spx_data["yesterdata"])
 
-    liquidity_lines = get_primary_liquidity()
+    liquidity_lines = get_primary_liquidity(current_time)
     candidate_trades = CandidateTrades()
     last_known_data_point = None
 

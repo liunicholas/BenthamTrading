@@ -12,11 +12,11 @@ take_profit_margin = 10
 
 portfolio_size = 50000
 max_drawdown = 0.05*portfolio_size
-leverage_multiplier = 10
-margin = 1250
+leverage_multiplier = 100
+margin = 5000
 max_position_size = (portfolio_size/margin)/2
 
-INTERVAL = 1  # minutes
+INTERVAL = 5  # minutes
 
 def log(line):
     def line_exists_in_file(file_path, target_line):
@@ -181,12 +181,12 @@ class TradeOrder:
 
     def __str__(self):
         return f"\n[TRADE ORDER]: \n \
-            Type: {self.trade_type}, \n \
-            Time Found: {self.time_found}, \n \
-            Entry Price: {self.entry:0.2f}, \n \
-            Stop Limit: {self.stop_limit}, \n \
-            Take Profit: {self.take_profit}, \n \
-            Position Size: {self.position_size}\n"
+        Type: {self.trade_type}, \n \
+        Time Found: {self.time_found}, \n \
+        Entry Price: {self.entry:0.2f}, \n \
+        Stop Limit: {self.stop_limit}, \n \
+        Take Profit: {self.take_profit}, \n \
+        Position Size: {self.position_size}\n"
     
 class CandidateTrades():
     def __init__(self):
@@ -237,10 +237,13 @@ class CandidateTrades():
                 print(trade_order)
                 log(str(trade_order))
 
-def get_primary_liquidity():
-    current_time = tc.get_today()
+
+def get_primary_liquidity(current_time):
+    # current_time = tc.get_today()
     dataForLiquidity = yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(
         security, current_time.date(), -1), end=current_time.date(), interval='1d')
+    # print(current_time)
+    # print(dataForLiquidity)
 
     dummyDatetime = datetime.combine(tc.get_delta_trading_date(
         security, current_time.date(), -1), time(16, 00, 0))

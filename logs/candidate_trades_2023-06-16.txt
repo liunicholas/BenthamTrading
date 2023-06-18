@@ -1,0 +1,67 @@
+BUYSIDE liquidity line at time 2023-06-15 16:00:00 at price level 4439.2001953125
+SELLSIDE liquidity line at time 2023-06-15 16:00:00 at price level 4362.60009765625
+[BREACH] BUYSIDE at time 2023-06-16 09:30:00-04:00 at price level 4448.47021484375
+[BREACH] BUYSIDE at time 2023-06-16 09:35:00-04:00 at price level 4444.16015625
+[SWING] LOW at time 2023-06-16 09:45:00-04:00 at price level 4425.669921875
+[SWING] LOW at time 2023-06-16 10:15:00-04:00 at price level 4430.7099609375
+[BREACH] BUYSIDE at time 2023-06-16 10:25:00-04:00 at price level 4441.22021484375
+[BREACH] BUYSIDE at time 2023-06-16 10:30:00-04:00 at price level 4441.2001953125
+[BREACH] BUYSIDE at time 2023-06-16 10:35:00-04:00 at price level 4440.02001953125
+[FVG] RED at time 2023-06-16 10:40:00-04:00 at entry 4436.27978515625 and stop loss 4437.6201171875
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Time Found: 2023-06-16 10:45:00-04:00, 
+         Entry Price: 4436.28, 
+         Stop Limit: 4437.6201171875, 
+         Take Profit: 4425.669921875, 
+         Position Size: 5.0
+
+[FVG] RED at time 2023-06-16 10:45:00-04:00 at entry 4430.47021484375 and stop loss 4434.89013671875
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Time Found: 2023-06-16 10:50:00-04:00, 
+         Entry Price: 4430.47, 
+         Stop Limit: 4434.89013671875, 
+         Take Profit: 4413.669921875, 
+         Position Size: 5.0
+
+[SWING] LOW at time 2023-06-16 10:45:00-04:00 at price level 4426.97998046875
+[SWING] LOW at time 2023-06-16 11:05:00-04:00 at price level 4427.7099609375
+[SWING] LOW at time 2023-06-16 11:25:00-04:00 at price level 4421.16015625
+[SWING] LOW at time 2023-06-16 11:35:00-04:00 at price level 4422.60986328125
+[SWING] LOW at time 2023-06-16 11:50:00-04:00 at price level 4421.56005859375
+[SWING] LOW at time 2023-06-16 12:15:00-04:00 at price level 4427.009765625
+[BREACH] BUYSIDE at time 2023-06-16 12:50:00-04:00 at price level 4440.56982421875
+[BREACH] BUYSIDE at time 2023-06-16 12:55:00-04:00 at price level 4440.1201171875
+[SWING] LOW at time 2023-06-16 13:10:00-04:00 at price level 4431.64013671875
+[SWING] LOW at time 2023-06-16 13:35:00-04:00 at price level 4427.89990234375
+[SWING] LOW at time 2023-06-16 13:45:00-04:00 at price level 4426.68017578125
+[SWING] LOW at time 2023-06-16 14:00:00-04:00 at price level 4425.89990234375
+[SWING] LOW at time 2023-06-16 14:20:00-04:00 at price level 4425.35009765625
+[SWING] LOW at time 2023-06-16 14:30:00-04:00 at price level 4421.52001953125
+[FVG] RED at time 2023-06-16 14:35:00-04:00 at entry 4425.5400390625 and stop loss 4426.080078125
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Time Found: 2023-06-16 14:40:00-04:00, 
+         Entry Price: 4425.54, 
+         Stop Limit: 4426.080078125, 
+         Take Profit: 4413.669921875, 
+         Position Size: 5.0
+
+[FVG] RED at time 2023-06-16 15:00:00-04:00 at entry 4418.8701171875 and stop loss 4420.31982421875
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Time Found: 2023-06-16 15:05:00-04:00, 
+         Entry Price: 4418.87, 
+         Stop Limit: 4420.31982421875, 
+         Take Profit: 4408.85009765625, 
+         Position Size: 5.0
+
+[SWING] LOW at time 2023-06-16 15:00:00-04:00 at price level 4414.16015625
+[SWING] LOW at time 2023-06-16 15:15:00-04:00 at price level 4411.08984375
+[SWING] LOW at time 2023-06-16 15:25:00-04:00 at price level 4412.3798828125
+[SWING] LOW at time 2023-06-16 15:40:00-04:00 at price level 4415.72021484375
