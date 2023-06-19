@@ -56,7 +56,7 @@ class SecurityData:
                 self.security, current_time.date(), 1), interval=interval)
         
         # combine twelvedata and yfinance if necessary
-        #TODO: test if this works
+        #TODO: test if this works on monday
         if not today_data_twelvedata.empty:
             twelvedata_first_time = tc.localize(today_data_twelvedata.index[0].to_pydatetime())
             temp = []
@@ -67,6 +67,8 @@ class SecurityData:
                 today_data_yfinance = pd.concat(temp, axis=1).T
                 today_data = pd.concat(
                     [today_data_yfinance, today_data_twelvedata], ignore_index=True)
+        else:
+            today_data = today_data_yfinance
 
         
         # filter today_data up to the current_time
@@ -151,7 +153,6 @@ class SecurityData:
         
         else:
             return pd.DataFrame()
-
 
 if __name__ == "__main__":
     SPXdata = SecurityData(security="^spx")

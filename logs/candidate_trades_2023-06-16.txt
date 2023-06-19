@@ -15,7 +15,7 @@ SELLSIDE liquidity line at time 2023-06-15 16:00:00 at price level 4362.60009765
          Entry Price: 4436.28, 
          Stop Limit: 4437.6201171875, 
          Take Profit: 4425.669921875, 
-         Position Size: 5.0
+         Position Size: 1.8652094717668488
 
 [FVG] RED at time 2023-06-16 10:45:00-04:00 at entry 4430.47021484375 and stop loss 4434.89013671875
 
@@ -25,7 +25,7 @@ SELLSIDE liquidity line at time 2023-06-15 16:00:00 at price level 4362.60009765
          Entry Price: 4430.47, 
          Stop Limit: 4434.89013671875, 
          Take Profit: 4413.669921875, 
-         Position Size: 5.0
+         Position Size: 0.5656208572691118
 
 [SWING] LOW at time 2023-06-16 10:45:00-04:00 at price level 4426.97998046875
 [SWING] LOW at time 2023-06-16 11:05:00-04:00 at price level 4427.7099609375
@@ -49,7 +49,7 @@ SELLSIDE liquidity line at time 2023-06-15 16:00:00 at price level 4362.60009765
          Entry Price: 4425.54, 
          Stop Limit: 4426.080078125, 
          Take Profit: 4413.669921875, 
-         Position Size: 5.0
+         Position Size: 4.6292947558770345
 
 [FVG] RED at time 2023-06-16 15:00:00-04:00 at entry 4418.8701171875 and stop loss 4420.31982421875
 
@@ -59,7 +59,7 @@ SELLSIDE liquidity line at time 2023-06-15 16:00:00 at price level 4362.60009765
          Entry Price: 4418.87, 
          Stop Limit: 4420.31982421875, 
          Take Profit: 4408.85009765625, 
-         Position Size: 5.0
+         Position Size: 1.724486359043449
 
 [SWING] LOW at time 2023-06-16 15:00:00-04:00 at price level 4414.16015625
 [SWING] LOW at time 2023-06-16 15:15:00-04:00 at price level 4411.08984375

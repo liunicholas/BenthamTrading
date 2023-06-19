@@ -11,10 +11,10 @@ trading_period_2_close = "15:00"
 take_profit_margin = 10
 
 portfolio_size = 50000
-max_drawdown = 0.05*portfolio_size
+max_drawdown = 0.005*portfolio_size
 leverage_multiplier = 100
 margin = 5000
-max_position_size = (portfolio_size/margin)/2
+# max_position_size = 
 
 INTERVAL = 5  # minutes
 
@@ -208,7 +208,8 @@ class CandidateTrades():
                         take_profit_price = potential_take_profit.price_level
             
             if take_profit_price != float("inf"):
-                position_size = min(max_drawdown / ((stop_limit-entry_price)*leverage_multiplier), max_position_size) 
+                # position_size = min(max_drawdown / ((stop_limit-entry_price)*leverage_multiplier), max_position_size) 
+                position_size = max_drawdown / ((stop_limit-entry_price)*leverage_multiplier)
                 trade_order = TradeOrder(
                     FVG_time, entry_price, stop_limit, take_profit_price, position_size, "SHORT")
                 self.trade_orders.append(trade_order)

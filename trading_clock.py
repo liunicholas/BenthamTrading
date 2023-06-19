@@ -51,14 +51,15 @@ def get_today():
         today = datetime.now(new_york_tz)
         return today
 
-# def time_during_day(datetime, time):
-#     return datetime.combine(datetime.date(), parse_hour_minute(time)).astimezone(new_york_tz)
+def real_time():
+    # NO OVERRIDE
+    return datetime.now(new_york_tz)
 
 def is_market_open(security, current=get_today(), VERBOSE=False):
     if VERBOSE:
         print(f"[INFO] Checking time {current} for market open")
 
-    holidays = [datetime(2023, 6, 16).date(), datetime(2023, 7, 4).date(),
+    holidays = [datetime(2023, 6, 19).date(), datetime(2023, 7, 4).date(),
                 datetime(2023, 9, 4).date(), datetime(2023, 10, 9).date(),
                 datetime(2023, 11, 11).date(), datetime(2023, 11, 23).date(),
                 datetime(2023, 12, 25).date()]
