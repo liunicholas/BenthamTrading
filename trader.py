@@ -9,29 +9,6 @@ from time import sleep
 from silver_bullet import *
 import os
 
-
-def get_previous_day_swings(yesterdata):
-    # print(yesterdata)
-    # print("CT", current_time)
-    # print(yesterdata)
-    takeProfitSwingLows, takeProfitSwingHighs = [], []
-
-    for i in yesterdata.index[:-2]:
-        threeCandles = yesterdata[i:i+timedelta(minutes=INTERVAL*2)]
-        # print(threeCandles)
-        middleCandle = threeCandles[-2:-1]
-        middleCandleTime = middleCandle.index.item()
-
-        if Swing.isSwingHigh(threeCandles):
-            swing = Swing(middleCandleTime, middleCandle["High"][-1], "HIGH")
-            takeProfitSwingHighs.append(swing)
-
-        if Swing.isSwingLow(threeCandles):
-            swing = Swing(middleCandleTime, middleCandle["Low"][-1], "LOW")
-            takeProfitSwingLows.append(swing)
-    
-    return takeProfitSwingLows, takeProfitSwingHighs
-
 def run_cycle(data, current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs):
     print(f"[INFO] Cycle run at {current_time}")
     print(data["todaysData"].tail())
@@ -85,7 +62,7 @@ def run_day(CATCH_UP):
     spx_data.get_day_data("yesterdata", tc.get_today(), interval=INTERVAL, delta=-1)
     takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings(spx_data["yesterdata"])
 
-    liquidity_lines = get_primary_liquidity(current_time)
+    liquidity_lines = get_primary_liquidity(current_time=tc.get_today())
     candidate_trades = CandidateTrades()
     last_known_data_point = None
 

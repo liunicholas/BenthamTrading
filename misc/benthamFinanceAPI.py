@@ -1,5 +1,8 @@
+import requests
 from twelvedata import TDClient
 # import requests
+import sys
+sys.path.insert(1, '..')
 import trading_clock as tc
 import silver_bullet as sb
 from polygon import RESTClient
@@ -28,11 +31,36 @@ twelvedata_api_key = '118aed5a291f4a9fb7c36cfb590db853'
 # Twelve data
 td = TDClient(apikey=twelvedata_api_key)
 ts = td.time_series(
-    symbol="gspc",
+    symbol="ESU3",
     interval=f"{sb.INTERVAL}min",
     timezone=tc.new_york_tz,
-    start_date="2023-06-13",
-    end_date="2023-06-14",
+    start_date="2023-06-16",
+    end_date="2023-06-17",
 ).as_pandas()
 
 print(ts.head())
+
+
+# Function to get the symbol for E-mini S&P 500 futures
+# def get_emini_symbol():
+#     url = f'https://api.twelvedata.com/symbol_search?symbol=E-mini%20S%26P%20500%20Futures&exchange=CME&apikey={twelvedata_api_key}'
+
+#     try:
+#         response = requests.get(url)
+#         data = response.json()
+#         if 'data' in data and data['data']:
+#             symbol = data['data'][0]['symbol']
+#             return symbol
+#         else:
+#             print('Error: Unable to fetch E-mini S&P 500 futures symbol.')
+#             return None
+#     except requests.exceptions.RequestException as e:
+#         print('Error: ', e)
+#         return None
+
+
+# # Get the symbol for E-mini S&P 500 futures
+# emini_symbol = get_emini_symbol()
+
+# if emini_symbol is not None:
+#     print(f"The symbol for E-mini S&P 500 futures is {emini_symbol}")

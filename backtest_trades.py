@@ -5,8 +5,8 @@ import yfinance as yf
 import pytz
 import time
 
-datetime_range = [tc.localize(datetime(2023, 6, 16, 9, 30, 0)),
-                  tc.localize(datetime(2023, 6, 16, 16, 0, 0))]
+datetime_range = [tc.localize(datetime(2023, 6, 11, 9, 30, 0)),
+                  tc.localize(datetime(2023, 6, 11, 16, 0, 0))]
 
 # currentTime = datetime_range[0]
 # waitTime = 0

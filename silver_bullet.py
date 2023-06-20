@@ -2,6 +2,7 @@ from __future__ import print_function
 import trading_clock as tc
 import yfinance as yf
 from datetime import datetime, date, time, timedelta
+from util import *
 
 security = "^spx"
 trading_period_1_open = "10:00"
@@ -16,7 +17,8 @@ leverage_multiplier = 100
 margin = 5000
 # max_position_size = 
 
-INTERVAL = 5  # minutes
+SWING_INTERVAL = 5
+INTERVAL = 1  # minutes
 
 def log(line):
     def line_exists_in_file(file_path, target_line):
@@ -169,24 +171,6 @@ class LiquidityLine:
 
     def __str__(self):
         return f"{self.liquidity_type} liquidity line at time {self.time} at price level {self.price_level}"
-
-class TradeOrder:
-    def __init__(self, timeFound, entry, stop_limit, take_profit, position_size, trade_type):
-        self.time_found = timeFound
-        self.entry = entry
-        self.stop_limit = stop_limit
-        self.take_profit = take_profit
-        self.position_size = position_size
-        self.trade_type = trade_type
-
-    def __str__(self):
-        return f"\n[TRADE ORDER]: \n \
-        Type: {self.trade_type}, \n \
-        Time Found: {self.time_found}, \n \
-        Entry Price: {self.entry:0.2f}, \n \
-        Stop Limit: {self.stop_limit}, \n \
-        Take Profit: {self.take_profit}, \n \
-        Position Size: {self.position_size}\n"
     
 class CandidateTrades():
     def __init__(self):
@@ -211,7 +195,7 @@ class CandidateTrades():
                 # position_size = min(max_drawdown / ((stop_limit-entry_price)*leverage_multiplier), max_position_size) 
                 position_size = max_drawdown / ((stop_limit-entry_price)*leverage_multiplier)
                 trade_order = TradeOrder(
-                    FVG_time, entry_price, stop_limit, take_profit_price, position_size, "SHORT")
+                    FVG_time, entry_price, stop_limit, take_profit_price, position_size, "SHORT", leverage_multiplier)
                 self.trade_orders.append(trade_order)
                 self.trade_times.append(FVG_time)
                 print(trade_order)
@@ -232,12 +216,33 @@ class CandidateTrades():
 
             if take_profit_price != float("inf"):
                 position_size = max_drawdown / ((entry_price-stop_limit)*leverage_multiplier)
-                trade_order = TradeOrder(FVG_time, entry_price, stop_limit, take_profit_price, position_size, "LONG")
+                trade_order = TradeOrder(FVG_time, entry_price, stop_limit, take_profit_price, position_size, "LONG", leverage_multiplier)
                 self.trade_orders.append(trade_order)
                 self.trade_times.append(FVG_time)
                 print(trade_order)
                 log(str(trade_order))
 
+def get_previous_day_swings(yesterdata):
+    # print(yesterdata)
+    # print("CT", current_time)
+    # print(yesterdata)
+    takeProfitSwingLows, takeProfitSwingHighs = [], []
+
+    for i in yesterdata.index[:-2]:
+        threeCandles = yesterdata[i:i+timedelta(minutes=SWING_INTERVAL*2)]
+        # print(threeCandles)
+        middleCandle = threeCandles[-2:-1]
+        middleCandleTime = middleCandle.index.item()
+
+        if Swing.isSwingHigh(threeCandles):
+            swing = Swing(middleCandleTime, middleCandle["High"][-1], "HIGH")
+            takeProfitSwingHighs.append(swing)
+
+        if Swing.isSwingLow(threeCandles):
+            swing = Swing(middleCandleTime, middleCandle["Low"][-1], "LOW")
+            takeProfitSwingLows.append(swing)
+
+    return takeProfitSwingLows, takeProfitSwingHighs
 
 def get_primary_liquidity(current_time):
     # current_time = tc.get_today()

@@ -15,13 +15,14 @@ OVERRIDE_TIME = localize(datetime(year=2023, month=6, day=8,
 GENERATOR_RANGE = [localize(datetime(2023, 6, 8, 6, 30, 0)),
                    localize(datetime(2023, 6, 8, 23, 0, 0))]
 
-def override(ot=OVERRIDE_TIME):
+def override(ot=OVERRIDE_TIME, VERBOSE=True):
     global OVERRIDE, OVERRIDE_TIME
 
     OVERRIDE = True
     OVERRIDE_TIME = ot
     
-    print(f"Time Overridden to {OVERRIDE_TIME}")
+    if VERBOSE:
+        print(f"Time Overridden to {OVERRIDE_TIME}")
 
 def turn_off_override():
     global OVERRIDE
