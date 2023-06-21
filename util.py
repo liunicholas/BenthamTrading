@@ -1,5 +1,6 @@
 class TradeOrder:
-    def __init__(self, time_found, entry, stop_limit, take_profit, position_size, trade_type, leverage):
+    def __init__(self, security, time_found, entry, stop_limit, take_profit, position_size, trade_type, leverage):
+        self.security = security
         self.time_found = time_found
         self.entry = entry
         self.stop_limit = stop_limit
@@ -15,6 +16,7 @@ class TradeOrder:
     def __str__(self):
         return f"\n[TRADE ORDER]: \n \
         Type: {self.trade_type}, \n \
+        Security: {self.security}, \n \
         Time Found: {self.time_found}, \n \
         Entry Price: {self.entry:0.2f}, \n \
         Stop Limit: {self.stop_limit}, \n \
@@ -41,6 +43,7 @@ class ExecutedTrade:
         return f"\n[EXECUTED TRADE]: \n \
         Exit Type: {self.exit_type}, \n \
         Trade Type: {self.trade_order.trade_type}, \n \
+        Security: {self.trade_order.security}, \n \
         Position Size: {self.position_size:0.2f}, \n \
         Entry Time: {self.entry_time}, \n \
         Entry Price: {self.entry_price:0.2f}, \n \

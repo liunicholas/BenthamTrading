@@ -2,7 +2,10 @@ from datetime import datetime, date, time, timedelta
 import pytz
 
 new_york_tz = pytz.timezone('America/New_York')
-exchange_openclose = {"^spx": [time(hour=9, minute=30), time(hour=16)], }
+exchange_openclose = {
+    "^spx": [time(hour=9, minute=30), time(hour=16)], 
+    "^ixic": [time(hour=9, minute=30), time(hour=16)],
+    }
 
 OVERRIDE = False
 

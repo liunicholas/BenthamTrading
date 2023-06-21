@@ -31,14 +31,14 @@ twelvedata_api_key = '118aed5a291f4a9fb7c36cfb590db853'
 # Twelve data
 td = TDClient(apikey=twelvedata_api_key)
 ts = td.time_series(
-    symbol="ESU3",
+    symbol="gspc",
     interval=f"{sb.INTERVAL}min",
     timezone=tc.new_york_tz,
-    start_date="2023-06-16",
-    end_date="2023-06-17",
+    start_date="2023-06-21",
+    end_date="2023-06-22",
 ).as_pandas()
 
-print(ts.head())
+print(ts)
 
 
 # Function to get the symbol for E-mini S&P 500 futures

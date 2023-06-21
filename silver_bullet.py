@@ -4,7 +4,6 @@ import yfinance as yf
 from datetime import datetime, date, time, timedelta
 from util import *
 
-security = "^spx"
 trading_period_1_open = "10:00"
 trading_period_1_close = "11:00"
 trading_period_2_open = "14:00"
@@ -20,7 +19,7 @@ margin = 5000
 SWING_INTERVAL = 5
 INTERVAL = 5  # minutes
 
-def log(line):
+def log(security, line):
     # print(tc.get_today())
     def line_exists_in_file(file_path, target_line):
         with open(file_path, 'r') as file:
@@ -29,8 +28,8 @@ def log(line):
                     return True
         return False
 
-    with open(f"trade_logs/candidate_trades_{tc.get_today().date()}.txt", "a") as f:
-        if not line_exists_in_file(f"trade_logs/candidate_trades_{tc.get_today().date()}.txt", line):
+    with open(f"trade_logs/{security}_candidate_trades_{tc.get_today().date()}.txt", "a") as f:
+        if not line_exists_in_file(f"trade_logs/{security}_candidate_trades_{tc.get_today().date()}.txt", line):
             f.write(line + "\n")
 
 class FVG:
@@ -47,7 +46,7 @@ class FVGList(list):
     def __init__(self, swing):
         self.swing = swing
     
-    def append(self, threeCandles):
+    def append(self, security, threeCandles):
         # FVG is during trading period 10-11, 14-15 DONE
         # After Swing High: Green FVG - 3rd low > 1st high, above swing high pl
         # After Swing Low: Red FVG - 3rd high < 1st low, below swing low pl
@@ -65,7 +64,7 @@ class FVGList(list):
                             ), rightCandle["Low"][-1], leftCandle["High"][-1], "GREEN")
                             super().append(green_fvg)
                             print(green_fvg)
-                            log(str(green_fvg))
+                            log(security, str(green_fvg))
 
             elif self.swing.swing_type == "LOW":
                 if leftCandle["Low"][-1] > rightCandle["High"][-1]:
@@ -75,7 +74,7 @@ class FVGList(list):
                             ), rightCandle["High"][-1], leftCandle["Low"][-1], "RED")
                             super().append(red_fvg)
                             print(red_fvg)
-                            log(str(red_fvg))
+                            log(security, str(red_fvg))
 
 class Swing:
     def __init__(self, time, price_level, swing_type):
@@ -107,7 +106,7 @@ class SwingList(list):
         super().__init__(*args)
         self.breach = breach
 
-    def append(self, threeCandles):
+    def append(self, security, threeCandles):
         middleCandle = threeCandles[-2:-1]
         middleCandleTime = middleCandle.index.item()
         swing = -1
@@ -123,14 +122,13 @@ class SwingList(list):
                 if (self.breach.breach_type=="SELLSIDE" and swing.swing_type=="HIGH" and swing.price_level>self.breach.liquidity_line.price_level):
                     super().append(swing)
                     print(swing)
-                    log(str(swing))
+                    log(security, str(swing))
                 elif (self.breach.breach_type == "BUYSIDE" and swing.swing_type=="LOW" and swing.price_level < self.breach.liquidity_line.price_level):
                     super().append(swing)
                     print(swing)
-                    log(str(swing))
+                    log(security, str(swing))
                 else:
                     print("[INFO] Not a valid swing high or low")
-                    # log(f"[INFO {swing.time}] Not a valid swing high or low")
 
 class Breach:
     def __init__(self, time, liquidity_line, price_level, breach_type):
@@ -149,18 +147,18 @@ class BreachList(list):
         super().__init__(*args)
         self.liquidity_line = liquidity_line
 
-    def append(self, potential_breach):
+    def append(self, security, potential_breach):
         if (self.liquidity_line.liquidity_type == "SELLSIDE") and (potential_breach["Low"][-1] <= self.liquidity_line.price_level):
             breach = Breach(potential_breach.index.item(), self.liquidity_line, potential_breach["Low"][-1], "SELLSIDE")
             super().append(breach)
             print(breach)
-            log(str(breach))
+            log(security, str(breach))
 
         if (self.liquidity_line.liquidity_type == "BUYSIDE") and (potential_breach["High"][-1] >= self.liquidity_line.price_level):
             breach = Breach(potential_breach.index.item(),self.liquidity_line,potential_breach["High"][-1], "BUYSIDE")
             super().append(breach)
             print(breach)
-            log(str(breach))
+            log(security, str(breach))
             
 class LiquidityLine:
     def __init__(self, time, price_level, liquidity_type):
@@ -178,11 +176,12 @@ class CandidateTrades():
         self.trade_orders = []
         self.trade_times = []
     
-    def append(self, fvg, all_swing_lows, all_swing_highs):
+    def append(self, security, fvg, all_swing_lows, all_swing_highs):
         FVG_time = fvg.time + timedelta(minutes=INTERVAL)
-        if fvg.FVG_type == "RED" and FVG_time not in self.trade_times:
-            entry_price = fvg.entry
+        entry_price = fvg.entry
+        stop_limit_price = fvg.stop_loss
 
+        if fvg.FVG_type == "RED" and FVG_time not in self.trade_times:
             # find take profit price
             profit_swing_threshold = entry_price - 10
             take_profit_price = float("inf")
@@ -191,34 +190,34 @@ class CandidateTrades():
                 if potential_take_profit.time < FVG_time and potential_take_profit.price_level < profit_swing_threshold:
                     if abs(profit_swing_threshold-potential_take_profit.price_level) < abs(profit_swing_threshold-take_profit_price):
                         take_profit_price = potential_take_profit.price_level
-
-            # find stop limit price
-            loss_swing_threshold = entry_price + 3
-            stop_limit_price = float("inf")
-
-            for potential_stop_limit in all_swing_highs:
-                if potential_stop_limit.time < FVG_time and potential_stop_limit.price_level > loss_swing_threshold:
-                    if abs(loss_swing_threshold-potential_stop_limit.price_level) < abs(loss_swing_threshold-stop_limit_price):
-                        stop_limit_price = potential_stop_limit.price_level
             
             if take_profit_price == float("inf"):
                 take_profit_price = profit_swing_threshold
-            if stop_limit_price == float("inf"):
-                stop_limit_price = loss_swing_threshold
+
+            # find stop limit price
+            loss_swing_threshold = entry_price + 3
+
+            if not stop_limit_price > loss_swing_threshold:
+                stop_limit_price = float("inf")
+
+                for potential_stop_limit in all_swing_highs:
+                    if potential_stop_limit.time < FVG_time and potential_stop_limit.price_level > loss_swing_threshold:
+                        if abs(loss_swing_threshold-potential_stop_limit.price_level) < abs(loss_swing_threshold-stop_limit_price):
+                            stop_limit_price = potential_stop_limit.price_level
+                
+                if stop_limit_price == float("inf"):
+                    stop_limit_price = loss_swing_threshold
 
             position_size = max_drawdown / ((stop_limit_price-entry_price)*leverage_multiplier)
             trade_order = TradeOrder(
-                FVG_time, entry_price, stop_limit_price, take_profit_price, position_size, "SHORT", leverage_multiplier)
+                security, FVG_time, entry_price, stop_limit_price, take_profit_price, position_size, "SHORT", leverage_multiplier)
             self.trade_orders.append(trade_order)
             self.trade_times.append(FVG_time)
             print(trade_order)
-            log(str(trade_order))
+            log(security, str(trade_order))
 
 
         if fvg.FVG_type == "GREEN" and FVG_time not in self.trade_times:
-            entry_price = fvg.entry
-            stop_limit = fvg.stop_loss
-            
             # find take profit price
             profit_swing_threshold = entry_price + 10
             take_profit_price = float("inf")
@@ -227,27 +226,29 @@ class CandidateTrades():
                 if potential_take_profit.time < FVG_time and potential_take_profit.price_level > profit_swing_threshold:
                     if abs(potential_take_profit.price_level-profit_swing_threshold) < abs(take_profit_price-profit_swing_threshold):
                         take_profit_price = potential_take_profit.price_level
-            
-            # find stop limit price
-            loss_swing_threshold = entry_price - 3
-            stop_limit_price = float("inf")
-
-            for potential_stop_limit in all_swing_lows:
-                if potential_stop_limit.time < FVG_time and potential_stop_limit.price_level < loss_swing_threshold:
-                    if abs(loss_swing_threshold-potential_stop_limit.price_level) < abs(loss_swing_threshold-stop_limit_price):
-                        stop_limit_price = potential_stop_limit.price_level
 
             if take_profit_price == float("inf"):
                 take_profit_price = profit_swing_threshold
-            if stop_limit_price == float("inf"):
-                stop_limit_price = loss_swing_threshold
+            
+            # find stop limit price
+            loss_swing_threshold = entry_price - 3
+            if not stop_limit_price < loss_swing_threshold:
+                stop_limit_price = float("inf")
+
+                for potential_stop_limit in all_swing_lows:
+                    if potential_stop_limit.time < FVG_time and potential_stop_limit.price_level < loss_swing_threshold:
+                        if abs(loss_swing_threshold-potential_stop_limit.price_level) < abs(loss_swing_threshold-stop_limit_price):
+                            stop_limit_price = potential_stop_limit.price_level
+                
+                if stop_limit_price == float("inf"):
+                    stop_limit_price = loss_swing_threshold
                 
             position_size = max_drawdown / ((entry_price-stop_limit_price)*leverage_multiplier)
-            trade_order = TradeOrder(FVG_time, entry_price, stop_limit_price, take_profit_price, position_size, "LONG", leverage_multiplier)
+            trade_order = TradeOrder(security, FVG_time, entry_price, stop_limit_price, take_profit_price, position_size, "LONG", leverage_multiplier)
             self.trade_orders.append(trade_order)
             self.trade_times.append(FVG_time)
             print(trade_order)
-            log(str(trade_order))
+            log(security, str(trade_order))
 
 def get_previous_day_swings(yesterdata):
     # print(yesterdata)
@@ -271,7 +272,7 @@ def get_previous_day_swings(yesterdata):
 
     return takeProfitSwingLows, takeProfitSwingHighs
 
-def get_primary_liquidity(current_time):
+def get_primary_liquidity(security, current_time):
     # current_time = tc.get_today()
     dataForLiquidity = yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(
         security, current_time.date(), -1), end=current_time.date(), interval='1d')
@@ -288,12 +289,12 @@ def get_primary_liquidity(current_time):
 
     print(pBuysideLiquidity)
     print(pSellsideLiquidity)
-    log(str(pBuysideLiquidity))
-    log(str(pSellsideLiquidity))
+    log(security, str(pBuysideLiquidity))
+    log(security, str(pSellsideLiquidity))
 
     return [pSellsideLiquidity, pBuysideLiquidity]
 
-def get_secondary_liquidity(current_time, todaysData):
+def get_secondary_liquidity(security, current_time, todaysData):
     amHigh = LiquidityLine(
         current_time, todaysData.max()["High"], "BUYSIDE")
     amLow = LiquidityLine(
@@ -318,9 +319,9 @@ def get_secondary_liquidity(current_time, todaysData):
     print("amClose", amClose)
     print("amHigh", amHigh)
     print("amLow", amLow)
-    log(str(amHigh))
-    log(str(amLow))
-    log(str(amClose))
-    log(str(amOpen))
+    log(security, str(amHigh))
+    log(security, str(amLow))
+    log(security, str(amClose))
+    log(security, str(amOpen))
 
     return [amHigh, amLow, amOpen, amClose]

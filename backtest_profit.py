@@ -11,7 +11,7 @@ start = datetime_range[0]
 end = datetime_range[1]
 this_generator = tc.get_generator([start, end])
 
-trade_log = "trade_logs/candidate_trades_2023-06-20.txt"
+trade_log = "trade_logs/^spx_candidate_trades_2023-06-20.txt"
 
 trade_orders = []
 with open(trade_log,"r") as f:
@@ -24,13 +24,14 @@ with open(trade_log,"r") as f:
                 temp.append(lsplit[-1][:-1])
             print(temp)
             trade_orders.append(TradeOrder(
-                time_found=datetime.strptime(temp[1], "%Y-%m-%d %H:%M:%S%z"),
-                entry = float(temp[2]), 
-                stop_limit=float(temp[3]),
-                take_profit=float(temp[4]),
-                position_size=float(temp[5]),
+                time_found=datetime.strptime(temp[2], "%Y-%m-%d %H:%M:%S%z"),
+                security= temp[1],
+                entry = float(temp[3]), 
+                stop_limit=float(temp[4]),
+                take_profit=float(temp[5]),
+                position_size=float(temp[6]),
                 trade_type = temp[0],
-                leverage=int(temp[6])))
+                leverage=int(temp[7])))
 
 spx_data = SecurityData(security=security)
 executed_trades = [] #ExecutedTrade objects
@@ -111,7 +112,7 @@ for simulated_time in this_generator:
                                 to, price_close, current_time, "TRADE PERIOD END (LIQUIDATE)"))
                             to.position_closed = True
 
-with open(f"backtest_logs/backtested_trades_{tc.get_today().date()}.txt", "a") as f:
+with open(f"backtest_logs/{security}_backtested_trades_{tc.get_today().date()}.txt", "a") as f:
     total_pnl = 0
     for et in executed_trades:
         f.write(str(et) + "\n")

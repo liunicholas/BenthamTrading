@@ -7,11 +7,14 @@ from datetime import timedelta, datetime
 import pandas as pd
 from time import sleep
 
-# main key
-twelvedata_api_key = '118aed5a291f4a9fb7c36cfb590db853'
+# twelvedata keys
+twelvedata_api_key_1 = '118aed5a291f4a9fb7c36cfb590db853'
+twelvedata_api_key_2 = "a7ae2e81f8d74438bd9f6a5e08cebef3"
+twelvedata_api_key_3 = "2e6d6dfac96b4ab1b4c5540d3c448b0b"
 
-# backup key
-backup_twelvedata_api_key = "a7ae2e81f8d74438bd9f6a5e08cebef3"
+twelvedata_keys = [twelvedata_api_key_1,
+                   twelvedata_api_key_2, 
+                   twelvedata_api_key_3]
 
 class SecurityData:
     def __init__(self, security):
@@ -22,7 +25,7 @@ class SecurityData:
         current_date = current_time.date()
         desired_date = tc.get_delta_trading_date(self.security, current_date, delta)
     
-        if desired_date > tc.get_today().date():
+        if desired_date > tc.real_time().date():
             print("[ERROR] Bad day data request: date is in the future.")
         elif delta == 0:
             self.data_master[day_name] = self.get_today_data(current_time, interval)
@@ -33,32 +36,20 @@ class SecurityData:
         return self.data_master[day_name]
 
     def get_today_data(self, current_time, interval):
-        # backtesting_flag = False
-
         # only use twelvedata when we actually need the live data
         today_data_twelvedata = pd.DataFrame()
-        if (datetime.now(tc.new_york_tz) - current_time) < timedelta(minutes=30): # 30 second tolerance
-            # TODO: if shit breaks, look here because twelve data may only get 2hr 30 min worth of data back
+        # 30 minute tolerance to delayed yfinance data
+        if (tc.real_time() - current_time) < timedelta(minutes=30):  
             today_data_twelvedata = self.get_twelve_data(
                 start=current_time.date(), 
                 end=tc.get_delta_trading_date(self.security, current_time.date(), 1), 
                 interval=interval
             )
 
-            # #live data
-            # if (datetime.now(tc.new_york_tz) - current_time) < timedelta(seconds=30):
-            #     backtesting_flag = False
-            # # back testing data 
-            # else:
-            #     backtesting_flag = True
-        # else: # back testing data
-            # backtesting_flag = True
-        
         today_data_yfinance = self.get_yfinance_data(start=current_time.date(), end=tc.get_delta_trading_date(
                 self.security, current_time.date(), 1), interval=interval)
         
         # combine twelvedata and yfinance if necessary
-        #TODO: test if this works on monday
         if not today_data_twelvedata.empty:
             twelvedata_first_time = today_data_twelvedata.index[0].to_pydatetime()
             temp = []
@@ -88,8 +79,6 @@ class SecurityData:
         return today_data
 
     def get_yfinance_data(self, start, end, interval):
-        # print({start},{end})
-        # print(interval)
         day_data = yf.download(
             progress=False,
             tickers=self.security,
@@ -108,54 +97,45 @@ class SecurityData:
     def get_twelve_data(self, start, end, interval):
         if self.security == "^spx":
             security = "gspc"
+        elif self.security == "^ixic":
+            security = "ixic"
         else:
             security = self.security
 
-        GOOD_DATA = False
-        try:
-            time_data_client = TDClient(apikey=twelvedata_api_key)
-            day_data = time_data_client.time_series(
-                symbol=security,
-                interval=f"{interval}min",
-                timezone=tc.new_york_tz,
-                start_date=start,
-                end_date=end,
-            ).as_pandas()
-        except:
-            try:
-                sleep(5)
-                time_data_client = TDClient(apikey=backup_twelvedata_api_key)
-                day_data = time_data_client.time_series(
-                    symbol=security,
-                    interval=f"{interval}min",
-                    timezone=tc.new_york_tz,
-                    start_date=start,
-                    end_date=end,
-                ).as_pandas()
-            except:
-                print("DATA IS FUCKED UP (or there is just no data for the day yet)")
-                exit()
-            else:
-                GOOD_DATA = True
-        else:
-            GOOD_DATA = True
+        API_SUCCESS = False
+        for i, apikey in enumerate(twelvedata_keys):
+            if not API_SUCCESS:
+                try:
+                    time_data_client = TDClient(apikey=apikey)
+                    day_data = time_data_client.time_series(
+                        symbol=security,
+                        interval=f"{interval}min",
+                        timezone=tc.new_york_tz,
+                        start_date=start,
+                        end_date=end,
+                    ).as_pandas()
+                except:
+                    print("[INFO/ERROR] Trying new API key")
+                else:
+                    API_SUCCESS = True
+                    print(f"[INFO] Data Successfully Retrieved with API key {i+1}")
 
-        if GOOD_DATA:
-            day_data.rename(columns={
-                'open': 'Open',
-                'high': 'High',
-                'low': 'Low',
-                'close': 'Close',
-                'volume': 'Volume',
-                }, inplace=True)
-            # day_data.index = day_data.index.tz_localize('UTC')
-            # if not day_data.empty:
-            day_data.index = day_data.index.tz_localize(tc.new_york_tz)
+                    # clean data
+                    day_data.rename(columns={
+                        'open': 'Open',
+                        'high': 'High',
+                        'low': 'Low',
+                        'close': 'Close',
+                        'volume': 'Volume',
+                    }, inplace=True)
+                    day_data.index = day_data.index.tz_localize(tc.new_york_tz)
 
-            day_data = day_data.iloc[::-1]
-            return day_data
+                    #reverse order of time series data
+                    day_data = day_data.iloc[::-1]
+                    return day_data
         
-        else:
+        if not API_SUCCESS:
+            print("[ERROR] All API keys failed")
             return pd.DataFrame()
 
 def get_economic_news():
