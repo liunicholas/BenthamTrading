@@ -11,7 +11,10 @@ import os
 
 def run_cycle(data, current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs):
     print(f"[INFO] Cycle run at {current_time}")
-    print(data["todaysData"].tail())
+
+    # print(data["todaysData"].tail())
+    print(data["todaysData"])
+
     # only iterate through procedure on new data
     if ((last_known_data_point is None) or (last_known_data_point < data["todaysData"].index[-1])) and (not data["todaysData"].empty):
         # if tc.OVERRIDE == False:
@@ -58,11 +61,16 @@ def managePortfolio(candidate_trades):
     pass
     
 def run_day(CATCH_UP):
+    with open(f"trade_logs/candidate_trades_{tc.get_today().date()}.txt", "w") as f:
+        f.write("Proprietary Information of Bentham Trading \n")
+
     spx_data = SecurityData(security=security)
     spx_data.get_day_data("yesterdata", tc.get_today(), interval=INTERVAL, delta=-1)
     takeProfitSwingLows, takeProfitSwingHighs = get_previous_day_swings(spx_data["yesterdata"])
 
     liquidity_lines = get_primary_liquidity(current_time=tc.get_today())
+    GOT_SECONDARY_LIQUIDITY = False
+
     candidate_trades = CandidateTrades()
     last_known_data_point = None
 
@@ -78,28 +86,29 @@ def run_day(CATCH_UP):
 
             if (current_time.minute % INTERVAL) == 0:  
                 spx_data.get_day_data("todaysData", current_time, interval=INTERVAL, delta=0)
+            
+            if tc.datetime_is_between(current_time, "11:00", "11:05") and not GOT_SECONDARY_LIQUIDITY:
+                print("ADDING LIQUIDITY LINES")
+                liquidity_lines += get_secondary_liquidity(current_time, spx_data["todaysData"])
+                GOT_SECONDARY_LIQUIDITY = True
 
             last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(
                 spx_data, current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs)
 
-            if not os.path.exists(f"logs/candidate_trades_{tc.get_today().date()}.txt"):
-                with open(f"logs/candidate_trades_{tc.get_today().date()}.txt", "w") as f:
-                    f.write("Proprietary Information of Bentham Trading ")
-
-        tc.turn_off_override()
-
-    else:
-        with open(f"logs/candidate_trades_{tc.get_today().date()}.txt", "w") as f:
-            f.write("Proprietary Information of Bentham Trading ")                                                                                                                
+        tc.turn_off_override()                                                                                                          
     
     last_known_minute = last_known_data_point.minute
     while tc.is_market_open(security, current=tc.get_today()):
         current_time = tc.get_today()
         if current_time.second >=0 and current_time.second <= 5 and current_time.minute != last_known_minute:
             last_known_minute = current_time.minute
-
             spx_data.get_day_data("todaysData", current_time, interval=INTERVAL, delta=0)
-    
+
+            if tc.datetime_is_between(current_time, "11:00", "11:05") and not GOT_SECONDARY_LIQUIDITY:
+                print("ADDING LIQUIDITY LINES")
+                liquidity_lines += get_secondary_liquidity(current_time, spx_data["todaysData"])
+                GOT_SECONDARY_LIQUIDITY = True
+
             last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs = run_cycle(
                 spx_data, current_time, last_known_data_point, liquidity_lines, candidate_trades, takeProfitSwingLows, takeProfitSwingHighs)
         
@@ -110,16 +119,14 @@ def run_day(CATCH_UP):
 
 def main():
     LIVE = True
-    # PRINTED_MARKET_CLOSED = False
     last_known_minute = None
     while LIVE:
         current_time = tc.get_today()
-        # if last_known_minute is None:
         if (last_known_minute is None) or (current_time.second >= 0 and current_time.second <= 5 and current_time.minute != last_known_minute):
             last_known_minute = current_time.minute
+            print(f"[INFO] Checking market open at {current_time}")
 
             if tc.is_market_open(security, current_time, VERBOSE=True):
-                # PRINTED_MARKET_CLOSED = False
                 print("MARKET OPENED")
 
                 CATCH_UP = False
@@ -128,9 +135,6 @@ def main():
                     
                 run_day(CATCH_UP)
             else:
-                # if not PRINTED_MARKET_CLOSED:
-                #     print("MARKET CLOSED")
-                #     PRINTED_MARKET_CLOSED = True
                 print("MARKET CLOSED")
 
 

@@ -5,8 +5,8 @@ import yfinance as yf
 import pytz
 import time
 
-datetime_range = [tc.localize(datetime(2023, 6, 11, 9, 30, 0)),
-                  tc.localize(datetime(2023, 6, 11, 16, 0, 0))]
+datetime_range = [tc.localize(datetime(2023, 6, 19, 9, 30, 0)),
+                  tc.localize(datetime(2023, 6, 19, 16, 0, 0))]
 
 # currentTime = datetime_range[0]
 # waitTime = 0
@@ -16,6 +16,8 @@ end = datetime_range[1]
 this_generator = tc.get_generator([start, end])
 
 tc.override(datetime_range[0])
+with open(f"trade_logs/candidate_trades_{tc.get_today().date()}.txt", "w") as f:
+    f.write("Proprietary Information of Bentham Trading \n")
 
 spx_data = SecurityData(security=security)
 spx_data.get_day_data("yesterdata", tc.get_today(), interval=INTERVAL, delta=-1)
@@ -28,9 +30,6 @@ last_known_data_point = None
 
 for simulated_time in this_generator:
     tc.override(simulated_time)
-    if not os.path.exists(f"logs/candidate_trades_{tc.get_today().date()}.txt"):
-        with open(f"logs/candidate_trades_{tc.get_today().date()}.txt", "w") as f:
-            f.write("Proprietary Information of Bentham Trading ")
 
     current_time = tc.get_today()
 

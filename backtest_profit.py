@@ -4,14 +4,14 @@ from silver_bullet import *
 from util import *
 from datetime import datetime, date, time, timedelta
 
-datetime_range = [tc.localize(datetime(2023, 6, 15, 9, 31, 0)),
-                  tc.localize(datetime(2023, 6, 15, 16, 0, 0))]
+datetime_range = [tc.localize(datetime(2023, 6, 20, 9, 31, 0)),
+                  tc.localize(datetime(2023, 6, 20, 16, 0, 0))]
 
 start = datetime_range[0]
 end = datetime_range[1]
 this_generator = tc.get_generator([start, end])
 
-trade_log = "logs/candidate_trades_2023-06-16.txt"
+trade_log = "trade_logs/candidate_trades_2023-06-20.txt"
 
 trade_orders = []
 with open(trade_log,"r") as f:
@@ -111,9 +111,12 @@ for simulated_time in this_generator:
                                 to, price_close, current_time, "TRADE PERIOD END (LIQUIDATE)"))
                             to.position_closed = True
 
-total_pnl = 0
-for et in executed_trades:
-    print(str(et))
-    total_pnl += et.pnl
+with open(f"backtest_logs/backtested_trades_{tc.get_today().date()}.txt", "a") as f:
+    total_pnl = 0
+    for et in executed_trades:
+        f.write(str(et) + "\n")
+        print(str(et))
+        total_pnl += et.pnl
 
-print(f"Final PNL ${total_pnl}")
+    print(f"Final PNL ${total_pnl:0.2f}")
+    f.write(f"Final PNL ${total_pnl:0.2f} \n")

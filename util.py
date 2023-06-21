@@ -25,8 +25,9 @@ class TradeOrder:
 class ExecutedTrade:
     def __init__(self, trade_order, exit_price, exit_time, exit_type):
         self.trade_order = trade_order
-        self.entry_price = self.trade_order.entry
-        self.entry_time= self.trade_order.entry_time
+        self.entry_price = trade_order.entry
+        self.entry_time = trade_order.entry_time
+        self.position_size = trade_order.position_size
         self.exit_price = exit_price
         self.exit_time = exit_time
         self.exit_type = exit_type
@@ -40,6 +41,7 @@ class ExecutedTrade:
         return f"\n[EXECUTED TRADE]: \n \
         Exit Type: {self.exit_type}, \n \
         Trade Type: {self.trade_order.trade_type}, \n \
+        Position Size: {self.position_size:0.2f}, \n \
         Entry Time: {self.entry_time}, \n \
         Entry Price: {self.entry_price:0.2f}, \n \
         Exit Time: {self.exit_time}, \n \

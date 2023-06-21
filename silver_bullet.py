@@ -13,14 +13,15 @@ take_profit_margin = 10
 
 portfolio_size = 50000
 max_drawdown = 0.005*portfolio_size
-leverage_multiplier = 100
+leverage_multiplier = 10
 margin = 5000
 # max_position_size = 
 
 SWING_INTERVAL = 5
-INTERVAL = 1  # minutes
+INTERVAL = 5  # minutes
 
 def log(line):
+    # print(tc.get_today())
     def line_exists_in_file(file_path, target_line):
         with open(file_path, 'r') as file:
             for line in file:
@@ -28,8 +29,8 @@ def log(line):
                     return True
         return False
 
-    with open(f"logs/candidate_trades_{tc.get_today().date()}.txt", "a") as f:
-        if not line_exists_in_file(f"logs/candidate_trades_{tc.get_today().date()}.txt", line):
+    with open(f"trade_logs/candidate_trades_{tc.get_today().date()}.txt", "a") as f:
+        if not line_exists_in_file(f"trade_logs/candidate_trades_{tc.get_today().date()}.txt", line):
             f.write(line + "\n")
 
 class FVG:
@@ -181,46 +182,72 @@ class CandidateTrades():
         FVG_time = fvg.time + timedelta(minutes=INTERVAL)
         if fvg.FVG_type == "RED" and FVG_time not in self.trade_times:
             entry_price = fvg.entry
-            stop_limit = fvg.stop_loss
 
-            p_swing_threshold = entry_price - 10
-
+            # find take profit price
+            profit_swing_threshold = entry_price - 10
             take_profit_price = float("inf")
+
             for potential_take_profit in all_swing_lows:
-                if potential_take_profit.time < FVG_time and potential_take_profit.price_level < p_swing_threshold:
-                    if abs(p_swing_threshold-potential_take_profit.price_level) < abs(p_swing_threshold-take_profit_price):
+                if potential_take_profit.time < FVG_time and potential_take_profit.price_level < profit_swing_threshold:
+                    if abs(profit_swing_threshold-potential_take_profit.price_level) < abs(profit_swing_threshold-take_profit_price):
                         take_profit_price = potential_take_profit.price_level
+
+            # find stop limit price
+            loss_swing_threshold = entry_price + 3
+            stop_limit_price = float("inf")
+
+            for potential_stop_limit in all_swing_highs:
+                if potential_stop_limit.time < FVG_time and potential_stop_limit.price_level > loss_swing_threshold:
+                    if abs(loss_swing_threshold-potential_stop_limit.price_level) < abs(loss_swing_threshold-stop_limit_price):
+                        stop_limit_price = potential_stop_limit.price_level
             
-            if take_profit_price != float("inf"):
-                # position_size = min(max_drawdown / ((stop_limit-entry_price)*leverage_multiplier), max_position_size) 
-                position_size = max_drawdown / ((stop_limit-entry_price)*leverage_multiplier)
-                trade_order = TradeOrder(
-                    FVG_time, entry_price, stop_limit, take_profit_price, position_size, "SHORT", leverage_multiplier)
-                self.trade_orders.append(trade_order)
-                self.trade_times.append(FVG_time)
-                print(trade_order)
-                log(str(trade_order))
+            if take_profit_price == float("inf"):
+                take_profit_price = profit_swing_threshold
+            if stop_limit_price == float("inf"):
+                stop_limit_price = loss_swing_threshold
+
+            position_size = max_drawdown / ((stop_limit_price-entry_price)*leverage_multiplier)
+            trade_order = TradeOrder(
+                FVG_time, entry_price, stop_limit_price, take_profit_price, position_size, "SHORT", leverage_multiplier)
+            self.trade_orders.append(trade_order)
+            self.trade_times.append(FVG_time)
+            print(trade_order)
+            log(str(trade_order))
 
 
         if fvg.FVG_type == "GREEN" and FVG_time not in self.trade_times:
             entry_price = fvg.entry
             stop_limit = fvg.stop_loss
-
-            p_swing_threshold = entry_price + 10
-
+            
+            # find take profit price
+            profit_swing_threshold = entry_price + 10
             take_profit_price = float("inf")
-            for potential_take_profit in all_swing_highs:
-                if potential_take_profit.time < FVG_time and potential_take_profit.price_level > p_swing_threshold:
-                    if abs(potential_take_profit.price_level-p_swing_threshold) < abs(take_profit_price-p_swing_threshold):
-                        take_profit_price = potential_take_profit.price_level
 
-            if take_profit_price != float("inf"):
-                position_size = max_drawdown / ((entry_price-stop_limit)*leverage_multiplier)
-                trade_order = TradeOrder(FVG_time, entry_price, stop_limit, take_profit_price, position_size, "LONG", leverage_multiplier)
-                self.trade_orders.append(trade_order)
-                self.trade_times.append(FVG_time)
-                print(trade_order)
-                log(str(trade_order))
+            for potential_take_profit in all_swing_highs:
+                if potential_take_profit.time < FVG_time and potential_take_profit.price_level > profit_swing_threshold:
+                    if abs(potential_take_profit.price_level-profit_swing_threshold) < abs(take_profit_price-profit_swing_threshold):
+                        take_profit_price = potential_take_profit.price_level
+            
+            # find stop limit price
+            loss_swing_threshold = entry_price - 3
+            stop_limit_price = float("inf")
+
+            for potential_stop_limit in all_swing_lows:
+                if potential_stop_limit.time < FVG_time and potential_stop_limit.price_level < loss_swing_threshold:
+                    if abs(loss_swing_threshold-potential_stop_limit.price_level) < abs(loss_swing_threshold-stop_limit_price):
+                        stop_limit_price = potential_stop_limit.price_level
+
+            if take_profit_price == float("inf"):
+                take_profit_price = profit_swing_threshold
+            if stop_limit_price == float("inf"):
+                stop_limit_price = loss_swing_threshold
+                
+            position_size = max_drawdown / ((entry_price-stop_limit_price)*leverage_multiplier)
+            trade_order = TradeOrder(FVG_time, entry_price, stop_limit_price, take_profit_price, position_size, "LONG", leverage_multiplier)
+            self.trade_orders.append(trade_order)
+            self.trade_times.append(FVG_time)
+            print(trade_order)
+            log(str(trade_order))
 
 def get_previous_day_swings(yesterdata):
     # print(yesterdata)
@@ -265,3 +292,35 @@ def get_primary_liquidity(current_time):
     log(str(pSellsideLiquidity))
 
     return [pSellsideLiquidity, pBuysideLiquidity]
+
+def get_secondary_liquidity(current_time, todaysData):
+    amHigh = LiquidityLine(
+        current_time, todaysData.max()["High"], "BUYSIDE")
+    amLow = LiquidityLine(
+        current_time, todaysData.min()["Low"], "SELLSIDE")
+    
+    openPrice = todaysData[0:1]["Open"]
+    closePrice = todaysData[-1:]["Close"]
+
+    if openPrice.item() >= closePrice.item():
+        amOpen = LiquidityLine(
+            current_time, openPrice.item(), "BUYSIDE")
+        amClose = LiquidityLine(
+            current_time, closePrice.item(), "SELLSIDE")
+    else:
+        amOpen = LiquidityLine(
+            current_time, openPrice.item(), "SELLSIDE")
+        amClose = LiquidityLine(
+            current_time, closePrice.item(), "BUYSIDE")
+
+
+    print("amOpen", amOpen)
+    print("amClose", amClose)
+    print("amHigh", amHigh)
+    print("amLow", amLow)
+    log(str(amHigh))
+    log(str(amLow))
+    log(str(amClose))
+    log(str(amOpen))
+
+    return [amHigh, amLow, amOpen, amClose]
