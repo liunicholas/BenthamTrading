@@ -4,21 +4,22 @@ from silver_bullet import *
 from util import *
 from datetime import datetime, date, time, timedelta
 
-datetime_range = [tc.localize(datetime(2023, 6, 20, 9, 31, 0)),
-                  tc.localize(datetime(2023, 6, 20, 16, 0, 0))]
+datetime_range = [tc.localize(datetime(2023, 6, 21, 9, 31, 0)),
+                  tc.localize(datetime(2023, 6, 21, 16, 0, 0))]
 
 start = datetime_range[0]
 end = datetime_range[1]
 this_generator = tc.get_generator([start, end])
 
-trade_log = "trade_logs/^spx_candidate_trades_2023-06-20.txt"
+security = "^ixic"
+trade_log = f"trade_logs/{security}_candidate_trades_{datetime_range[0].date()}.txt"
 
 trade_orders = []
 with open(trade_log,"r") as f:
     for line in f:
         if "TRADE ORDER" in line:
             temp = []
-            for i in range(7):
+            for i in range(8):
                 l = f.readline().strip()
                 lsplit = l.split(": ")
                 temp.append(lsplit[-1][:-1])
@@ -33,7 +34,7 @@ with open(trade_log,"r") as f:
                 trade_type = temp[0],
                 leverage=int(temp[7])))
 
-spx_data = SecurityData(security=security)
+security_data = SecurityData(security=security)
 executed_trades = [] #ExecutedTrade objects
 finished_trades = []
 pnl = 0
@@ -42,12 +43,12 @@ for simulated_time in this_generator:
     current_time = tc.get_today()
     
     if (current_time.minute % INTERVAL) == 0:
-        spx_data.get_day_data("todaysData", current_time,
+        security_data.get_day_data("todaysData", current_time,
                             interval=INTERVAL, delta=0)
-        # print(spx_data["todaysData"])
-        price_low = spx_data["todaysData"][-1:]["Low"][0]
-        price_high = spx_data["todaysData"][-1:]["High"][0]
-        price_close = spx_data["todaysData"][-1:]["Close"][0]
+        # print(security_data["todaysData"])
+        price_low = security_data["todaysData"][-1:]["Low"][0]
+        price_high = security_data["todaysData"][-1:]["High"][0]
+        price_close = security_data["todaysData"][-1:]["Close"][0]
         for to in trade_orders:
             if to.time_found <= current_time:
                 # print("to.time_found <= current_time")

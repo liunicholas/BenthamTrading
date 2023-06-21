@@ -1,0 +1,37 @@
+
+[EXECUTED TRADE]: 
+         Exit Type: TAKE PROFIT, 
+         Trade Type: LONG, 
+         Security: ^ixic, 
+         Position Size: 4.20, 
+         Entry Time: 2023-06-21 14:20:00-04:00, 
+         Entry Price: 13553.39, 
+         Exit Time: 2023-06-21 14:20:00-04:00, 
+         Exit Price: 13569.59, 
+         PNL: 681.13, 
+
+
+[EXECUTED TRADE]: 
+         Exit Type: STOMPED, 
+         Trade Type: LONG, 
+         Security: ^ixic, 
+         Position Size: 7.88, 
+         Entry Time: 2023-06-21 14:35:00-04:00, 
+         Entry Price: 13579.47, 
+         Exit Time: 2023-06-21 14:45:00-04:00, 
+         Exit Price: 13576.29, 
+         PNL: -250.25, 
+
+
+[EXECUTED TRADE]: 
+         Exit Type: STOMPED, 
+         Trade Type: LONG, 
+         Security: ^ixic, 
+         Position Size: 2.11, 
+         Entry Time: 2023-06-21 14:25:00-04:00, 
+         Entry Price: 13565.24, 
+         Exit Time: 2023-06-21 15:05:00-04:00, 
+         Exit Price: 13553.40, 
+         PNL: -250.10, 
+
+Final PNL $180.78 

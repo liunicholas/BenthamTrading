@@ -12,6 +12,9 @@ import os
 snp_ticker = "^spx"
 ndq_ticker = "^ixic"
 
+take_profit_margin = {snp_ticker: 10, ndq_ticker: 30}
+stop_loss_margin = {snp_ticker: 3, ndq_ticker: 10}
+
 def initialize_day(security):
     with open(f"trade_logs/{security}_candidate_trades_{tc.get_today().date()}.txt", "w") as f:
         f.write("Proprietary Information of Bentham Trading \n")
@@ -31,7 +34,11 @@ def initialize_day(security):
     if tc.real_time()-timedelta(minutes=INTERVAL) > tc.localize(datetime.combine(tc.get_today().date(), tc.exchange_openclose[security][0])):
         start = tc.localize(datetime.combine(
             tc.get_today().date(), tc.exchange_openclose[security][0]))
-        end = tc.real_time()
+        if tc.real_time() > tc.localize(datetime.combine(tc.get_today().date(), tc.exchange_openclose[security][1])):
+            end = tc.localize(datetime.combine(
+                tc.get_today().date(), tc.exchange_openclose[security][1]))
+        else:
+            end = tc.real_time()
         this_generator = tc.get_generator([start, end])
 
         for simulated_time in this_generator:
@@ -86,7 +93,7 @@ def run_cycle(security, data, current_time, last_known_data_point, liquidity_lin
                         # iterate through FVGs in each swing
                         for FVG in swing.FVG_list:
                             candidate_trades.append(
-                                security, FVG, takeProfitSwingLows, takeProfitSwingHighs)
+                                security, take_profit_margin[security], stop_loss_margin[security], FVG, takeProfitSwingLows, takeProfitSwingHighs)
 
         last_known_data_point = data["todaysData"].index[-1]
 
@@ -150,6 +157,7 @@ def main():
     LIVE = True
     last_known_minute = None
     while LIVE:
+        # tc.override(tc.localize(datetime(year=2023, month=6, day=21,hour=16, minute=00)))
         current_time = tc.get_today()
         if (last_known_minute is None) or (current_time.second >= 0 and current_time.second <= 5 and current_time.minute != last_known_minute):
             last_known_minute = current_time.minute

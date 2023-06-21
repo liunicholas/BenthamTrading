@@ -8,7 +8,6 @@ trading_period_1_open = "10:00"
 trading_period_1_close = "11:00"
 trading_period_2_open = "14:00"
 trading_period_2_close = "15:00"
-take_profit_margin = 10
 
 portfolio_size = 50000
 max_drawdown = 0.005*portfolio_size
@@ -176,14 +175,14 @@ class CandidateTrades():
         self.trade_orders = []
         self.trade_times = []
     
-    def append(self, security, fvg, all_swing_lows, all_swing_highs):
+    def append(self, security, take_profit_margin, stop_loss_margin, fvg, all_swing_lows, all_swing_highs):
         FVG_time = fvg.time + timedelta(minutes=INTERVAL)
         entry_price = fvg.entry
         stop_limit_price = fvg.stop_loss
 
         if fvg.FVG_type == "RED" and FVG_time not in self.trade_times:
             # find take profit price
-            profit_swing_threshold = entry_price - 10
+            profit_swing_threshold = entry_price - take_profit_margin
             take_profit_price = float("inf")
 
             for potential_take_profit in all_swing_lows:
@@ -195,7 +194,7 @@ class CandidateTrades():
                 take_profit_price = profit_swing_threshold
 
             # find stop limit price
-            loss_swing_threshold = entry_price + 3
+            loss_swing_threshold = entry_price + stop_loss_margin
 
             if not stop_limit_price > loss_swing_threshold:
                 stop_limit_price = float("inf")
@@ -219,7 +218,7 @@ class CandidateTrades():
 
         if fvg.FVG_type == "GREEN" and FVG_time not in self.trade_times:
             # find take profit price
-            profit_swing_threshold = entry_price + 10
+            profit_swing_threshold = entry_price + take_profit_margin
             take_profit_price = float("inf")
 
             for potential_take_profit in all_swing_highs:
@@ -231,7 +230,7 @@ class CandidateTrades():
                 take_profit_price = profit_swing_threshold
             
             # find stop limit price
-            loss_swing_threshold = entry_price - 3
+            loss_swing_threshold = entry_price - stop_loss_margin
             if not stop_limit_price < loss_swing_threshold:
                 stop_limit_price = float("inf")
 
