@@ -118,7 +118,7 @@ class SecurityData:
                     print("[INFO/ERROR] Trying new API key")
                 else:
                     API_SUCCESS = True
-                    print(f"[INFO] Data Successfully Retrieved with API key {i+1}")
+                    print(f"[INFO] Data Successfully Retrieved for {security} with API key {i+1}")
 
                     # clean data
                     day_data.rename(columns={

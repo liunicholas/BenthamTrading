@@ -1,0 +1,90 @@
+Proprietary Information of Bentham Trading 
+BUYSIDE liquidity line at time 2023-06-21 16:00:00 at price level 13638.5703125
+SELLSIDE liquidity line at time 2023-06-21 16:00:00 at price level 13460.9404296875
+[BREACH] SELLSIDE at time 2023-06-22 09:30:00-04:00 at price level 13451.7294921875
+[SWING] HIGH at time 2023-06-22 10:00:00-04:00 at price level 13533.3193359375
+[FVG] GREEN at time 2023-06-22 10:15:00-04:00 at entry 13559.982421875 and stop loss 13530.1982421875
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ^ixic, 
+         Time Found: 2023-06-22 10:20:00-04:00, 
+         Entry Price: 13559.98, 
+         Stop Limit: 13530.1982421875, 
+         Take Profit: 13589.982421875, 
+         Position Size: 0.8393717826813993, 
+         Leverage Multiplier: 10, 
+
+[SWING] HIGH at time 2023-06-22 10:15:00-04:00 at price level 13577.4267578125
+[SWING] HIGH at time 2023-06-22 10:30:00-04:00 at price level 13573.6171875
+BUYSIDE liquidity line at time 2023-06-22 11:00:00-04:00 at price level 13577.4267578125
+SELLSIDE liquidity line at time 2023-06-22 11:00:00-04:00 at price level 13451.7294921875
+BUYSIDE liquidity line at time 2023-06-22 11:00:00-04:00 at price level 13527.8525390625
+SELLSIDE liquidity line at time 2023-06-22 11:00:00-04:00 at price level 13452.51171875
+[SWING] HIGH at time 2023-06-22 10:50:00-04:00 at price level 13534.314453125
+[BREACH] BUYSIDE at time 2023-06-22 10:55:00-04:00 at price level 13529.3330078125
+[BREACH] BUYSIDE at time 2023-06-22 11:00:00-04:00 at price level 13556.5458984375
+[FVG] GREEN at time 2023-06-22 11:05:00-04:00 at entry 13556.009765625 and stop loss 13529.3330078125
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ^ixic, 
+         Time Found: 2023-06-22 11:10:00-04:00, 
+         Entry Price: 13556.01, 
+         Stop Limit: 13529.3330078125, 
+         Take Profit: 13589.892578125, 
+         Position Size: 0.9371453673536626, 
+         Leverage Multiplier: 10, 
+
+[BREACH] BUYSIDE at time 2023-06-22 11:05:00-04:00 at price level 13576.3720703125
+[SWING] HIGH at time 2023-06-22 11:05:00-04:00 at price level 13576.3720703125
+[FVG] GREEN at time 2023-06-22 11:10:00-04:00 at entry 13557.1953125 and stop loss 13556.5458984375
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ^ixic, 
+         Time Found: 2023-06-22 11:15:00-04:00, 
+         Entry Price: 13557.20, 
+         Stop Limit: 13546.1923828125, 
+         Take Profit: 13589.892578125, 
+         Position Size: 2.272122126564303, 
+         Leverage Multiplier: 10, 
+
+[BREACH] BUYSIDE at time 2023-06-22 11:10:00-04:00 at price level 13567.4365234375
+[BREACH] BUYSIDE at time 2023-06-22 11:15:00-04:00 at price level 13569.3515625
+[BREACH] BUYSIDE at time 2023-06-22 11:20:00-04:00 at price level 13570.1826171875
+[SWING] HIGH at time 2023-06-22 11:20:00-04:00 at price level 13570.1826171875
+[BREACH] BUYSIDE at time 2023-06-22 11:25:00-04:00 at price level 13562.017578125
+[BREACH] BUYSIDE at time 2023-06-22 11:30:00-04:00 at price level 13563.4013671875
+[BREACH] BUYSIDE at time 2023-06-22 11:35:00-04:00 at price level 13577.7392578125
+[BREACH] BUYSIDE at time 2023-06-22 11:40:00-04:00 at price level 13600.349609375
+[BREACH] BUYSIDE at time 2023-06-22 11:45:00-04:00 at price level 13605.1552734375
+[BREACH] BUYSIDE at time 2023-06-22 11:50:00-04:00 at price level 13606.7841796875
+[SWING] HIGH at time 2023-06-22 11:50:00-04:00 at price level 13606.7841796875
+[BREACH] BUYSIDE at time 2023-06-22 11:55:00-04:00 at price level 13592.4541015625
+[BREACH] BUYSIDE at time 2023-06-22 12:00:00-04:00 at price level 13591.478515625
+[BREACH] BUYSIDE at time 2023-06-22 12:05:00-04:00 at price level 13573.01953125
+[BREACH] BUYSIDE at time 2023-06-22 12:10:00-04:00 at price level 13566.8662109375
+[BREACH] BUYSIDE at time 2023-06-22 12:15:00-04:00 at price level 13566.828125
+[SWING] LOW at time 2023-06-22 12:15:00-04:00 at price level 13554.970703125
+[BREACH] BUYSIDE at time 2023-06-22 12:20:00-04:00 at price level 13574.8896484375
+[BREACH] BUYSIDE at time 2023-06-22 12:25:00-04:00 at price level 13575.12109375
+[BREACH] BUYSIDE at time 2023-06-22 12:30:00-04:00 at price level 13577.07421875
+[BREACH] BUYSIDE at time 2023-06-22 12:35:00-04:00 at price level 13584.884765625
+[SWING] HIGH at time 2023-06-22 12:35:00-04:00 at price level 13584.884765625
+[BREACH] BUYSIDE at time 2023-06-22 12:40:00-04:00 at price level 13577.2548828125
+[BREACH] BUYSIDE at time 2023-06-22 12:45:00-04:00 at price level 13578.291015625
+[SWING] HIGH at time 2023-06-22 12:45:00-04:00 at price level 13578.291015625
+[BREACH] BUYSIDE at time 2023-06-22 12:50:00-04:00 at price level 13568.103515625
+[BREACH] BUYSIDE at time 2023-06-22 12:55:00-04:00 at price level 13568.8916015625
+[SWING] HIGH at time 2023-06-22 12:55:00-04:00 at price level 13568.8916015625
+[BREACH] BUYSIDE at time 2023-06-22 13:00:00-04:00 at price level 13566.6181640625
+[SWING] LOW at time 2023-06-22 13:00:00-04:00 at price level 13537.1748
+[BREACH] BUYSIDE at time 2023-06-22 13:05:00-04:00 at price level 13552.04199
+[BREACH] BUYSIDE at time 2023-06-22 13:10:00-04:00 at price level 13556.70703
+[SWING] HIGH at time 2023-06-22 13:10:00-04:00 at price level 13556.70703
+[BREACH] BUYSIDE at time 2023-06-22 13:15:00-04:00 at price level 13556.60059
+[SWING] LOW at time 2023-06-22 13:15:00-04:00 at price level 13545.20605
+[BREACH] BUYSIDE at time 2023-06-22 13:20:00-04:00 at price level 13560.17285
+[BREACH] BUYSIDE at time 2023-06-22 13:25:00-04:00 at price level 13562.01465
+[BREACH] BUYSIDE at time 2023-06-22 13:30:00-04:00 at price level 13566.48242

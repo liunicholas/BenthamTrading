@@ -15,8 +15,8 @@ TOKEN = "MTEyMTE1MzI3MjE3MDk0NjU5Mg.G3qbyD.-IhGrjmcKp4e_d3H2A7xwlXSNzmiOVuyvKslh
 async def send_message():
     global last_to_spx
     global last_to_nasdaq
-    spx_path = f'trade_logs/{"spx"}_candidate_trades_{tc.get_today().date()}.txt'
-    nasdaq_path = f'trade_logs/{"ixic"}_candidate_trades_{tc.get_today().date()}.txt'
+    spx_path = f'trade_logs/{"^spx"}_candidate_trades_{tc.get_today().date()}.txt'
+    nasdaq_path = f'trade_logs/{"^ixic"}_candidate_trades_{tc.get_today().date()}.txt'
     if os.path.exists(spx_path):
         with open(spx_path, 'r') as f:
             lines = f.readlines()

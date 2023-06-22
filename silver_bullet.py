@@ -324,3 +324,6 @@ def get_secondary_liquidity(security, current_time, todaysData):
     log(security, str(amOpen))
 
     return [amHigh, amLow, amOpen, amClose]
+
+# def SilverBullet():
+#     def __init__(self):
