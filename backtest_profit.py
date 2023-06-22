@@ -4,14 +4,14 @@ from silver_bullet import *
 from util import *
 from datetime import datetime, date, time, timedelta
 
-datetime_range = [tc.localize(datetime(2023, 6, 21, 9, 31, 0)),
-                  tc.localize(datetime(2023, 6, 21, 16, 0, 0))]
+datetime_range = [tc.localize(datetime(2023, 6, 22, 9, 31, 0)),
+                  tc.localize(datetime(2023, 6, 22, 16, 0, 0))]
 
 start = datetime_range[0]
 end = datetime_range[1]
 this_generator = tc.get_generator([start, end])
 
-security = "^ixic"
+security = "^spx"
 trade_log = f"trade_logs/{security}_candidate_trades_{datetime_range[0].date()}.txt"
 
 trade_orders = []

@@ -1,6 +1,4 @@
 Proprietary Information of Bentham Trading 
-BUYSIDE liquidity line at time 2023-06-20 16:00:00 at price level 4400.14990234375
-SELLSIDE liquidity line at time 2023-06-20 16:00:00 at price level 4367.18994140625
 [BREACH] SELLSIDE at time 2023-06-21 09:55:00-04:00 at price level 4365.10009765625
 [BREACH] SELLSIDE at time 2023-06-21 10:00:00-04:00 at price level 4361.56982421875
 [BREACH] SELLSIDE at time 2023-06-21 10:05:00-04:00 at price level 4360.56005859375

@@ -2,19 +2,19 @@ from datetime import datetime, date, time, timedelta
 import pytz
 
 new_york_tz = pytz.timezone('America/New_York')
+
+def localize(dt):
+    return new_york_tz.localize(dt)
+
 exchange_openclose = {
     "^spx": [time(hour=9, minute=30), time(hour=16)], 
     "^ixic": [time(hour=9, minute=30), time(hour=16)],
     }
 
+# default variables
 OVERRIDE = False
-
-def localize(dt):
-    return new_york_tz.localize(dt)
-
 OVERRIDE_TIME = localize(datetime(year=2023, month=6, day=8,
                          hour=10, minute=59))
-
 GENERATOR_RANGE = [localize(datetime(2023, 6, 8, 6, 30, 0)),
                    localize(datetime(2023, 6, 8, 23, 0, 0))]
 
@@ -59,9 +59,10 @@ def real_time():
     # NO OVERRIDE
     return datetime.now(new_york_tz)
 
-def is_market_open(security, current=get_today(), VERBOSE=False):
+
+def is_market_open(security="^spx", current_datetime=get_today(), VERBOSE=False):
     if VERBOSE:
-        print(f"[INFO] Checking time {current} for market open")
+        print(f"[INFO] Checking time {current_datetime} for market open")
 
     holidays = [datetime(2023, 6, 19).date(), datetime(2023, 7, 4).date(),
                 datetime(2023, 9, 4).date(), datetime(2023, 10, 9).date(),
@@ -71,12 +72,12 @@ def is_market_open(security, current=get_today(), VERBOSE=False):
     start_time = exchange_openclose[security][0]
     end_time = exchange_openclose[security][1]
 
-    current_time = current.time()
-    current_date = current.date()
+    current_time = current_datetime.time()
+    current_date = current_datetime.date()
     
     is_tradinghour = start_time <= current_time <= end_time
     is_weekend = current_date.weekday() >= 5
-    is_holiday = current.date() in holidays
+    is_holiday = current_date in holidays
 
     return is_tradinghour and not is_weekend and not is_holiday
 

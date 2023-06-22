@@ -1,3 +1,15 @@
+def log(security, datetime, line):
+    def line_exists_in_file(file_path, target_line):
+        with open(file_path, 'r') as file:
+            for line in file:
+                if line.strip() == target_line:
+                    return True
+        return False
+
+    with open(f"trade_logs/{security}_candidate_trades_{datetime.date()}.txt", "a") as f:
+        if not line_exists_in_file(f"trade_logs/{security}_candidate_trades_{datetime.date()}.txt", line):
+            f.write(line + "\n")
+
 class TradeOrder:
     def __init__(self, security, time_found, entry, stop_limit, take_profit, position_size, trade_type, leverage):
         self.security = security

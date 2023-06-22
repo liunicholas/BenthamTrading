@@ -1,0 +1,13 @@
+
+[EXECUTED TRADE]: 
+         Exit Type: STOMPED, 
+         Trade Type: LONG, 
+         Security: ^spx, 
+         Position Size: 4.29, 
+         Entry Time: 2023-06-22 10:25:00-04:00, 
+         Entry Price: 4371.99, 
+         Exit Time: 2023-06-22 10:45:00-04:00, 
+         Exit Price: 4366.16, 
+         PNL: -249.99, 
+
+Final PNL $-249.99 
