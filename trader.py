@@ -17,13 +17,13 @@ def run_day():
         if current_time.minute != last_known_minute:
             last_known_minute = current_time.minute
 
-        snp_silver_bullet.run_cycle(current_time)
-        ndq_silver_bullet.run_cycle(current_time)
+            snp_silver_bullet.run_cycle(current_time)
+            ndq_silver_bullet.run_cycle(current_time)
 
-        # check on portfolio every iteration
-        managePortfolio([
-            snp_silver_bullet.candidate_trades, 
-            ndq_silver_bullet.candidate_trades,])
+            # check on portfolio every iteration
+            managePortfolio([
+                snp_silver_bullet.candidate_trades, 
+                ndq_silver_bullet.candidate_trades,])
 
     return
 

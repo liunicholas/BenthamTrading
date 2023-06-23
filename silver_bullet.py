@@ -49,7 +49,6 @@ class FVGList(list):
                             green_fvg = FVG(rightCandle.index.item(
                             ), rightCandle["Low"][-1], leftCandle["High"][-1], "GREEN")
                             super().append(green_fvg)
-                            print(green_fvg)
                             log(security, tc.get_today(), str(green_fvg))
 
             elif self.swing.swing_type == "LOW":
@@ -59,7 +58,6 @@ class FVGList(list):
                             red_fvg = FVG(rightCandle.index.item(
                             ), rightCandle["High"][-1], leftCandle["Low"][-1], "RED")
                             super().append(red_fvg)
-                            print(red_fvg)
                             log(security, tc.get_today(), str(red_fvg))
 
 class Swing:
@@ -107,14 +105,13 @@ class SwingList(list):
             if (swing.time > self.breach.time):
                 if (self.breach.breach_type=="SELLSIDE" and swing.swing_type=="HIGH" and swing.price_level>self.breach.liquidity_line.price_level):
                     super().append(swing)
-                    print(swing)
                     log(security, tc.get_today(), str(swing))
                 elif (self.breach.breach_type == "BUYSIDE" and swing.swing_type=="LOW" and swing.price_level < self.breach.liquidity_line.price_level):
                     super().append(swing)
-                    print(swing)
                     log(security, tc.get_today(), str(swing))
                 else:
-                    print("[INFO] Not a valid swing high or low")
+                    log(security, tc.get_today(),
+                        f"[INFO] Not a valid swing high or low at {swing.time}")
 
 class Breach:
     def __init__(self, time, liquidity_line, price_level, breach_type):
@@ -137,13 +134,11 @@ class BreachList(list):
         if (self.liquidity_line.liquidity_type == "SELLSIDE") and (potential_breach["Low"][-1] <= self.liquidity_line.price_level):
             breach = Breach(potential_breach.index.item(), self.liquidity_line, potential_breach["Low"][-1], "SELLSIDE")
             super().append(breach)
-            print(breach)
             log(security, tc.get_today(), str(breach))
 
         if (self.liquidity_line.liquidity_type == "BUYSIDE") and (potential_breach["High"][-1] >= self.liquidity_line.price_level):
             breach = Breach(potential_breach.index.item(),self.liquidity_line,potential_breach["High"][-1], "BUYSIDE")
             super().append(breach)
-            print(breach)
             log(security, tc.get_today(), str(breach))
             
 class LiquidityLine:
@@ -199,7 +194,6 @@ class CandidateTrades():
                 security, FVG_time, entry_price, stop_limit_price, take_profit_price, position_size, "SHORT", leverage_multiplier)
             self.trade_orders.append(trade_order)
             self.trade_times.append(FVG_time)
-            print(trade_order)
             log(security, tc.get_today(), str(trade_order))
 
 
@@ -233,18 +227,13 @@ class CandidateTrades():
             trade_order = TradeOrder(security, FVG_time, entry_price, stop_limit_price, take_profit_price, position_size, "LONG", leverage_multiplier)
             self.trade_orders.append(trade_order)
             self.trade_times.append(FVG_time)
-            print(trade_order)
             log(security, tc.get_today(), str(trade_order))
 
 def get_previous_day_swings(yesterdata):
-    # print(yesterdata)
-    # print("CT", current_time)
-    # print(yesterdata)
     takeProfitSwingLows, takeProfitSwingHighs = [], []
 
     for i in yesterdata.index[:-2]:
         threeCandles = yesterdata[i:i+timedelta(minutes=SWING_INTERVAL*2)]
-        # print(threeCandles)
         middleCandle = threeCandles[-2:-1]
         middleCandleTime = middleCandle.index.item()
 
@@ -259,11 +248,8 @@ def get_previous_day_swings(yesterdata):
     return takeProfitSwingLows, takeProfitSwingHighs
 
 def get_primary_liquidity(security, current_time):
-    # current_time = tc.get_today()
     dataForLiquidity = yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(
         security, current_time.date(), -1), end=current_time.date(), interval='1d')
-    # print(current_time)
-    # print(dataForLiquidity)
 
     dummyDatetime = datetime.combine(tc.get_delta_trading_date(
         security, current_time.date(), -1), time(16, 00, 0))
@@ -273,10 +259,8 @@ def get_primary_liquidity(security, current_time):
     pBuysideLiquidity = LiquidityLine(
         dummyDatetime, dataForLiquidity["High"][0], "BUYSIDE")
 
-    print(pBuysideLiquidity)
-    print(pSellsideLiquidity)
-    log(security, tc.get_today(), str(pBuysideLiquidity))
-    log(security, tc.get_today(), str(pSellsideLiquidity))
+    log(security, tc.get_today(), "[INFO] Previous day high " + str(pBuysideLiquidity))
+    log(security, tc.get_today(), "[INFO] Previous day low " + str(pSellsideLiquidity))
 
     return [pSellsideLiquidity, pBuysideLiquidity]
 
@@ -299,21 +283,19 @@ def get_secondary_liquidity(security, current_time, todaysData):
             current_time, openPrice.item(), "SELLSIDE")
         amClose = LiquidityLine(
             current_time, closePrice.item(), "BUYSIDE")
-
-
-    print("amOpen", amOpen)
-    print("amClose", amClose)
-    print("amHigh", amHigh)
-    print("amLow", amLow)
-    log(security, tc.get_today(), str(amHigh))
-    log(security, tc.get_today(), str(amLow))
-    log(security, tc.get_today(), str(amClose))
-    log(security, tc.get_today(), str(amOpen))
+        
+    log(security, tc.get_today(), "[INFO] AM Open " + str(amOpen))
+    log(security, tc.get_today(), "[INFO] AM High " + str(amHigh))
+    log(security, tc.get_today(), "[INFO] AM Low " + str(amLow))
+    log(security, tc.get_today(), "[INFO] AM Close " + str(amClose))
 
     return [amHigh, amLow, amOpen, amClose]
 
 class SilverBullet():
     def __init__(self, security, take_profit_margin, stop_loss_margin, OVERRIDE=False):
+        with open(f"trade_logs/{security}_candidate_trades_{tc.get_today().date()}.txt", "w") as f:
+            f.write("Proprietary Information of Bentham Trading \n")
+
         self.security = security
         self.take_profit_margin = take_profit_margin
         self.stop_loss_margin = stop_loss_margin
@@ -327,9 +309,6 @@ class SilverBullet():
         self.liquidity_lines = get_primary_liquidity(
             security, current_time=tc.get_today())
         self.GOT_SECONDARY_LIQUIDITY = False
-
-        with open(f"trade_logs/{security}_candidate_trades_{tc.get_today().date()}.txt", "w") as f:
-            f.write("Proprietary Information of Bentham Trading \n")
 
         self.candidate_trades = CandidateTrades()
         self.last_known_data_point = None
@@ -358,27 +337,27 @@ class SilverBullet():
         tc.turn_off_override()
     
     def run_cycle(self, current_time):
-        print(f"[INFO] Cycle run at {current_time}")
+        print(f"[INFO] Cycle run at {current_time} for {self.security}")
 
         # only get data if the minute time is on an interval mark or data has never been pulled before
         if self.last_pulled_minute == -1 or (current_time.minute % INTERVAL == 0 and current_time.minute != self.last_pulled_minute):
+            print(f"[INFO] Retrieving data for {self.security} at {current_time}")
             self.security_data.get_day_data("todaysData", current_time, interval=INTERVAL, delta=0)
             self.last_pulled_minute = current_time.minute
 
         # add new liquidity lines after AM session
         if tc.datetime_is_between(current_time, "11:00", "11:05") and not self.GOT_SECONDARY_LIQUIDITY:
-            print("[INFO] ADDING LIQUIDITY LINES FROM AM SESSION")
+            print(f"[INFO] ADDING LIQUIDITY LINES FROM AM SESSION FOR {{self.security}}")
             self.liquidity_lines += get_secondary_liquidity(
                 self.security, current_time, self.security_data["todaysData"])
             self.GOT_SECONDARY_LIQUIDITY = True
 
         todays_data = self.security_data["todaysData"]
-        print(f"[INFO] Last known data point time: {self.last_known_data_point}")
         # print(todays_data.tail())
 
         # only iterate through procedure on new data
         if (not todays_data.empty) and ((self.last_known_data_point is None) or (self.last_known_data_point < todays_data.index[-1])):
-            print(f"[INFO] New data found, running silver bullet cycle")
+            print(f"[INFO] New data found at {current_time}, running silver bullet cycle for {self.security}")
             for liquidity_line in self.liquidity_lines:
                 liquidity_line.breach_list.append(
                     self.security, todays_data[-1:])
@@ -401,18 +380,18 @@ class SilverBullet():
 
             self.last_known_data_point = todays_data.index[-1]
 
-        # separate function for take profit points
-        if len(todays_data) >= 3:
-            middleCandleTime = todays_data.index[-2]
-            if Swing.isSwingHigh(todays_data[-3:]):
-                swingHigh = Swing(
-                    middleCandleTime, todays_data.iloc[-2]["High"], "HIGH")
-                self.takeProfitSwingHighs.append(swingHigh)
+            # separate function for take profit points
+            if len(todays_data) >= 3:
+                middleCandleTime = todays_data.index[-2]
+                if Swing.isSwingHigh(todays_data[-3:]):
+                    swingHigh = Swing(
+                        middleCandleTime, todays_data.iloc[-2]["High"], "HIGH")
+                    self.takeProfitSwingHighs.append(swingHigh)
 
-            if Swing.isSwingLow(todays_data[-3:]):
-                swingLow = Swing(
-                    middleCandleTime, todays_data.iloc[-2]["Low"], "LOW")
-                self.takeProfitSwingLows.append(swingLow)
+                if Swing.isSwingLow(todays_data[-3:]):
+                    swingLow = Swing(
+                        middleCandleTime, todays_data.iloc[-2]["Low"], "LOW")
+                    self.takeProfitSwingLows.append(swingLow)
             
 
     
