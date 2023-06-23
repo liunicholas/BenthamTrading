@@ -5,7 +5,6 @@ import yfinance as yf
 from twelvedata import TDClient
 from datetime import timedelta, datetime
 import pandas as pd
-from time import sleep
 
 # twelvedata keys
 twelvedata_api_key_1 = '118aed5a291f4a9fb7c36cfb590db853'

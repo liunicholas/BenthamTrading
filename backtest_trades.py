@@ -1,9 +1,4 @@
 from trader import *
-import trading_clock as tc
-from datetime import datetime, date, time, timedelta
-import yfinance as yf
-import pytz
-import time
 
 datetime_range = [tc.localize(datetime(2023, 6, 22, 9, 30, 0)),
                   tc.localize(datetime(2023, 6, 22, 16, 0, 0))]

@@ -333,6 +333,7 @@ class SilverBullet():
 
         self.candidate_trades = CandidateTrades()
         self.last_known_data_point = None
+        self.last_pulled_minute = -1
 
         if not OVERRIDE and tc.real_time()-timedelta(minutes=INTERVAL) > tc.localize(datetime.combine(tc.get_today().date(), tc.exchange_openclose[security][0])):
             start_time = tc.localize(datetime.combine(
@@ -359,22 +360,25 @@ class SilverBullet():
     def run_cycle(self, current_time):
         print(f"[INFO] Cycle run at {current_time}")
 
-        # only get data if the minute time is on an interval mark
-        if (current_time.minute % INTERVAL) == 0:
+        # only get data if the minute time is on an interval mark or data has never been pulled before
+        if self.last_pulled_minute == -1 or (current_time.minute % INTERVAL == 0 and current_time.minute != self.last_pulled_minute):
             self.security_data.get_day_data("todaysData", current_time, interval=INTERVAL, delta=0)
+            self.last_pulled_minute = current_time.minute
 
         # add new liquidity lines after AM session
         if tc.datetime_is_between(current_time, "11:00", "11:05") and not self.GOT_SECONDARY_LIQUIDITY:
-            print("ADDING LIQUIDITY LINES")
+            print("[INFO] ADDING LIQUIDITY LINES FROM AM SESSION")
             self.liquidity_lines += get_secondary_liquidity(
                 self.security, current_time, self.security_data["todaysData"])
             self.GOT_SECONDARY_LIQUIDITY = True
 
         todays_data = self.security_data["todaysData"]
-        print(todays_data.tail())
+        print(f"[INFO] Last known data point time: {self.last_known_data_point}")
+        # print(todays_data.tail())
 
         # only iterate through procedure on new data
-        if ((self.last_known_data_point is None) or (self.last_known_data_point < todays_data.index[-1])) and (not todays_data.empty):
+        if (not todays_data.empty) and ((self.last_known_data_point is None) or (self.last_known_data_point < todays_data.index[-1])):
+            print(f"[INFO] New data found, running silver bullet cycle")
             for liquidity_line in self.liquidity_lines:
                 liquidity_line.breach_list.append(
                     self.security, todays_data[-1:])
