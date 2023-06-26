@@ -21,8 +21,18 @@ async def send_message():
         with open(spx_path, 'r') as f:
             lines = f.readlines()
 
-        if len(lines) >= 10:
-            last_lines = lines[-10:-1]
+        count = 0
+        for i in range(len(lines)-1,0, -1):
+            if lines[i] == "\n":
+                count += 1
+            else:
+                break
+        
+        for i in range(count):
+            lines.pop()
+
+        if len(lines) >= 9:
+            last_lines = lines[-9:]
             if ("[TRADE ORDER]:" in last_lines[0]) and last_to_spx != last_lines:
                 channel = client.get_channel(1121157472690909316)
                 message="@everyone\n"
@@ -36,8 +46,18 @@ async def send_message():
         with open(nasdaq_path, 'r') as f:
             lines = f.readlines()
 
-        if len(lines) >= 10:
-            last_lines = lines[-10:-1]
+        count = 0
+        for i in range(len(lines)-1,0, -1):
+            if lines[i] == "\n":
+                count += 1
+            else:
+                break
+        
+        for i in range(count):
+            lines.pop()
+
+        if len(lines) >= 9:
+            last_lines = lines[-9:]
             if ("[TRADE ORDER]:" in last_lines[0]) and last_to_nasdaq != last_lines:
                 channel = client.get_channel(1121157472690909316)
                 message="@everyone\n"
