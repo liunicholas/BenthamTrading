@@ -1,10 +1,21 @@
 from trader import *
 
-datetime_range = [tc.localize(datetime(2023, 6, 22, 9, 30, 0)),
-                  tc.localize(datetime(2023, 6, 22, 16, 0, 0))]
+test_date_start = tc.localize(datetime(2023, 6, 23, 9, 30, 0))
+test_date_end = tc.localize(datetime(2023, 6, 23, 16, 0, 0))
+for i in range(7):
+    # override time so the log file is written correctly
+    tc.override(test_date_start)
+    snp_silver_bullet = SilverBullet(security="^spx", take_profit_margin=30, stop_loss_margin=10, OVERRIDE=True)
+    snp_silver_bullet.simulate_cycles(
+        start_time=test_date_start, end_time=test_date_end)
 
-tc.override(datetime_range[0])  # override time so the log file is written correctly
-snp_silver_bullet = SilverBullet(
-    security="^ixic", take_profit_margin=30, stop_loss_margin=10, OVERRIDE=True)
+    tc.override(test_date_start)
+    ndq_silver_bullet = SilverBullet(security="^ixic", take_profit_margin=30, stop_loss_margin=10, OVERRIDE=True)
+    ndq_silver_bullet.simulate_cycles(
+        start_time=test_date_start, end_time=test_date_end)
 
-snp_silver_bullet.simulate_cycles(start_time=datetime_range[0], end_time=datetime_range[1])
+    test_date_start = tc.localize(datetime.combine(
+        tc.get_last_trading_date("^spx", test_date_start), time(9, 30, 0)))
+    
+    test_date_end = tc.localize(datetime.combine(
+        tc.get_last_trading_date("^spx", test_date_end), time(16, 0, 0)))

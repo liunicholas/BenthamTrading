@@ -2,16 +2,16 @@ from trader import *
 import trading_clock as tc
 from silver_bullet import *
 from util import *
-from datetime import datetime, date, time, timedelta
+from datetime import datetime
 
-datetime_range = [tc.localize(datetime(2023, 6, 22, 9, 31, 0)),
-                  tc.localize(datetime(2023, 6, 22, 16, 0, 0))]
+datetime_range = [tc.localize(datetime(2023, 6, 23, 9, 31, 0)),
+                  tc.localize(datetime(2023, 6, 23, 16, 0, 0))]
 
 start = datetime_range[0]
 end = datetime_range[1]
 this_generator = tc.get_generator([start, end])
 
-security = "^spx"
+security = "^ixic"
 trade_log = f"trade_logs/{security}_candidate_trades_{datetime_range[0].date()}.txt"
 
 trade_orders = []

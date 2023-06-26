@@ -29,7 +29,8 @@ class SecurityData:
         elif delta == 0:
             self.data_master[day_name] = self.get_today_data(current_time, interval)
         else:
-            self.data_master[day_name] = self.get_yfinance_data(desired_date, desired_date+timedelta(days=1), interval)
+            self.data_master[day_name] = self.get_yfinance_data(
+                desired_date, desired_date+timedelta(days=1), f'{interval}m')
     
     def __getitem__(self, day_name):
         return self.data_master[day_name]
@@ -46,7 +47,7 @@ class SecurityData:
             )
 
         today_data_yfinance = self.get_yfinance_data(start=current_time.date(), end=tc.get_delta_trading_date(
-                self.security, current_time.date(), 1), interval=interval)
+            self.security, current_time.date(), 1), interval=f'{interval}m')
         
         # combine twelvedata and yfinance if necessary
         if not today_data_twelvedata.empty:
@@ -77,21 +78,24 @@ class SecurityData:
 
         return today_data
 
-    def get_yfinance_data(self, start, end, interval):
-        day_data = yf.download(
+    def get_yfinance_data(self, start, end, interval, name=None):
+        yf_data = yf.download(
             progress=False,
             tickers=self.security,
             start=start,
             end=end,
-            interval=f'{interval}m'
+            interval=interval
         )
-        day_data = day_data.drop('Adj Close', axis=1)
+        yf_data = yf_data.drop('Adj Close', axis=1)
 
-        if day_data.empty:
+        if yf_data.empty:
             print("[ERROR] No data found for this query")
             print("[SUGGESTION] run 'pip install yfinance --upgrade --no-cache-dir'")
         
-        return day_data
+        if name is None:
+            return yf_data
+        else:
+            self.data_master[name] = yf_data
 
     def get_twelve_data(self, start, end, interval):
         if self.security == "^spx":

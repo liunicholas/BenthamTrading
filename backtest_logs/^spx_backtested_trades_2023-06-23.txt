@@ -1,0 +1,13 @@
+
+[EXECUTED TRADE]: 
+         Exit Type: TRADE PERIOD END (LIQUIDATE), 
+         Trade Type: SHORT, 
+         Security: ^spx, 
+         Position Size: 4.43, 
+         Entry Time: 2023-06-23 14:55:00-04:00, 
+         Entry Price: 4347.95, 
+         Exit Time: 2023-06-23 15:35:00-04:00, 
+         Exit Price: 4349.10, 
+         PNL: -50.98, 
+
+Final PNL $-50.98 

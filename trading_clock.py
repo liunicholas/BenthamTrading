@@ -102,12 +102,21 @@ def get_delta_trading_date(security, date, delta):
         for _ in range(delta):
             date = get_next_trading_date(security, date)
     elif delta < 0:
-        for _ in range(-1*delta):
+        for _ in range(-delta):
             date = get_last_trading_date(security, date)
     else:
         date = date
     
     return date
+
+def get_trading_days_between(security, start, end):
+    days = 0
+    current_index = start
+    while current_index < end:
+        days += 1
+        current_index = get_next_trading_date(security, current_index)
+
+    return days
     
 def datetime_is_between(t, start_time, end_time):
     return parse_hour_minute(start_time) <= t.time() <= parse_hour_minute(end_time)
