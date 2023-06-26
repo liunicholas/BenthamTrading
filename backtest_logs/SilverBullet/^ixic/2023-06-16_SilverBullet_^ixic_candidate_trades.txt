@@ -1,0 +1,49 @@
+
+[EXECUTED TRADE]: 
+         Exit Type: STOMPED, 
+         Trade Type: SHORT, 
+         Security: ^ixic, 
+         Position Size: 1.69, 
+         Entry Time: 2023-06-16 11:00:00-04:00, 
+         Entry Price: 13767.78, 
+         Exit Time: 2023-06-16 11:10:00-04:00, 
+         Exit Price: 13782.61, 
+         PNL: -249.94, 
+
+
+[EXECUTED TRADE]: 
+         Exit Type: STOMPED, 
+         Trade Type: SHORT, 
+         Security: ^ixic, 
+         Position Size: 1.07, 
+         Entry Time: 2023-06-16 11:00:00-04:00, 
+         Entry Price: 13769.83, 
+         Exit Time: 2023-06-16 11:15:00-04:00, 
+         Exit Price: 13793.21, 
+         PNL: -249.99, 
+
+
+[EXECUTED TRADE]: 
+         Exit Type: TAKE PROFIT, 
+         Trade Type: SHORT, 
+         Security: ^ixic, 
+         Position Size: 1.85, 
+         Entry Time: 2023-06-16 14:40:00-04:00, 
+         Entry Price: 13741.56, 
+         Exit Time: 2023-06-16 15:05:00-04:00, 
+         Exit Price: 13704.83, 
+         PNL: 679.12, 
+
+
+[EXECUTED TRADE]: 
+         Exit Type: TRADE PERIOD END (LIQUIDATE), 
+         Trade Type: SHORT, 
+         Security: ^ixic, 
+         Position Size: 1.50, 
+         Entry Time: 2023-06-16 15:05:00-04:00, 
+         Entry Price: 13719.31, 
+         Exit Time: 2023-06-16 15:35:00-04:00, 
+         Exit Price: 13721.04, 
+         PNL: -25.86, 
+
+Final PNL $153.32 

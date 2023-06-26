@@ -4,7 +4,7 @@ import trading_clock as tc
 from data import *
 from datetime import date
 
-def get_FVGS(security, ts_data, odds_date):
+def get_FVGS(security_type, ts_data, odds_date):
     # key is date distance, value is mid price level
     FVGS = {}
 
@@ -12,7 +12,8 @@ def get_FVGS(security, ts_data, odds_date):
     middle_date, middle_low, middle_high = ts_data.index[1], ts_data["Low"][1], ts_data["High"][1]
     for right_date, right_low, right_high in zip(ts_data.index[2:], ts_data["Low"][2:], ts_data["High"][2:]):
         
-        timedelta = tc.get_trading_days_between(security, right_date.to_pydatetime().date(), odds_date)
+        timedelta = tc.get_trading_days_between(
+            security_type, right_date.to_pydatetime().date(), odds_date)
 
         if right_low > left_high:
             FVGS[timedelta] = (right_low+left_high)/2
@@ -24,7 +25,8 @@ def get_FVGS(security, ts_data, odds_date):
     
     return FVGS
 
-def get_SWINGS(security, ts_data, odds_date):
+
+def get_SWINGS(security_type, ts_data, odds_date):
     SWINGS = {}
 
     left_date, left_low, left_high = ts_data.index[0], ts_data["Low"][0], ts_data["High"][0]
@@ -32,7 +34,7 @@ def get_SWINGS(security, ts_data, odds_date):
     for right_date, right_low, right_high in zip(ts_data.index[2:], ts_data["Low"][2:], ts_data["High"][2:]):
 
         timedelta = tc.get_trading_days_between(
-            security, middle_date.to_pydatetime().date(), odds_date)
+            security_type, middle_date.to_pydatetime().date(), odds_date)
 
         if middle_high > right_high and middle_high > left_high:
             SWINGS[timedelta] = middle_high
@@ -44,8 +46,8 @@ def get_SWINGS(security, ts_data, odds_date):
 
     return SWINGS
     
-def get_coin_odds(odds_date, security):
-    security_data = SecurityData(security)
+def get_coin_odds(odds_date, security, security_type):
+    security_data = SecurityData(security, security_type)
     # one month dailies
     security_data.get_yfinance_data(
         odds_date-timedelta(weeks=4), odds_date, interval="1d", name="dailies")
@@ -54,15 +56,17 @@ def get_coin_odds(odds_date, security):
         odds_date-timedelta(weeks=52), odds_date, interval="1wk", name="weeklies")
 
     # get all midpoints of FVGS and their time distance from odds date
-    daily_FVGS = get_FVGS(security, security_data["dailies"], odds_date)
+    daily_FVGS = get_FVGS(security_type, security_data["dailies"], odds_date)
     # print(daily_FVGS)
-    weekly_FVGS = get_FVGS(security, security_data["weeklies"], odds_date)
+    weekly_FVGS = get_FVGS(security_type, security_data["weeklies"], odds_date)
     # print(weekly_FVGS)
 
     # get all swings and their time distance from odds date
-    daily_SWINGS = get_SWINGS(security, security_data["dailies"], odds_date)
+    daily_SWINGS = get_SWINGS(
+        security_type, security_data["dailies"], odds_date)
     # print(daily_SWINGS)
-    weekly_SWINGS = get_SWINGS(security, security_data["dailies"], odds_date)
+    weekly_SWINGS = get_SWINGS(
+        security_type, security_data["dailies"], odds_date)
     # print(weekly_SWINGS)
 
     current_price = security_data["dailies"][-1:]["Close"].item()
@@ -105,9 +109,10 @@ def get_coin_odds(odds_date, security):
 
 if __name__ == "__main__":
     security = "^spx"
+    security_type = "ETF"
     odds_date = date(2023, 5, 12)
     for i in range(35):
-        heads_odd, tails_odd = get_coin_odds(odds_date + timedelta(days=i), security)
+        heads_odd, tails_odd = get_coin_odds(odds_date + timedelta(days=i), security, security_type)
         print(f"Odds for {odds_date + timedelta(days=i)}")
         print(f"Bull: {heads_odd:0.2f}")
         print(f"Bear: {tails_odd:0.2f}")

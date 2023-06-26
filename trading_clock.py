@@ -3,13 +3,15 @@ import pytz
 
 new_york_tz = pytz.timezone('America/New_York')
 
+exchange_openclose = {
+    "ETF": [time(hour=9, minute=30), time(hour=16)],
+}
+
 def localize(dt):
     return new_york_tz.localize(dt)
 
-exchange_openclose = {
-    "^spx": [time(hour=9, minute=30), time(hour=16)], 
-    "^ixic": [time(hour=9, minute=30), time(hour=16)],
-    }
+def tz_to_ny(dt):
+    return dt.astimezone(new_york_tz)
 
 # default variables
 OVERRIDE = False
@@ -52,69 +54,77 @@ def get_today():
     if OVERRIDE:
         return OVERRIDE_TIME
     else:
-        today = datetime.now(new_york_tz)
-        return today
+        return tz_to_ny(datetime.now())
 
 def real_time():
     # NO OVERRIDE
-    return datetime.now(new_york_tz)
+    return tz_to_ny(datetime.now())
 
-
-def is_market_open(security="^spx", current_datetime=get_today(), VERBOSE=False):
+def is_market_open(security_type, current_datetime, VERBOSE=False):
     if VERBOSE:
         print(f"[INFO] Checking time {current_datetime} for market open")
 
-    holidays = [datetime(2023, 6, 19).date(), datetime(2023, 7, 4).date(),
-                datetime(2023, 9, 4).date(), datetime(2023, 10, 9).date(),
-                datetime(2023, 11, 11).date(), datetime(2023, 11, 23).date(),
-                datetime(2023, 12, 25).date()]
+    if security_type == "ETF":
+        holidays = [date(2023, 6, 19), date(2023, 7, 4),
+                    date(2023, 9, 4), date(2023, 10, 9),
+                    date(2023, 11, 11), date(2023, 11, 23),
+                    date(2023, 12, 25)]
+        
+        start_time = exchange_openclose["ETF"][0]
+        end_time = exchange_openclose["ETF"][1]
+
+        current_time = current_datetime.time()
+        current_date = current_datetime.date()
+        
+        is_tradinghour = start_time <= current_time <= end_time
+        is_weekend = current_date.weekday() >= 5
+        is_holiday = current_date in holidays
+
+        return is_tradinghour and not is_weekend and not is_holiday
     
-    start_time = exchange_openclose[security][0]
-    end_time = exchange_openclose[security][1]
+    elif security_type == "CFD":
+        print("[ERROR] Not Implemented Yet")
+        pass
+    elif security_type == "FUTURES":
+        print("[ERROR] Not Implemented Yet")
+        pass
+    else:
+        print("[ERROR] Market Times Not Available")
 
-    current_time = current_datetime.time()
-    current_date = current_datetime.date()
-    
-    is_tradinghour = start_time <= current_time <= end_time
-    is_weekend = current_date.weekday() >= 5
-    is_holiday = current_date in holidays
-
-    return is_tradinghour and not is_weekend and not is_holiday
-
-def get_last_trading_date(security, date):
+def get_last_trading_date(security_type, date):
     lastTradingDay = localize(datetime.combine(date-timedelta(days=1), time(9, 35, 0)))
 
-    while not is_market_open(security, lastTradingDay):
+    while not is_market_open(security_type, lastTradingDay):
         lastTradingDay -= timedelta(days=1)
     
     return lastTradingDay.date()
 
-def get_next_trading_date(security, date):
+def get_next_trading_date(security_type, date):
     TradingDay = localize(datetime.combine(date+timedelta(days=1), time(9, 35, 0)))
 
-    while not is_market_open(security, TradingDay):
+    while not is_market_open(security_type, TradingDay):
         TradingDay += timedelta(days=1)
     
     return TradingDay.date()
 
-def get_delta_trading_date(security, date, delta):
+def get_delta_trading_date(security_type, date, delta):
     if delta > 0:
         for _ in range(delta):
-            date = get_next_trading_date(security, date)
+            date = get_next_trading_date(security_type, date)
     elif delta < 0:
         for _ in range(-delta):
-            date = get_last_trading_date(security, date)
+            date = get_last_trading_date(security_type, date)
     else:
         date = date
     
     return date
 
-def get_trading_days_between(security, start, end):
+def get_trading_days_between(security_type, start, end):
     days = 0
     current_index = start
     while current_index < end:
         days += 1
-        current_index = get_next_trading_date(security, current_index)
+        current_index = get_next_trading_date(security_type, current_index)
 
     return days
     
@@ -126,4 +136,4 @@ def parse_hour_minute(stringTime):
     return time(hour=int(splitTime[0]), minute=int(splitTime[1]))
 
 if __name__ == "__main__":
-    print(datetime_is_between(datetime.now(new_york_tz), "4:00", "5:00"))
+    print(datetime_is_between(real_time(), "4:00", "5:00"))

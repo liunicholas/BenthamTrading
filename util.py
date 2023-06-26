@@ -1,15 +1,26 @@
-def log(security, datetime, line):
-    def line_exists_in_file(file_path, target_line):
-        with open(file_path, 'r') as file:
-            for line in file:
-                if line.strip() == target_line:
-                    return True
-        return False
+class StrategyLogger:
+    def __init__(self, security, strategy_name, date):
+        self.security = security
+        self.strategy_name = strategy_name
+        self.date = date
+        self.file_path = f"trade_logs/{strategy_name}/{security}/{date}_{strategy_name}_{security}_candidate_trades.txt"
 
-    with open(f"trade_logs/{security}_candidate_trades_{datetime.date()}.txt", "a") as f:
-        if not line_exists_in_file(f"trade_logs/{security}_candidate_trades_{datetime.date()}.txt", line):
-            f.write(line + "\n")
-            print(line)
+        with open(self.file_path, "w") as f:
+            f.write(f"Proprietary Information of Bentham Trading {self.date} \n")
+            f.write(f"Log file for {self.strategy_name} on {self.security} \n \n")
+
+    def log(self, line):
+        def line_exists_in_file(file_path, target_line):
+            with open(file_path, 'r') as file:
+                for line in file:
+                    if line.strip() == target_line:
+                        return True
+            return False
+
+        with open(self.file_path, "a") as f:
+            if not line_exists_in_file(self.file_path, line):
+                f.write(line + "\n")
+                print(line)
 
 class TradeOrder:
     def __init__(self, security, time_found, entry, stop_limit, take_profit, position_size, trade_type, leverage):

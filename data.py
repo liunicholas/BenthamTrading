@@ -16,13 +16,14 @@ twelvedata_keys = [twelvedata_api_key_1,
                    twelvedata_api_key_3]
 
 class SecurityData:
-    def __init__(self, security):
+    def __init__(self, security, security_type):
         self.data_master = {}
         self.security = security
+        self.security_type = security_type
     
     def get_day_data(self, day_name, current_time, interval, delta):
         current_date = current_time.date()
-        desired_date = tc.get_delta_trading_date(self.security, current_date, delta)
+        desired_date = tc.get_delta_trading_date(self.security_type, current_date, delta)
     
         if desired_date > tc.real_time().date():
             print("[ERROR] Bad day data request: date is in the future.")
@@ -42,12 +43,12 @@ class SecurityData:
         if (tc.real_time() - current_time) < timedelta(minutes=30):  
             today_data_twelvedata = self.get_twelve_data(
                 start=current_time.date(), 
-                end=tc.get_delta_trading_date(self.security, current_time.date(), 1), 
+                end=tc.get_delta_trading_date(self.security_type, current_time.date(), 1), 
                 interval=interval
             )
 
         today_data_yfinance = self.get_yfinance_data(start=current_time.date(), end=tc.get_delta_trading_date(
-            self.security, current_time.date(), 1), interval=f'{interval}m')
+            self.security_type, current_time.date(), 1), interval=f'{interval}m')
         
         # combine twelvedata and yfinance if necessary
         if not today_data_twelvedata.empty:

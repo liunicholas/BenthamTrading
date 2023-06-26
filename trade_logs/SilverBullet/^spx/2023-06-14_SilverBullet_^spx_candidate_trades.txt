@@ -1,4 +1,6 @@
-Proprietary Information of Bentham Trading 
+Proprietary Information of Bentham Trading 2023-06-14 
+Log file for SilverBullet on ^spx 
+ 
 [INFO] Previous day PM high BUYSIDE liquidity line at time 2023-06-13 16:00:00 at price level 4374.33984375
 [INFO] Previous day PM low SELLSIDE liquidity line at time 2023-06-13 16:00:00 at price level 4356.1201171875
 [BREACH] BUYSIDE at time 2023-06-14 09:45:00-04:00 at price level 4375.990234375
