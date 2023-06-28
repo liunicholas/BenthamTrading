@@ -4,12 +4,12 @@ from silver_bullet import *
 from util import *
 from datetime import datetime
 
-test_date_start = tc.localize(datetime(2023, 6, 23, 9, 35, 0))
-test_date_end = tc.localize(datetime(2023, 6, 23, 16, 0, 0))
-for i in range(7):
+test_date_start = tc.localize(datetime(2023, 6, 26, 9, 35, 0))
+test_date_end = tc.localize(datetime(2023, 6, 26, 16, 0, 0))
+for i in range(1):
     this_generator = tc.get_generator([test_date_start, test_date_end])
 
-    security = "^spx"
+    security = "^ixic"
     security_type = "ETF"
     strategy_name = "SilverBullet"
     trade_log = f"trade_logs/{strategy_name}/{security}/{test_date_start.date()}_{strategy_name}_{security}_candidate_trades.txt"

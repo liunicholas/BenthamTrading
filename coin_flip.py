@@ -77,9 +77,9 @@ def get_coin_odds(odds_date, security, security_type):
 
     for fvg in daily_FVGS:
         if current_price < daily_FVGS[fvg]:
-            heads_weight += 8*((daily_FVGS[fvg]-current_price) * (20-fvg))**(1/2)
+            heads_weight += 10*((daily_FVGS[fvg]-current_price) * (20-fvg))**(1/2)
         if current_price > daily_FVGS[fvg]:
-            tails_weight += 8*((current_price-daily_FVGS[fvg]) * (20-fvg))**(1/2)
+            tails_weight += 10*((current_price-daily_FVGS[fvg]) * (20-fvg))**(1/2)
     
     for fvg in weekly_FVGS:
         if current_price < weekly_FVGS[fvg]:
@@ -110,8 +110,8 @@ def get_coin_odds(odds_date, security, security_type):
 if __name__ == "__main__":
     security = "^spx"
     security_type = "ETF"
-    odds_date = date(2023, 5, 12)
-    for i in range(35):
+    odds_date = date(2023, 6, 27)
+    for i in range(1):
         heads_odd, tails_odd = get_coin_odds(odds_date + timedelta(days=i), security, security_type)
         print(f"Odds for {odds_date + timedelta(days=i)}")
         print(f"Bull: {heads_odd:0.2f}")

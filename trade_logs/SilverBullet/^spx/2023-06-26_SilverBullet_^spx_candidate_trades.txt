@@ -1,0 +1,101 @@
+Proprietary Information of Bentham Trading 2023-06-26 
+Log file for SilverBullet on ^spx 
+ 
+[INFO] Previous day PM high BUYSIDE liquidity line at time 2023-06-23 16:00:00 at price level 4366.5498046875
+[INFO] Previous day PM low SELLSIDE liquidity line at time 2023-06-23 16:00:00 at price level 4341.33984375
+[BREACH] SELLSIDE at time 2023-06-26 10:40:00-04:00 at price level 4340.759765625
+[INFO] AM High BUYSIDE liquidity line at time 2023-06-26 11:00:00-04:00 at price level 4362.06005859375
+[INFO] AM Low SELLSIDE liquidity line at time 2023-06-26 11:00:00-04:00 at price level 4340.759765625
+[SWING] HIGH at time 2023-06-26 10:50:00-04:00 at price level 4353.2099609375
+[SWING] HIGH at time 2023-06-26 11:00:00-04:00 at price level 4351.43017578125
+[INFO] Not a valid swing high or low at 2023-06-26 11:05:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 11:15:00-04:00 at price level 4341.22998046875
+[BREACH] SELLSIDE at time 2023-06-26 11:20:00-04:00 at price level 4339.4599609375
+[SWING] HIGH at time 2023-06-26 11:15:00-04:00 at price level 4346.1201171875
+[BREACH] SELLSIDE at time 2023-06-26 11:25:00-04:00 at price level 4339.8701171875
+[INFO] Not a valid swing high or low at 2023-06-26 11:20:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 11:30:00-04:00 at price level 4340.02978515625
+[BREACH] SELLSIDE at time 2023-06-26 11:40:00-04:00 at price level 4340.08984375
+[SWING] HIGH at time 2023-06-26 11:35:00-04:00 at price level 4345.919921875
+[INFO] Not a valid swing high or low at 2023-06-26 11:40:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 12:05:00-04:00 at price level 4336.97998046875
+[SWING] HIGH at time 2023-06-26 12:00:00-04:00 at price level 4348.81982421875
+[BREACH] SELLSIDE at time 2023-06-26 12:10:00-04:00 at price level 4334.56005859375
+[BREACH] SELLSIDE at time 2023-06-26 12:15:00-04:00 at price level 4337.0400390625
+[INFO] Not a valid swing high or low at 2023-06-26 12:10:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 12:20:00-04:00 at price level 4337.22021484375
+[BREACH] SELLSIDE at time 2023-06-26 12:25:00-04:00 at price level 4339.33984375
+[SWING] HIGH at time 2023-06-26 12:20:00-04:00 at price level 4342.919921875
+[BREACH] SELLSIDE at time 2023-06-26 12:30:00-04:00 at price level 4337.1298828125
+[BREACH] SELLSIDE at time 2023-06-26 12:35:00-04:00 at price level 4335.8798828125
+[BREACH] SELLSIDE at time 2023-06-26 12:40:00-04:00 at price level 4332.8798828125
+[BREACH] SELLSIDE at time 2023-06-26 12:45:00-04:00 at price level 4333.35009765625
+[INFO] Not a valid swing high or low at 2023-06-26 12:40:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 12:50:00-04:00 at price level 4334.7001953125
+[BREACH] SELLSIDE at time 2023-06-26 12:55:00-04:00 at price level 4336.81982421875
+[BREACH] SELLSIDE at time 2023-06-26 13:00:00-04:00 at price level 4338.56982421875
+[BREACH] SELLSIDE at time 2023-06-26 13:05:00-04:00 at price level 4337.330078125
+[INFO] Not a valid swing high or low at 2023-06-26 13:00:00-04:00
+[SWING] HIGH at time 2023-06-26 13:00:00-04:00 at price level 4340.990234375
+[BREACH] SELLSIDE at time 2023-06-26 13:10:00-04:00 at price level 4335.93017578125
+[BREACH] SELLSIDE at time 2023-06-26 13:15:00-04:00 at price level 4337.27978515625
+[INFO] Not a valid swing high or low at 2023-06-26 13:10:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 13:20:00-04:00 at price level 4338.2099609375
+[BREACH] SELLSIDE at time 2023-06-26 13:25:00-04:00 at price level 4336.00977
+[BREACH] SELLSIDE at time 2023-06-26 13:30:00-04:00 at price level 4340.18994
+[INFO] Not a valid swing high or low at 2023-06-26 13:25:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 13:35:00-04:00 at price level 4338.83008
+[SWING] HIGH at time 2023-06-26 13:30:00-04:00 at price level 4342.5
+[BREACH] SELLSIDE at time 2023-06-26 13:40:00-04:00 at price level 4339.06982
+[INFO] Not a valid swing high or low at 2023-06-26 13:35:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 13:45:00-04:00 at price level 4339.0498
+[SWING] HIGH at time 2023-06-26 13:40:00-04:00 at price level 4342.66992
+[BREACH] SELLSIDE at time 2023-06-26 13:50:00-04:00 at price level 4337.93994
+[BREACH] SELLSIDE at time 2023-06-26 13:55:00-04:00 at price level 4336.91016
+[BREACH] SELLSIDE at time 2023-06-26 14:00:00-04:00 at price level 4336.24023
+[BREACH] SELLSIDE at time 2023-06-26 14:05:00-04:00 at price level 4335.2002
+[BREACH] SELLSIDE at time 2023-06-26 14:10:00-04:00 at price level 4335.2998
+[INFO] Not a valid swing high or low at 2023-06-26 14:05:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 14:15:00-04:00 at price level 4334.74023
+[BREACH] SELLSIDE at time 2023-06-26 14:20:00-04:00 at price level 4333.77979
+[BREACH] SELLSIDE at time 2023-06-26 14:25:00-04:00 at price level 4333.72998
+[INFO] Not a valid swing high or low at 2023-06-26 14:20:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 14:30:00-04:00 at price level 4336.58984
+[BREACH] SELLSIDE at time 2023-06-26 14:35:00-04:00 at price level 4340.85986
+[FVG] GREEN at time 2023-06-26 14:35:00-04:00 at entry 4340.85986 and stop loss 4337.29004
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ^spx, 
+         Time Found: 2023-06-26 14:40:00-04:00, 
+         Entry Price: 4340.86, 
+         Stop Limit: 4337.29004, 
+         Take Profit: 4351.43017578125, 
+         Position Size: 7.003154220661557, 
+         Leverage Multiplier: 10, 
+
+[FVG] GREEN at time 2023-06-26 14:40:00-04:00 at entry 4343.10986 and stop loss 4341.56982
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ^spx, 
+         Time Found: 2023-06-26 14:45:00-04:00, 
+         Entry Price: 4343.11, 
+         Stop Limit: 4340.08984375, 
+         Take Profit: 4353.2099609375, 
+         Position Size: 8.27810115260259, 
+         Leverage Multiplier: 10, 
+
+[SWING] HIGH at time 2023-06-26 14:40:00-04:00 at price level 4344.79004
+[SWING] HIGH at time 2023-06-26 14:50:00-04:00 at price level 4344.97021
+[INFO] Not a valid swing high or low at 2023-06-26 14:55:00-04:00
+[SWING] HIGH at time 2023-06-26 15:05:00-04:00 at price level 4345.08008
+[BREACH] SELLSIDE at time 2023-06-26 15:20:00-04:00 at price level 4340.77979
+[INFO] Not a valid swing high or low at 2023-06-26 15:20:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 15:30:00-04:00 at price level 4340.89014
+[INFO] Not a valid swing high or low at 2023-06-26 15:30:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 15:40:00-04:00 at price level 4339.7002
+[BREACH] SELLSIDE at time 2023-06-26 15:45:00-04:00 at price level 4331.25977
+[BREACH] SELLSIDE at time 2023-06-26 15:50:00-04:00 at price level 4332.50977
+[INFO] Not a valid swing high or low at 2023-06-26 15:45:00-04:00
+[BREACH] SELLSIDE at time 2023-06-26 15:55:00-04:00 at price level 4328.08008
