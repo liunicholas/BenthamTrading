@@ -11,9 +11,9 @@ from selenium.webdriver.common.by import By
 
 options = webdriver.ChromeOptions()
 options.add_argument("window-size=1440, 751")
-options.add_argument("--profile-directory=Profile 10")
+# options.add_argument("--profile-directory=Profile 10")
 options.add_argument("--headless")
-options.add_argument("user-data-dir=/Users/jameshou/Library/Application Support/Google/Chrome/User Data")
+# options.add_argument("user-data-dir=/Users/jameshou/Library/Application Support/Google/Chrome/User Data")
 driver = webdriver.Chrome(options=options)
 driver.maximize_window()
 driver.get('https://www.tradingview.com/chart/?symbol=EIGHTCAP%3ASPX500')
