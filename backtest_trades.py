@@ -1,8 +1,10 @@
 from trader import *
 
-test_date_start = tc.localize(datetime(2023, 6, 23, 9, 30, 0))
-test_date_end = tc.localize(datetime(2023, 6, 23, 16, 0, 0))
-for i in range(7):
+month = 6
+day = 29
+test_date_start = tc.localize(datetime(2023, month, day, 9, 30, 0))
+test_date_end = tc.localize(datetime(2023, month, day, 16, 0, 0))
+for i in range(2):
     # override time so the log file is written correctly
     tc.override(test_date_start)
     snp_silver_bullet = SilverBullet(
