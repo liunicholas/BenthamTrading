@@ -8,6 +8,8 @@ import pandas as pd
 import numpy as np
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.keys import Keys
 
 options = webdriver.ChromeOptions()
 options.add_argument("window-size=1440, 751")
@@ -17,11 +19,17 @@ options.add_argument("window-size=1440, 751")
 driver = webdriver.Chrome(options=options)
 driver.maximize_window()
 driver.get('https://www.tradingview.com/chart/?symbol=EIGHTCAP%3ASPX500')
+# driver.get("https://www.tradingview.com/symbols/CBOE-SPX/")
 # elem = driver.find_element(By.CSS_SELECTOR, "body")
 # ac = ActionChains(driver)
 # ac.move_by_offset(440, 40).click().perform()
 time.sleep(5)
 
+# while True:
+#     text = driver.execute_script("""
+#     return Array.prototype.slice.call(document.getElementsByClassName("last-JWoJqCpY"));
+#     """)[0].text
+#     print(text)
 
 screenshot_interval = 1
 while True:
