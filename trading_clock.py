@@ -134,6 +134,13 @@ def datetime_is_between(t, start_time, end_time):
 def parse_hour_minute(stringTime):
     splitTime = stringTime.split(":")
     return time(hour=int(splitTime[0]), minute=int(splitTime[1]))
+def last_five_minute(t):
+    multiple = (t.minute // 5)
+    return localize(datetime.combine(t.date(), time(t.hour, multiple*5, 0)))
+
+def next_five_minute(t):
+    multiple = (t.minute // 5) + 1
+    return localize(datetime.combine(t.date(), time(t.hour, multiple*5, 0)))
 
 if __name__ == "__main__":
     print(datetime_is_between(real_time(), "4:00", "5:00"))
