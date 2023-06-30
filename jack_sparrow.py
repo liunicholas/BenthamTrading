@@ -19,7 +19,8 @@ options.add_argument("--headless")
 driver = webdriver.Chrome(options=options)
 driver.maximize_window()
 # driver.get('https://www.tradingview.com/chart/?symbol=EIGHTCAP%3ASPX500')
-driver.get("https://www.tradingview.com/symbols/CBOE-SPX/")
+# driver.get("https://www.tradingview.com/symbols/CBOE-SPX/")
+driver.get("https://www.tradingview.com/symbols/EIGHTCAP-SPX500/")
 
 def scrape_day():
     date = tc.get_today().date()
