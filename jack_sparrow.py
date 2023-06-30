@@ -38,12 +38,13 @@ def scrape_day():
     day_df = pd.DataFrame({'Date': date_range, 'Open':open, "High":high, "Low":low, "Close":close})
     day_df = day_df.set_index('Date')
     while tc.is_market_open(security_type="ETF", current_datetime=tc.get_today()):
+        t1 = time.time()
         while True:
             try:
                 current_price = float(driver.execute_script("""
                 return Array.prototype.slice.call(document.getElementsByClassName("last-JWoJqCpY"));
                 """)[0].text)
-                print(current_price)
+                # print(current_price)
             except:
                 print("Bad price request, trying again")
             else:
@@ -67,7 +68,8 @@ def scrape_day():
 
         # day_df.dropna().to_csv(f"data/{tc.get_today().date()}.csv")
         day_df.to_csv(f"data/spx_{tc.get_today().date()}.csv")
-
+        t2 = time.time()
+        print(t2-t1)
 def main():
     LIVE = True
     last_known_minute = -1
