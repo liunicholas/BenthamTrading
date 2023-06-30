@@ -12,7 +12,7 @@ from selenium.webdriver.common.by import By
 options = webdriver.ChromeOptions()
 options.add_argument("window-size=1440, 751")
 # options.add_argument("--profile-directory=Profile 10")
-options.add_argument("--headless")
+# options.add_argument("--headless")
 # options.add_argument("user-data-dir=/Users/jameshou/Library/Application Support/Google/Chrome/User Data")
 driver = webdriver.Chrome(options=options)
 driver.maximize_window()
@@ -68,5 +68,5 @@ while True:
 
         print(day_df.loc[[tc.last_five_minute(tc.get_today())]])
 
-        day_df.dropna().to_csv(f"data/{tc.get_today().date}.csv")
+        day_df.dropna().to_csv(f"data/{tc.get_today().date()}.csv")
         print(time.time() - timer)
