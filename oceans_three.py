@@ -68,5 +68,5 @@ while True:
 
         print(day_df.loc[[tc.last_five_minute(tc.get_today())]])
 
-        day_df.to_csv(f"data/{tc.get_today().date}.csv")
+        day_df.dropna().to_csv(f"data/{tc.get_today().date}.csv")
         print(time.time() - timer)
