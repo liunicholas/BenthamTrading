@@ -5,6 +5,7 @@ import yfinance as yf
 from twelvedata import TDClient
 from datetime import timedelta, datetime
 import pandas as pd
+import os
 
 # twelvedata keys
 twelvedata_api_key_1 = '118aed5a291f4a9fb7c36cfb590db853'
@@ -20,16 +21,20 @@ class SecurityData:
         self.data_master = {}
         self.security = security
         self.security_type = security_type
+        self.sparrow_data_names = ["spxCFD", "ndqCFD", "spxFUTURES", "ndqFUTURES"]
     
     def get_day_data(self, day_name, current_time, interval, delta):
         current_date = current_time.date()
         desired_date = tc.get_delta_trading_date(self.security_type, current_date, delta)
-    
+
+        
         if desired_date > tc.real_time().date():
             print("[ERROR] Bad day data request: date is in the future.")
         elif delta == 0:
             self.data_master[day_name] = self.get_today_data(current_time, interval)
         else:
+            if self.security in self.sparrow_data_names:
+                self.data_master[day_name] = self.get_sparrow_data(desired_date)
             self.data_master[day_name] = self.get_yfinance_data(
                 desired_date, desired_date+timedelta(days=1), f'{interval}m')
     
@@ -37,34 +42,37 @@ class SecurityData:
         return self.data_master[day_name]
 
     def get_today_data(self, current_time, interval):
-        # only use twelvedata when we actually need the live data
-        today_data_twelvedata = pd.DataFrame()
-        # 30 minute tolerance to delayed yfinance data
-        if (tc.real_time() - current_time) < timedelta(minutes=30):  
-            today_data_twelvedata = self.get_twelve_data(
-                start=current_time.date(), 
-                end=tc.get_delta_trading_date(self.security_type, current_time.date(), 1), 
-                interval=interval
-            )
-
-        today_data_yfinance = self.get_yfinance_data(start=current_time.date(), end=tc.get_delta_trading_date(
-            self.security_type, current_time.date(), 1), interval=f'{interval}m')
-        
-        # combine twelvedata and yfinance if necessary
-        if not today_data_twelvedata.empty:
-            twelvedata_first_time = today_data_twelvedata.index[0].to_pydatetime()
-            temp = []
-            for i, row in today_data_yfinance.iterrows():
-                if i < twelvedata_first_time:
-                    temp.append(row)
-            if temp:
-                today_data_yfinance = pd.concat(temp, axis=1).T
-                today_data = pd.concat(
-                    [today_data_yfinance, today_data_twelvedata], ignore_index=False)
-            else:
-                today_data = today_data_twelvedata
+        if self.security in self.sparrow_data_names:
+            today_data = self.get_sparrow_data(current_time.date())
         else:
-            today_data = today_data_yfinance
+            # only use twelvedata when we actually need the live data
+            today_data_twelvedata = pd.DataFrame()
+            # 30 minute tolerance to delayed yfinance data
+            if (tc.real_time() - current_time) < timedelta(minutes=30):  
+                today_data_twelvedata = self.get_twelve_data(
+                    start=current_time.date(), 
+                    end=tc.get_delta_trading_date(self.security_type, current_time.date(), 1), 
+                    interval=interval
+                )
+
+            today_data_yfinance = self.get_yfinance_data(start=current_time.date(), end=tc.get_delta_trading_date(
+                self.security_type, current_time.date(), 1), interval=f'{interval}m')
+            
+            # combine twelvedata and yfinance if necessary
+            if not today_data_twelvedata.empty:
+                twelvedata_first_time = today_data_twelvedata.index[0].to_pydatetime()
+                temp = []
+                for i, row in today_data_yfinance.iterrows():
+                    if i < twelvedata_first_time:
+                        temp.append(row)
+                if temp:
+                    today_data_yfinance = pd.concat(temp, axis=1).T
+                    today_data = pd.concat(
+                        [today_data_yfinance, today_data_twelvedata], ignore_index=False)
+                else:
+                    today_data = today_data_twelvedata
+            else:
+                today_data = today_data_yfinance
 
         
         # filter today_data up to the current_time
@@ -141,6 +149,12 @@ class SecurityData:
         if not API_SUCCESS:
             print("[ERROR] All API keys failed")
             return pd.DataFrame()
+
+    # always 5 minute single day
+    def get_sparrow_data(self, date):
+        data_file_path = f"data/{self.security}_{date}.csv"
+        if os.path.exists(data_file_path):
+            return pd.read_csv(data_file_path, index_col=0).dropna()
 
 def get_economic_news():
     # url = 'https://us.econoday.com/byweek.asp?cust=us'

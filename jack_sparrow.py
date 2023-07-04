@@ -1,4 +1,5 @@
 import time
+import os
 from selenium import webdriver
 import trading_clock as tc
 import datetime
@@ -30,23 +31,27 @@ class JackSparrow():
     def __init__(self, name, driver):
         self.name = name
         self.driver = driver
+        self.data_file_path = f"data/{self.name}_{tc.real_time().date()}.csv"
         
-        date = tc.get_today().date()
-        start = tc.localize(datetime.datetime.combine(date, datetime.time(9, 35, 0)))
-        date_range = pd.date_range(start, start + datetime.timedelta(hours=6, minutes=25), freq=datetime.timedelta(minutes=5))
+        if os.path.exists(self.data_file_path):
+            self.day_df = pd.read_csv(self.data_file_path, index_col=0)
+        else:
+            date = tc.real_time().date()
+            start = tc.localize(datetime.datetime.combine(date, datetime.time(9, 35, 0)))
+            date_range = pd.date_range(start, start + datetime.timedelta(hours=6, minutes=25), freq=datetime.timedelta(minutes=5))
 
-        open = np.empty((len(date_range)))
-        open[:] = np.nan
-        high = np.empty((len(date_range)))
-        high[:] = -1
-        low = np.empty((len(date_range)))
-        low[:] = float("inf")
-        close = np.empty((len(date_range)))
-        close[:] = np.nan
+            open = np.empty((len(date_range)))
+            open[:] = np.nan
+            high = np.empty((len(date_range)))
+            high[:] = -1
+            low = np.empty((len(date_range)))
+            low[:] = float("inf")
+            close = np.empty((len(date_range)))
+            close[:] = np.nan
 
-        self.day_df = pd.DataFrame(
-            {'Date': date_range, 'Open': open, "High": high, "Low": low, "Close": close}).set_index('Date')
-        # self.day_df = self.day_df.set_index('Date')
+            self.day_df = pd.DataFrame(
+                {'Date': date_range, 'Open': open, "High": high, "Low": low, "Close": close}).set_index('Date')
+            # self.day_df = self.day_df.set_index('Date')
     
     def scrape_moment(self):
         while True:
@@ -60,26 +65,26 @@ class JackSparrow():
             else:
                 break
 
-        current_datetime = tc.get_today()
+        current_datetime = tc.real_time()
         if (current_datetime.minute) % 5 == 0 and current_datetime.second == 0:
             self.day_df["Open"][[tc.next_five_minute(
-                tc.get_today())]] = current_price
+                tc.real_time())]] = current_price
             self.day_df["High"][[tc.next_five_minute(
-                tc.get_today())]] = current_price
+                tc.real_time())]] = current_price
             self.day_df["Low"][[tc.next_five_minute(
-                tc.get_today())]] = current_price
+                tc.real_time())]] = current_price
 
-        if current_price > self.day_df["High"][[tc.next_five_minute(tc.get_today())]].item():
+        if current_price > self.day_df["High"][[tc.next_five_minute(tc.real_time())]].item():
             self.day_df["High"][[tc.next_five_minute(
-                tc.get_today())]] = current_price
-        if current_price < self.day_df["Low"][[tc.next_five_minute(tc.get_today())]].item():
+                tc.real_time())]] = current_price
+        if current_price < self.day_df["Low"][[tc.next_five_minute(tc.real_time())]].item():
             self.day_df["Low"][[tc.next_five_minute(
-                tc.get_today())]] = current_price
+                tc.real_time())]] = current_price
 
-        self.day_df["Close"][[tc.next_five_minute(tc.get_today())]] = current_price
+        self.day_df["Close"][[tc.next_five_minute(tc.real_time())]] = current_price
 
-        # self.day_df.dropna().to_csv(f"data/{self.name}_{tc.get_today().date()}.csv")
-        self.day_df.to_csv(f"data/{self.name}_{tc.get_today().date()}.csv")
+        # self.day_df.dropna().to_csv(f"data/{self.name}_{tc.real_time().date()}.csv")
+        self.day_df.to_csv(self.data_file_path)
 
 def scrape_day():
 
@@ -88,7 +93,7 @@ def scrape_day():
     spxFUTURESscraper = JackSparrow("spxFUTURES", spxFUTURESdriver)
     ndqFUTURESscraper = JackSparrow("ndqFUTURES", ndqFUTURESdriver)
     
-    while tc.is_market_open(security_type="ETF", current_datetime=tc.get_today()):
+    while tc.is_market_open(security_type="ETF", current_datetime=tc.real_time()):
         spxCFDscraper.scrape_moment()
         ndqCFDscraper.scrape_moment()
         spxFUTURESscraper.scrape_moment()
@@ -98,7 +103,7 @@ def main():
     LIVE = True
     last_known_minute = -1
     while LIVE:
-        current_time = tc.get_today()
+        current_time = tc.real_time()
         if current_time.minute != last_known_minute:
             last_known_minute = current_time.minute
 
