@@ -1,0 +1,54 @@
+Proprietary Information of Bentham Trading 2023-07-05 
+Log file for SilverBullet on ^spx 
+ 
+[INFO] Previous day AM high BUYSIDE liquidity line at time 2023-07-03 16:00:00 at price level 4456.4599609375
+[INFO] Previous day AM low SELLSIDE liquidity line at time 2023-07-03 16:00:00 at price level 4442.2900390625
+[BREACH] SELLSIDE at time 2023-07-05 09:30:00-04:00 at price level 4436.60986328125
+[BREACH] SELLSIDE at time 2023-07-05 09:35:00-04:00 at price level 4438.72021484375
+[BREACH] SELLSIDE at time 2023-07-05 09:40:00-04:00 at price level 4440.64013671875
+[SWING] HIGH at time 2023-07-05 09:50:00-04:00 at price level 4448.91015625
+[INFO] Not a valid swing high or low at 2023-07-05 10:00:00-04:00
+[SWING] HIGH at time 2023-07-05 10:05:00-04:00 at price level 4449.81982421875
+[INFO] Not a valid swing high or low at 2023-07-05 10:10:00-04:00
+[FVG] GREEN at time 2023-07-05 10:20:00-04:00 at entry 4449.4501953125 and stop loss 4448.2900390625
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ^spx, 
+         Time Found: 2023-07-05 10:25:00-04:00, 
+         Entry Price: 4449.45, 
+         Stop Limit: 4446.10986328125, 
+         Take Profit: 4459.4501953125, 
+         Position Size: 7.484285923110656, 
+         Leverage Multiplier: 10, 
+
+[INFO] Not a valid swing high or low at 2023-07-05 10:25:00-04:00
+[FVG] GREEN at time 2023-07-05 10:35:00-04:00 at entry 4451.75 and stop loss 4451.6001
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ^spx, 
+         Time Found: 2023-07-05 10:40:00-04:00, 
+         Entry Price: 4451.75, 
+         Stop Limit: 4447.0400390625, 
+         Take Profit: 4461.75, 
+         Position Size: 5.307899647522289, 
+         Leverage Multiplier: 10, 
+
+[SWING] HIGH at time 2023-07-05 10:35:00-04:00 at price level 4453.50977
+[INFO] Not a valid swing high or low at 2023-07-05 10:45:00-04:00
+[INFO] AM High BUYSIDE liquidity line at time 2023-07-05 11:00:00-04:00 at price level 4453.50977
+[INFO] AM Low SELLSIDE liquidity line at time 2023-07-05 11:00:00-04:00 at price level 4436.60986
+[FVG] GREEN at time 2023-07-05 11:00:00-04:00 at entry 4451.66016 and stop loss 4450.2002
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ^spx, 
+         Time Found: 2023-07-05 11:05:00-04:00, 
+         Entry Price: 4451.66, 
+         Stop Limit: 4447.1001, 
+         Take Profit: 4461.66016, 
+         Position Size: 5.482384003718404, 
+         Leverage Multiplier: 10, 
+
+[BREACH] BUYSIDE at time 2023-07-05 11:00:00-04:00 at price level 4453.8501

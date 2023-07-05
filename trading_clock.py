@@ -7,6 +7,11 @@ exchange_openclose = {
     "ETF": [time(hour=9, minute=30), time(hour=16)],
 }
 
+federal_holidays = [date(2023, 6, 19), date(2023, 7, 4),
+                    date(2023, 9, 4), date(2023, 10, 9),
+                    date(2023, 11, 11), date(2023, 11, 23),
+                    date(2023, 12, 25)]
+
 def localize(dt):
     return new_york_tz.localize(dt)
 
@@ -65,11 +70,6 @@ def is_market_open(security_type, current_datetime, VERBOSE=False):
         print(f"[INFO] Checking time {current_datetime} for market open")
 
     if security_type == "ETF":
-        holidays = [date(2023, 6, 19), date(2023, 7, 4),
-                    date(2023, 9, 4), date(2023, 10, 9),
-                    date(2023, 11, 11), date(2023, 11, 23),
-                    date(2023, 12, 25)]
-        
         start_time = exchange_openclose["ETF"][0]
         end_time = exchange_openclose["ETF"][1]
 
@@ -78,7 +78,7 @@ def is_market_open(security_type, current_datetime, VERBOSE=False):
         
         is_tradinghour = start_time <= current_time <= end_time
         is_weekend = current_date.weekday() >= 5
-        is_holiday = current_date in holidays
+        is_holiday = current_date in federal_holidays
 
         return is_tradinghour and not is_weekend and not is_holiday
     

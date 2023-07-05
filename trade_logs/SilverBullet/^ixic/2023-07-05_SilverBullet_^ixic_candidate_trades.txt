@@ -1,0 +1,32 @@
+Proprietary Information of Bentham Trading 2023-07-05 
+Log file for SilverBullet on ^ixic 
+ 
+[INFO] Previous day AM high BUYSIDE liquidity line at time 2023-07-03 16:00:00 at price level 13838.4580078125
+[INFO] Previous day AM low SELLSIDE liquidity line at time 2023-07-03 16:00:00 at price level 13773.513671875
+[BREACH] SELLSIDE at time 2023-07-05 09:30:00-04:00 at price level 13771.3203125
+[BREACH] SELLSIDE at time 2023-07-05 09:35:00-04:00 at price level 13768.99609375
+[INFO] Not a valid swing high or low at 2023-07-05 09:35:00-04:00
+[SWING] HIGH at time 2023-07-05 09:45:00-04:00 at price level 13819.37109375
+[INFO] Not a valid swing high or low at 2023-07-05 09:50:00-04:00
+[SWING] HIGH at time 2023-07-05 10:00:00-04:00 at price level 13821.9912109375
+[INFO] Not a valid swing high or low at 2023-07-05 10:10:00-04:00
+[FVG] GREEN at time 2023-07-05 10:20:00-04:00 at entry 13829.0439453125 and stop loss 13811.64453125
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ^ixic, 
+         Time Found: 2023-07-05 10:25:00-04:00, 
+         Entry Price: 13829.04, 
+         Stop Limit: 13811.64453125, 
+         Take Profit: 13859.0439453125, 
+         Position Size: 1.436829993826121, 
+         Leverage Multiplier: 10, 
+
+[INFO] Not a valid swing high or low at 2023-07-05 10:25:00-04:00
+[BREACH] BUYSIDE at time 2023-07-05 10:35:00-04:00 at price level 13844.50293
+[SWING] HIGH at time 2023-07-05 10:35:00-04:00 at price level 13844.50293
+[BREACH] BUYSIDE at time 2023-07-05 10:40:00-04:00 at price level 13841.65527
+[INFO] AM High BUYSIDE liquidity line at time 2023-07-05 11:00:00-04:00 at price level 13844.50293
+[INFO] AM Low SELLSIDE liquidity line at time 2023-07-05 11:00:00-04:00 at price level 13768.99609
+[INFO] Not a valid swing high or low at 2023-07-05 10:50:00-04:00
+[SWING] LOW at time 2023-07-05 10:50:00-04:00 at price level 13810.34375

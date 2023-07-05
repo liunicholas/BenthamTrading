@@ -154,7 +154,10 @@ class SecurityData:
     def get_sparrow_data(self, date):
         data_file_path = f"data/{self.security}_{date}.csv"
         if os.path.exists(data_file_path):
-            return pd.read_csv(data_file_path, index_col=0).dropna()
+            return pd.read_csv(data_file_path, index_col=0,
+                               parse_dates=True).dropna()
+        else:
+            print(f"[ERROR] Data File for {self.security} Does Not Exist")
 
 def get_economic_news():
     # url = 'https://us.econoday.com/byweek.asp?cust=us'

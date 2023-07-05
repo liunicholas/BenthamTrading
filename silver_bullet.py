@@ -13,7 +13,6 @@ trading_period_2_close = "15:00"
 portfolio_size = 50000
 max_drawdown = 0.005*portfolio_size
 leverage_multiplier = 10
-margin = 5000
 
 SWING_INTERVAL = 5
 INTERVAL = 5  # minutes
@@ -36,12 +35,13 @@ class FVGList(list):
         # FVG is during trading period 10-11, 14-15 DONE
         # After Swing High: Green FVG - 3rd low > 1st high, above swing high pl
         # After Swing Low: Red FVG - 3rd high < 1st low, below swing low pl
+        # note that 5 minute delay is added to fvg time when creating the trade order
 
         leftCandle = threeCandles[0:1]
         middleCandle = threeCandles[1:2]
         rightCandle = threeCandles[2:3]
         
-        if tc.datetime_is_between(leftCandle.index.item(), trading_period_1_open, trading_period_1_close) or tc.datetime_is_between(leftCandle.index.item(), trading_period_2_open, trading_period_2_close):
+        if tc.datetime_is_between(middleCandle.index.item(), trading_period_1_open, trading_period_1_close) or tc.datetime_is_between(middleCandle.index.item(), trading_period_2_open, trading_period_2_close):
             if self.swing.swing_type == "HIGH":
                 if leftCandle["High"][-1] < rightCandle["Low"][-1]:
                     if (leftCandle.index.item() >= self.swing.time):
@@ -356,10 +356,7 @@ class SilverBullet():
 
 
     def get_primary_liquidity(self, current_time):
-        security = self.security
         security_type = self.security_type
-        # dataForLiquidity = yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(
-        #     security_type, current_time.date(), -1), end=current_time.date(), interval='1d')
 
         # dummyDatetime = datetime.combine(tc.get_delta_trading_date(
         #     security_type, current_time.date(), -1), time(16, 00, 0))
@@ -372,21 +369,39 @@ class SilverBullet():
         # self.logger.log("[INFO] Previous day high " + str(pBuysideLiquidity))
         # self.logger.log("[INFO] Previous day low " + str(pSellsideLiquidity))
 
-        dataForLiquidity = yf.download(progress=False, tickers=security, start=tc.get_delta_trading_date(
-            security_type, current_time.date(), -1), end=current_time.date(), interval='15m')
-        pm_session_data = dataForLiquidity.between_time("13:30", "16:00")
+        dataForLiquidity = self.security_data["yesterdata"]
+        if current_time.date() - timedelta(days=1) not in tc.federal_holidays:
+            pm_session_data = dataForLiquidity.between_time("13:30", "16:00")
 
-        pm_high = pm_session_data["High"].max()
-        pm_low = pm_session_data["Low"].min()
+            pm_high = pm_session_data["High"].max()
+            pm_low = pm_session_data["Low"].min()
 
-        dummyDatetime = datetime.combine(tc.get_delta_trading_date(
-            security_type, current_time.date(), -1), time(16, 00, 0))
+            dummyDatetime = datetime.combine(tc.get_delta_trading_date(
+                security_type, current_time.date(), -1), time(16, 00, 0))
 
-        pSellsideLiquidity = LiquidityLine(dummyDatetime, pm_low, "SELLSIDE")
-        pBuysideLiquidity = LiquidityLine(dummyDatetime, pm_high, "BUYSIDE")
+            pSellsideLiquidity = LiquidityLine(dummyDatetime, pm_low, "SELLSIDE")
+            pBuysideLiquidity = LiquidityLine(dummyDatetime, pm_high, "BUYSIDE")
 
-        self.logger.log("[INFO] Previous day PM high " + str(pBuysideLiquidity))
-        self.logger.log("[INFO] Previous day PM low " + str(pSellsideLiquidity))
+            self.logger.log("[INFO] Previous day PM high " + str(pBuysideLiquidity))
+            self.logger.log("[INFO] Previous day PM low " + str(pSellsideLiquidity))
+        else:
+            am_session_data = dataForLiquidity.between_time("9:30", "13:30")
+
+            am_high = am_session_data["High"].max()
+            am_low = am_session_data["Low"].min()
+
+            dummyDatetime = datetime.combine(tc.get_delta_trading_date(
+                security_type, current_time.date(), -1), time(16, 00, 0))
+
+            pSellsideLiquidity = LiquidityLine(
+                dummyDatetime, am_low, "SELLSIDE")
+            pBuysideLiquidity = LiquidityLine(
+                dummyDatetime, am_high, "BUYSIDE")
+
+            self.logger.log("[INFO] Previous day AM high " +
+                            str(pBuysideLiquidity))
+            self.logger.log("[INFO] Previous day AM low " +
+                            str(pSellsideLiquidity))
 
         return [pSellsideLiquidity, pBuysideLiquidity]
 
