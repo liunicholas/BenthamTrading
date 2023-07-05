@@ -52,3 +52,29 @@ Log file for SilverBullet on ^spx
          Leverage Multiplier: 10, 
 
 [BREACH] BUYSIDE at time 2023-07-05 11:00:00-04:00 at price level 4453.8501
+[BREACH] BUYSIDE at time 2023-07-05 11:05:00-04:00 at price level 4454.06006
+[SWING] HIGH at time 2023-07-05 11:05:00-04:00 at price level 4454.06006
+[BREACH] BUYSIDE at time 2023-07-05 11:10:00-04:00 at price level 4453.6001
+[INFO] Not a valid swing high or low at 2023-07-05 11:05:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-05 11:20:00-04:00
+[SWING] LOW at time 2023-07-05 11:20:00-04:00 at price level 4449.02979
+[SWING] HIGH at time 2023-07-05 11:30:00-04:00 at price level 4453.22021
+[INFO] Not a valid swing high or low at 2023-07-05 11:30:00-04:00
+[SWING] HIGH at time 2023-07-05 11:45:00-04:00 at price level 4453.4502
+[INFO] Not a valid swing high or low at 2023-07-05 11:45:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-05 12:00:00-04:00
+[SWING] LOW at time 2023-07-05 12:00:00-04:00 at price level 4445.85986
+[SWING] HIGH at time 2023-07-05 12:05:00-04:00 at price level 4448.81006
+[INFO] Not a valid swing high or low at 2023-07-05 12:05:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-05 12:10:00-04:00
+[SWING] LOW at time 2023-07-05 12:10:00-04:00 at price level 4446.31006
+[SWING] HIGH at time 2023-07-05 12:15:00-04:00 at price level 4448.75977
+[INFO] Not a valid swing high or low at 2023-07-05 12:15:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-05 12:20:00-04:00
+[SWING] LOW at time 2023-07-05 12:20:00-04:00 at price level 4445.52979
+[SWING] HIGH at time 2023-07-05 12:30:00-04:00 at price level 4448.95996
+[INFO] Not a valid swing high or low at 2023-07-05 12:30:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-05 12:35:00-04:00
+[SWING] LOW at time 2023-07-05 12:35:00-04:00 at price level 4442.62012
+[INFO] Not a valid swing high or low at 2023-07-05 12:45:00-04:00
+[SWING] LOW at time 2023-07-05 12:45:00-04:00 at price level 4443.29004
