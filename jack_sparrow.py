@@ -10,6 +10,7 @@ options = webdriver.ChromeOptions()
 options.add_argument("window-size=1440, 751")
 options.add_argument("--profile-directory=Profile 10")
 options.add_argument("--headless")
+options.add_argument('--blink-settings=imagesEnabled=false')
 
 print("[INFO] Initializing Drivers")
 spxCFDdriver = webdriver.Chrome(options=options)
