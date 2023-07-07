@@ -6,9 +6,9 @@ def managePortfolio(candidate_trades):
     
 def run_day():
     snp_silver_bullet = SilverBullet(
-        security="^spx", security_type="ETF", take_profit_margin=10, stop_loss_margin=3)
+        security="spxCFD", security_type="ETF", take_profit_margin=10, stop_loss_margin=3)
     ndq_silver_bullet = SilverBullet(
-        security="^ixic", security_type="ETF", take_profit_margin=30, stop_loss_margin=10)
+        security="ndqCFD", security_type="ETF", take_profit_margin=30, stop_loss_margin=10)
 
     last_known_minute = -1
     while tc.is_market_open(security_type="ETF", current_datetime=tc.get_today()):
@@ -30,7 +30,7 @@ def run_day():
 def main():
     LIVE = True
     last_known_minute = -1
-    # tc.override(tc.localize(datetime(year=2023, month=6, day=22, hour=16, minute=00)))
+    # tc.override(tc.localize(datetime(year=2023, month=7, day=7, hour=15, minute=59)))
     while LIVE:
         current_time = tc.get_today()
         if current_time.minute != last_known_minute:

@@ -102,11 +102,22 @@ def scrape_day():
     ndqFUTURESscraper = JackSparrow("ndqFUTURES", ndqFUTURESdriver)
     
     print("[INFO] Scraping Now")
+
+    last_known_minute = -1
     while tc.is_market_open(security_type="ETF", current_datetime=tc.real_time()):
+        current_time = tc.real_time()
+        if current_time.minute != last_known_minute:
+            print(f"[INFO] Scraper Active Last At {current_time}")
+            last_known_minute = current_time.minute
+        if current_time.time() == tc.exchange_openclose["ETF"][1]:
+            break
+
         spxCFDscraper.scrape_moment()
         ndqCFDscraper.scrape_moment()
         spxFUTURESscraper.scrape_moment()
         ndqFUTURESscraper.scrape_moment()
+
+    print("[INFO] Finished Scraping Day")
         
 def main():
     LIVE = True

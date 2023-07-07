@@ -27,7 +27,6 @@ class SecurityData:
         current_date = current_time.date()
         desired_date = tc.get_delta_trading_date(self.security_type, current_date, delta)
 
-        
         if desired_date > tc.real_time().date():
             print("[ERROR] Bad day data request: date is in the future.")
         elif delta == 0:
@@ -35,8 +34,9 @@ class SecurityData:
         else:
             if self.security in self.sparrow_data_names:
                 self.data_master[day_name] = self.get_sparrow_data(desired_date)
-            self.data_master[day_name] = self.get_yfinance_data(
-                desired_date, desired_date+timedelta(days=1), f'{interval}m')
+            else:
+                self.data_master[day_name] = self.get_yfinance_data(
+                    desired_date, desired_date+timedelta(days=1), f'{interval}m')
     
     def __getitem__(self, day_name):
         return self.data_master[day_name]
@@ -154,10 +154,15 @@ class SecurityData:
     def get_sparrow_data(self, date):
         data_file_path = f"data/{self.security}_{date}.csv"
         if os.path.exists(data_file_path):
-            return pd.read_csv(data_file_path, index_col=0,
+            while True:
+                try:
+                    return pd.read_csv(data_file_path, index_col=0,
                                parse_dates=True).dropna()
+                except:
+                    print("[ERROR] Pandas Read CSV Empty Data Error")
         else:
-            print(f"[ERROR] Data File for {self.security} Does Not Exist")
+            print(f"[ERROR] Data File for {self.security} Does Not Exist (Yet)")
+            return pd.DataFrame()
 
 def get_economic_news():
     # url = 'https://us.econoday.com/byweek.asp?cust=us'
