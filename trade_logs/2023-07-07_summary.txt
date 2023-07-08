@@ -1,0 +1,47 @@
+Proprietary Information of Bentham Trading 2023-07-07 
+Summary Log file for all strategies on all securities 
+ 
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-07 10:35:00-04:00, 
+         Entry Price: 15076.24, 
+         Stop Limit: 15089.58, 
+         Take Profit: 15044.45, 
+         Position Size: 1.8740629685157217, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-07 10:40:00-04:00, 
+         Entry Price: 15067.99, 
+         Stop Limit: 15081.7, 
+         Take Profit: 15019.7, 
+         Position Size: 1.8234865061997283, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-07 10:35:00-04:00, 
+         Entry Price: 15076.24, 
+         Stop Limit: 15089.58, 
+         Take Profit: 15044.45, 
+         Position Size: 1.87, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-07 10:40:00-04:00, 
+         Entry Price: 15067.99, 
+         Stop Limit: 15081.7, 
+         Take Profit: 15019.7, 
+         Position Size: 1.82, 
+         Leverage Multiplier: 10, 
+

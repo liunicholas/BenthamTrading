@@ -1,26 +1,42 @@
+import os
+
 class StrategyLogger:
     def __init__(self, security, strategy_name, date):
         self.security = security
         self.strategy_name = strategy_name
         self.date = date
-        self.file_path = f"trade_logs/{strategy_name}/{security}/{date}_{strategy_name}_{security}_candidate_trades.txt"
+        self.specific_file_path = f"trade_logs/{strategy_name}/{security}/{date}_{strategy_name}_{security}_candidate_trades.txt"
+        self.general_file_path = f"trade_logs/{date}_summary.txt"
 
-        with open(self.file_path, "w") as f:
+        if not os.path.exists(self.general_file_path):
+            with open(self.general_file_path, "w") as f:
+                f.write(
+                    f"Proprietary Information of Bentham Trading {self.date} \n")
+                f.write(
+                    f"Summary Log file for all strategies on all securities \n \n")
+
+        with open(self.specific_file_path, "w") as f:
             f.write(f"Proprietary Information of Bentham Trading {self.date} \n")
             f.write(f"Log file for {self.strategy_name} on {self.security} \n \n")
 
     def log(self, line):
-        def line_exists_in_file(file_path, target_line):
-            with open(file_path, 'r') as file:
-                for line in file:
-                    if line.strip() == target_line:
-                        return True
-            return False
-
-        with open(self.file_path, "a") as f:
-            if not line_exists_in_file(self.file_path, line):
+        with open(self.specific_file_path, "a") as f:
+            if not self.line_exists_in_file(self.specific_file_path, line):
                 f.write(line + "\n")
                 print(line)
+    
+    def sum_log(self, line):
+        with open(self.general_file_path, "a") as f:
+            if not self.line_exists_in_file(self.general_file_path, line):
+                f.write(line + "\n")
+    
+    def line_exists_in_file(self, file_path, target_line):
+        with open(file_path, 'r') as f:
+            current_lines = ' '.join(f.read().split()).lower()
+            if ' '.join(target_line.split()).lower() in current_lines:
+                return True
+            else:
+                return False
 
 class TradeOrder:
     def __init__(self, security, time_found, entry, stop_limit, take_profit, position_size, trade_type, leverage):
@@ -45,7 +61,7 @@ class TradeOrder:
         Entry Price: {self.entry:0.2f}, \n \
         Stop Limit: {self.stop_limit}, \n \
         Take Profit: {self.take_profit}, \n \
-        Position Size: {self.position_size}, \n \
+        Position Size: {self.position_size:0.2f}, \n \
         Leverage Multiplier: {self.leverage}, \n"
 
 class ExecutedTrade:

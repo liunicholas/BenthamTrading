@@ -194,6 +194,7 @@ class CandidateTrades():
             self.trade_orders.append(trade_order)
             self.trade_times.append(FVG_time)
             logger.log(str(trade_order))
+            logger.sum_log(str(trade_order))
 
 
         if fvg.FVG_type == "GREEN" and FVG_time not in self.trade_times:
@@ -227,6 +228,7 @@ class CandidateTrades():
             self.trade_orders.append(trade_order)
             self.trade_times.append(FVG_time)
             logger.log(str(trade_order))
+            logger.sum_log(str(trade_order))
 
 class SilverBullet():
     def __init__(self, security, security_type, take_profit_margin, stop_loss_margin, OVERRIDE=False):

@@ -25,7 +25,7 @@ Log file for SilverBullet on ndqCFD
          Entry Price: 15076.24, 
          Stop Limit: 15089.58, 
          Take Profit: 15044.45, 
-         Position Size: 1.8740629685157217, 
+         Position Size: 1.87, 
          Leverage Multiplier: 10, 
 
 [BREACH] SELLSIDE at time 2023-07-07 10:35:00-04:00 at price level 15035.74
@@ -40,7 +40,7 @@ Log file for SilverBullet on ndqCFD
          Entry Price: 15067.99, 
          Stop Limit: 15081.7, 
          Take Profit: 15019.7, 
-         Position Size: 1.8234865061997283, 
+         Position Size: 1.82, 
          Leverage Multiplier: 10, 
 
 [INFO] AM High BUYSIDE liquidity line at time 2023-07-07 11:00:00-04:00 at price level 15130.74
