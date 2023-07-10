@@ -1,8 +1,5 @@
 import trading_clock as tc
 from silver_bullet import *
-
-def managePortfolio(candidate_trades):
-    pass
     
 def run_day():
     snp_silver_bullet = SilverBullet(
@@ -21,9 +18,8 @@ def run_day():
             ndq_silver_bullet.run_cycle(current_time)
 
             # check on portfolio every iteration
-            managePortfolio([
-                snp_silver_bullet.candidate_trades, 
-                ndq_silver_bullet.candidate_trades,])
+            # snp_silver_bullet.candidate_trades
+            # ndq_silver_bullet.candidate_trades
 
     return
 

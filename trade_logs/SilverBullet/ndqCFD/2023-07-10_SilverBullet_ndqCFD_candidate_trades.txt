@@ -1,0 +1,147 @@
+Proprietary Information of Bentham Trading 2023-07-10 
+Log file for SilverBullet on ndqCFD 
+ 
+[INFO] Previous day PM high BUYSIDE liquidity line at time 2023-07-07 16:00:00 at price level 15212.37
+[INFO] Previous day PM low SELLSIDE liquidity line at time 2023-07-07 16:00:00 at price level 15027.49
+[BREACH] SELLSIDE at time 2023-07-10 10:05:00-04:00 at price level 15002.11
+[BREACH] SELLSIDE at time 2023-07-10 10:10:00-04:00 at price level 15020.36
+[BREACH] SELLSIDE at time 2023-07-10 10:15:00-04:00 at price level 15012.61
+[SWING] HIGH at time 2023-07-10 10:10:00-04:00 at price level 15036.11
+[INFO] Not a valid swing high or low at 2023-07-10 10:15:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 10:30:00-04:00 at price level 15013.61
+[SWING] HIGH at time 2023-07-10 10:25:00-04:00 at price level 15063.11
+[BREACH] SELLSIDE at time 2023-07-10 10:35:00-04:00 at price level 14994.11
+[BREACH] SELLSIDE at time 2023-07-10 10:40:00-04:00 at price level 14997.11
+[INFO] Not a valid swing high or low at 2023-07-10 10:35:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 10:45:00-04:00 at price level 15000.61
+[SWING] HIGH at time 2023-07-10 10:40:00-04:00 at price level 15030.36
+[BREACH] SELLSIDE at time 2023-07-10 10:50:00-04:00 at price level 15000.36
+[INFO] AM High BUYSIDE liquidity line at time 2023-07-10 11:00:00.000002-04:00 at price level 15063.11
+[INFO] AM Low SELLSIDE liquidity line at time 2023-07-10 11:00:00.000002-04:00 at price level 14994.11
+[BREACH] SELLSIDE at time 2023-07-10 10:55:00-04:00 at price level 14999.11
+[SWING] HIGH at time 2023-07-10 10:50:00-04:00 at price level 15028.36
+[BREACH] SELLSIDE at time 2023-07-10 11:00:00-04:00 at price level 14981.86
+[BREACH] SELLSIDE at time 2023-07-10 11:05:00-04:00 at price level 14991.11
+[INFO] Not a valid swing high or low at 2023-07-10 11:00:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 11:10:00-04:00 at price level 14992.36
+[BREACH] SELLSIDE at time 2023-07-10 11:15:00-04:00 at price level 14998.11
+[BREACH] SELLSIDE at time 2023-07-10 11:20:00-04:00 at price level 14993.74
+[INFO] Not a valid swing high or low at 2023-07-10 11:15:00-04:00
+[SWING] HIGH at time 2023-07-10 11:15:00-04:00 at price level 15018.74
+[BREACH] SELLSIDE at time 2023-07-10 11:25:00-04:00 at price level 14993.61
+[BREACH] SELLSIDE at time 2023-07-10 11:30:00-04:00 at price level 15013.49
+[INFO] Not a valid swing high or low at 2023-07-10 11:25:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 11:35:00-04:00 at price level 15026.86
+[SWING] HIGH at time 2023-07-10 11:30:00-04:00 at price level 15034.61
+[BREACH] SELLSIDE at time 2023-07-10 11:40:00-04:00 at price level 14996.61
+[BREACH] SELLSIDE at time 2023-07-10 11:45:00-04:00 at price level 14970.74
+[SWING] HIGH at time 2023-07-10 11:40:00-04:00 at price level 15034.49
+[BREACH] SELLSIDE at time 2023-07-10 11:50:00-04:00 at price level 14975.86
+[INFO] Not a valid swing high or low at 2023-07-10 11:45:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 11:55:00-04:00 at price level 14975.74
+[BREACH] SELLSIDE at time 2023-07-10 12:00:00-04:00 at price level 14934.36
+[INFO] Not a valid swing high or low at 2023-07-10 11:55:00-04:00
+[SWING] HIGH at time 2023-07-10 11:55:00-04:00 at price level 14999.24
+[BREACH] SELLSIDE at time 2023-07-10 12:05:00-04:00 at price level 14931.11
+[BREACH] SELLSIDE at time 2023-07-10 12:10:00-04:00 at price level 14925.86
+[BREACH] SELLSIDE at time 2023-07-10 12:15:00-04:00 at price level 14924.11
+[BREACH] SELLSIDE at time 2023-07-10 12:20:00-04:00 at price level 14941.74
+[INFO] Not a valid swing high or low at 2023-07-10 12:15:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 12:25:00-04:00 at price level 14959.11
+[BREACH] SELLSIDE at time 2023-07-10 12:30:00-04:00 at price level 14961.86
+[BREACH] SELLSIDE at time 2023-07-10 12:35:00-04:00 at price level 14962.74
+[BREACH] SELLSIDE at time 2023-07-10 12:40:00-04:00 at price level 14975.99
+[BREACH] SELLSIDE at time 2023-07-10 12:45:00-04:00 at price level 14988.11
+[BREACH] SELLSIDE at time 2023-07-10 12:50:00-04:00 at price level 14992.61
+[BREACH] SELLSIDE at time 2023-07-10 12:55:00-04:00 at price level 14995.61
+[BREACH] SELLSIDE at time 2023-07-10 13:00:00-04:00 at price level 15006.24
+[BREACH] SELLSIDE at time 2023-07-10 13:05:00-04:00 at price level 15005.61
+[INFO] Not a valid swing high or low at 2023-07-10 13:00:00-04:00
+[SWING] HIGH at time 2023-07-10 13:00:00-04:00 at price level 15020.24
+[BREACH] SELLSIDE at time 2023-07-10 13:10:00-04:00 at price level 15001.36
+[BREACH] SELLSIDE at time 2023-07-10 13:15:00-04:00 at price level 14999.11
+[BREACH] SELLSIDE at time 2023-07-10 13:20:00-04:00 at price level 15004.86
+[INFO] Not a valid swing high or low at 2023-07-10 13:15:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 13:25:00-04:00 at price level 15008.11
+[BREACH] SELLSIDE at time 2023-07-10 13:30:00-04:00 at price level 15018.36
+[BREACH] SELLSIDE at time 2023-07-10 13:35:00-04:00 at price level 15006.61
+[SWING] HIGH at time 2023-07-10 13:30:00-04:00 at price level 15039.24
+[BREACH] SELLSIDE at time 2023-07-10 13:40:00-04:00 at price level 15008.49
+[INFO] Not a valid swing high or low at 2023-07-10 13:35:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 13:45:00-04:00 at price level 15009.24
+[BREACH] SELLSIDE at time 2023-07-10 13:50:00-04:00 at price level 15008.36
+[SWING] HIGH at time 2023-07-10 13:45:00-04:00 at price level 15027.61
+[BREACH] SELLSIDE at time 2023-07-10 13:55:00-04:00 at price level 15004.74
+[BREACH] SELLSIDE at time 2023-07-10 14:00:00-04:00 at price level 14997.49
+[BREACH] SELLSIDE at time 2023-07-10 14:05:00-04:00 at price level 14994.74
+[BREACH] SELLSIDE at time 2023-07-10 14:10:00-04:00 at price level 15001.11
+[INFO] Not a valid swing high or low at 2023-07-10 14:05:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 14:15:00-04:00 at price level 15020.86
+[FVG] GREEN at time 2023-07-10 14:15:00-04:00 at entry 15020.86 and stop loss 15006.99
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-10 14:20:00-04:00, 
+         Entry Price: 15020.86, 
+         Stop Limit: 15006.99, 
+         Take Profit: 15063.11, 
+         Position Size: 1.80, 
+         Leverage Multiplier: 10, 
+
+[FVG] GREEN at time 2023-07-10 14:20:00-04:00 at entry 15028.36 and stop loss 15023.49
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-10 14:25:00-04:00, 
+         Entry Price: 15028.36, 
+         Stop Limit: 15012.61, 
+         Take Profit: 15063.11, 
+         Position Size: 1.59, 
+         Leverage Multiplier: 10, 
+
+[FVG] GREEN at time 2023-07-10 14:25:00-04:00 at entry 15039.86 and stop loss 15034.36
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-10 14:30:00-04:00, 
+         Entry Price: 15039.86, 
+         Stop Limit: 15027.49, 
+         Take Profit: 15111.99, 
+         Position Size: 2.02, 
+         Leverage Multiplier: 10, 
+
+[SWING] HIGH at time 2023-07-10 14:25:00-04:00 at price level 15051.61
+[BREACH] SELLSIDE at time 2023-07-10 14:40:00-04:00 at price level 15024.36
+[BREACH] SELLSIDE at time 2023-07-10 14:45:00-04:00 at price level 15021.49
+[INFO] Not a valid swing high or low at 2023-07-10 14:45:00-04:00
+[FVG] GREEN at time 2023-07-10 14:55:00-04:00 at entry 15041.24 and stop loss 15030.61
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-10 15:00:00-04:00, 
+         Entry Price: 15041.24, 
+         Stop Limit: 15030.61, 
+         Take Profit: 15111.99, 
+         Position Size: 2.35, 
+         Leverage Multiplier: 10, 
+
+[SWING] HIGH at time 2023-07-10 14:55:00-04:00 at price level 15050.86
+[BREACH] SELLSIDE at time 2023-07-10 15:05:00-04:00 at price level 15024.86
+[BREACH] SELLSIDE at time 2023-07-10 15:10:00-04:00 at price level 15024.11
+[BREACH] SELLSIDE at time 2023-07-10 15:15:00-04:00 at price level 15026.86
+[INFO] Not a valid swing high or low at 2023-07-10 15:10:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 15:20:00-04:00 at price level 15020.11
+[BREACH] SELLSIDE at time 2023-07-10 15:25:00-04:00 at price level 15021.99
+[INFO] Not a valid swing high or low at 2023-07-10 15:20:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 15:30:00-04:00 at price level 15020.36
+[BREACH] SELLSIDE at time 2023-07-10 15:35:00-04:00 at price level 15021.36
+[INFO] Not a valid swing high or low at 2023-07-10 15:30:00-04:00
+[BREACH] SELLSIDE at time 2023-07-10 15:40:00-04:00 at price level 15015.86
+[SWING] HIGH at time 2023-07-10 15:35:00-04:00 at price level 15035.99
+[BREACH] SELLSIDE at time 2023-07-10 15:45:00-04:00 at price level 15014.36
+[BREACH] SELLSIDE at time 2023-07-10 15:50:00-04:00 at price level 15011.86
+[INFO] Not a valid swing high or low at 2023-07-10 15:50:00-04:00

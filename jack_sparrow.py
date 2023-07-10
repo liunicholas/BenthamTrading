@@ -12,33 +12,34 @@ options.add_argument("--profile-directory=Profile 10")
 options.add_argument("--headless")
 options.add_argument('--blink-settings=imagesEnabled=false')
 
-print("[INFO] Initializing Drivers")
-spxCFDdriver = webdriver.Chrome(options=options)
-spxCFDdriver.get("https://www.tradingview.com/symbols/EIGHTCAP-SPX500/")
+# print("[INFO] Initializing Drivers")
+# spxCFDdriver = webdriver.Chrome(options=options)
+# spxCFDdriver.get("https://www.tradingview.com/symbols/EIGHTCAP-SPX500/")
 
-ndqCFDdriver = webdriver.Chrome(options=options)
-ndqCFDdriver.get("https://www.tradingview.com/symbols/EIGHTCAP-NDQ100/")
+# ndqCFDdriver = webdriver.Chrome(options=options)
+# ndqCFDdriver.get("https://www.tradingview.com/symbols/EIGHTCAP-NDQ100/")
 
-spxFUTURESdriver = webdriver.Chrome(options=options)
-spxFUTURESdriver.get("https://www.tradingview.com/symbols/CME_MINI-ES1!/")
+# spxFUTURESdriver = webdriver.Chrome(options=options)
+# spxFUTURESdriver.get("https://www.tradingview.com/symbols/CME_MINI-ES1!/")
 
-ndqFUTURESdriver = webdriver.Chrome(options=options)
-ndqFUTURESdriver.get("https://www.tradingview.com/symbols/CME_MINI-NQ1!/")
-print("[INFO] Finished Initializing Drivers")
+# ndqFUTURESdriver = webdriver.Chrome(options=options)
+# ndqFUTURESdriver.get("https://www.tradingview.com/symbols/CME_MINI-NQ1!/")
+# print("[INFO] Finished Initializing Drivers")
 
 class JackSparrow():
-    def __init__(self, name, driver):
+    def __init__(self, name, data_url):
         self.name = name
-        self.driver = driver
+        self.data_url = data_url
+        self.driver = self.initialize_driver()
         self.data_file_path = f"data/{self.name}_{tc.real_time().date()}.csv"
         
         if os.path.exists(self.data_file_path):
-            print(f"Reading Already Made DataFrame for {name}")
+            print(f"[INFO] Reading Already Made DataFrame for {name} \n")
             self.day_df = pd.read_csv(
                 self.data_file_path, index_col=0, parse_dates=True)
             # self.day_df.index = self.day_df.index.tz_localize(tc.new_york_tz)
         else:
-            print(f"Making New DataFrame for {name}")
+            print(f"[INFO] Making New DataFrame for {name} \n")
             date = tc.real_time().date()
             start = tc.localize(datetime.datetime.combine(date, datetime.time(9, 30, 0)))
             date_range = pd.date_range(start, start + datetime.timedelta(hours=6, minutes=25), freq=datetime.timedelta(minutes=5))
@@ -56,6 +57,13 @@ class JackSparrow():
                 {'Date': date_range, 'Open': open, "High": high, "Low": low, "Close": close}).set_index('Date')
             # self.day_df = self.day_df.set_index('Date')
     
+    def initialize_driver(self):
+        print(f"[INFO] Initializing Driver For {self.name}")
+        driver = webdriver.Chrome(options=options)
+        driver.get(self.data_url)
+
+        return driver
+
     def scrape_moment(self):
         while True:
             try:
@@ -63,16 +71,23 @@ class JackSparrow():
                 return Array.prototype.slice.call(document.getElementsByClassName("last-JWoJqCpY"));
                 """)[0].text)
                 # print(current_price)
-            except:
+            except Exception as exception:
                 print("Bad price request, trying again")
+                print(exception)
+                self.driver = self.initialize_driver(self.data_url)
             else:
                 break
 
         current_datetime = tc.real_time()
-        if np.isnan(self.day_df["Open"][[tc.last_five_minute(
-                tc.real_time())]].item()):
-            self.day_df["Open"][[tc.last_five_minute(
-                tc.real_time())]] = current_price
+        try:
+            # add open price
+            if np.isnan(self.day_df["Open"][[tc.last_five_minute(
+                    tc.real_time())]].item()):
+                self.day_df["Open"][[tc.last_five_minute(
+                    tc.real_time())]] = current_price
+        except:
+            # return if there is a key error, notably on the last 5 minute interval of the day at 4:00
+            return
         # if (current_datetime.minute) % 5 == 0 and current_datetime.second == 0:
         #     self.day_df["Open"][[tc.last_five_minute(
         #         tc.real_time())]] = current_price
@@ -96,10 +111,14 @@ class JackSparrow():
 
 def scrape_day():
 
-    spxCFDscraper = JackSparrow("spxCFD", spxCFDdriver)
-    ndqCFDscraper = JackSparrow("ndqCFD", ndqCFDdriver)
-    spxFUTURESscraper = JackSparrow("spxFUTURES", spxFUTURESdriver)
-    ndqFUTURESscraper = JackSparrow("ndqFUTURES", ndqFUTURESdriver)
+    spxCFDscraper = JackSparrow(
+        "spxCFD", "https://www.tradingview.com/symbols/EIGHTCAP-SPX500/")
+    ndqCFDscraper = JackSparrow(
+        "ndqCFD", "https://www.tradingview.com/symbols/EIGHTCAP-NDQ100/")
+    spxFUTURESscraper = JackSparrow(
+        "spxFUTURES", "https://www.tradingview.com/symbols/CME_MINI-ES1!/")
+    ndqFUTURESscraper = JackSparrow(
+        "ndqFUTURES", "https://www.tradingview.com/symbols/CME_MINI-NQ1!/")
     
     print("[INFO] Scraping Now")
 
@@ -109,7 +128,7 @@ def scrape_day():
         if current_time.minute != last_known_minute:
             print(f"[INFO] Scraper Active Last At {current_time}")
             last_known_minute = current_time.minute
-        if current_time.time() == tc.exchange_openclose["ETF"][1]:
+        if current_time.time() >= tc.exchange_openclose["ETF"][1]:
             break
 
         spxCFDscraper.scrape_moment()
