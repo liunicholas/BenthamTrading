@@ -86,16 +86,9 @@ class JackSparrow():
                 self.day_df["Open"][[tc.last_five_minute(
                     tc.real_time())]] = current_price
         except:
-            # return if there is a key error, notably on the last 5 minute interval of the day at 4:00
+            print("[INFO] Key error, likely last 5 minute interval of the day at 4:00")
             return
-        # if (current_datetime.minute) % 5 == 0 and current_datetime.second == 0:
-        #     self.day_df["Open"][[tc.last_five_minute(
-        #         tc.real_time())]] = current_price
-            # self.day_df["High"][[tc.last_five_minute(
-            #     tc.real_time())]] = current_price
-            # self.day_df["Low"][[tc.last_five_minute(
-            #     tc.real_time())]] = current_price
-        # print(self.day_df.index[0])
+  
         if current_price > self.day_df["High"][[tc.last_five_minute(current_datetime)]].item():
             self.day_df["High"][[tc.last_five_minute(
                 tc.real_time())]] = current_price
@@ -129,6 +122,7 @@ def scrape_day():
             print(f"[INFO] Scraper Active Last At {current_time}")
             last_known_minute = current_time.minute
         if current_time.time() >= tc.exchange_openclose["ETF"][1]:
+            print("[INFO] Exchange Closed")
             break
 
         spxCFDscraper.scrape_moment()
