@@ -27,8 +27,8 @@ Log file for SilverBullet on spxCFD
 [BREACH] BUYSIDE at time 2023-07-11 10:45:00-04:00 at price level 4423.85
 [BREACH] BUYSIDE at time 2023-07-11 10:50:00-04:00 at price level 4423.35
 [INFO] Not a valid swing high or low at 2023-07-11 10:45:00-04:00
-[INFO] AM High BUYSIDE liquidity line at time 2023-07-11 11:00:00.000005-04:00 at price level 4426.6
-[INFO] AM Low SELLSIDE liquidity line at time 2023-07-11 11:00:00.000005-04:00 at price level 4410.1
+[INFO] AM High BUYSIDE liquidity line at time 2023-07-11 11:00:00-04:00 at price level 4426.6
+[INFO] AM Low SELLSIDE liquidity line at time 2023-07-11 11:00:00-04:00 at price level 4410.1
 [BREACH] BUYSIDE at time 2023-07-11 10:55:00-04:00 at price level 4423.1
 [INFO] Not a valid swing high or low at 2023-07-11 10:50:00-04:00
 [BREACH] BUYSIDE at time 2023-07-11 11:00:00-04:00 at price level 4425.1
@@ -104,9 +104,9 @@ Log file for SilverBullet on spxCFD
          Security: spxCFD, 
          Time Found: 2023-07-11 14:20:00-04:00, 
          Entry Price: 4423.60, 
-         Stop Limit: 4427.35, 
-         Take Profit: 4412.35, 
-         Position Size: 6.67, 
+         Stop Limit: 4433.6, 
+         Take Profit: 4391.73, 
+         Position Size: 2.50, 
          Leverage Multiplier: 10, 
 
 [BREACH] BUYSIDE at time 2023-07-11 14:20:00-04:00 at price level 4421.85
@@ -117,9 +117,38 @@ Log file for SilverBullet on spxCFD
          Security: spxCFD, 
          Time Found: 2023-07-11 14:25:00-04:00, 
          Entry Price: 4421.85, 
-         Stop Limit: 4425.1, 
-         Take Profit: 4410.1, 
-         Position Size: 7.69, 
+         Stop Limit: 4433.1, 
+         Take Profit: 4391.73, 
+         Position Size: 2.22, 
          Leverage Multiplier: 10, 
 
 [BREACH] BUYSIDE at time 2023-07-11 14:25:00-04:00 at price level 4423.35
+[BREACH] BUYSIDE at time 2023-07-11 14:30:00-04:00 at price level 4423.85
+[INFO] Not a valid swing high or low at 2023-07-11 14:25:00-04:00
+[SWING] LOW at time 2023-07-11 14:25:00-04:00 at price level 4418.6
+[BREACH] BUYSIDE at time 2023-07-11 14:35:00-04:00 at price level 4422.1
+[INFO] Not a valid swing high or low at 2023-07-11 14:30:00-04:00
+[BREACH] BUYSIDE at time 2023-07-11 14:40:00-04:00 at price level 4425.1
+[INFO] Not a valid swing high or low at 2023-07-11 14:35:00-04:00
+[SWING] LOW at time 2023-07-11 14:35:00-04:00 at price level 4419.6
+[BREACH] BUYSIDE at time 2023-07-11 14:45:00-04:00 at price level 4426.1
+[BREACH] BUYSIDE at time 2023-07-11 14:50:00-04:00 at price level 4427.85
+[BREACH] BUYSIDE at time 2023-07-11 14:55:00-04:00 at price level 4430.35
+[BREACH] BUYSIDE at time 2023-07-11 15:00:00-04:00 at price level 4430.6
+[BREACH] BUYSIDE at time 2023-07-11 15:05:00-04:00 at price level 4430.35
+[INFO] Not a valid swing high or low at 2023-07-11 15:00:00-04:00
+[BREACH] BUYSIDE at time 2023-07-11 15:10:00-04:00 at price level 4429.35
+[INFO] Not a valid swing high or low at 2023-07-11 15:05:00-04:00
+[BREACH] BUYSIDE at time 2023-07-11 15:15:00-04:00 at price level 4431.6
+[BREACH] BUYSIDE at time 2023-07-11 15:20:00-04:00 at price level 4432.1
+[INFO] Not a valid swing high or low at 2023-07-11 15:15:00-04:00
+[BREACH] BUYSIDE at time 2023-07-11 15:25:00-04:00 at price level 4431.85
+[INFO] Not a valid swing high or low at 2023-07-11 15:20:00-04:00
+[BREACH] BUYSIDE at time 2023-07-11 15:30:00-04:00 at price level 4431.6
+[BREACH] BUYSIDE at time 2023-07-11 15:35:00-04:00 at price level 4432.1
+[INFO] Not a valid swing high or low at 2023-07-11 15:30:00-04:00
+[BREACH] BUYSIDE at time 2023-07-11 15:40:00-04:00 at price level 4436.1
+[BREACH] BUYSIDE at time 2023-07-11 15:45:00-04:00 at price level 4444.1
+[BREACH] BUYSIDE at time 2023-07-11 15:50:00-04:00 at price level 4445.85
+[BREACH] BUYSIDE at time 2023-07-11 15:55:00-04:00 at price level 4443.6
+[INFO] Not a valid swing high or low at 2023-07-11 15:50:00-04:00

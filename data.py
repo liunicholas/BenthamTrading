@@ -60,29 +60,23 @@ class SecurityData:
             
             # combine twelvedata and yfinance if necessary
             if not today_data_twelvedata.empty:
-                twelvedata_first_time = today_data_twelvedata.index[0].to_pydatetime()
-                temp = []
-                for i, row in today_data_yfinance.iterrows():
-                    if i < twelvedata_first_time:
-                        temp.append(row)
-                if temp:
-                    today_data_yfinance = pd.concat(temp, axis=1).T
-                    today_data = pd.concat(
-                        [today_data_yfinance, today_data_twelvedata], ignore_index=False)
-                else:
+                try:
+                    twelvedata_first_time = today_data_twelvedata.index[0].to_pydatetime()
+                    today_data_yfinance = today_data_yfinance.between_time(
+                     "00:00", (twelvedata_first_time-timedelta(minutes=interval)).time())
+                except:
+                    print("[ERROR] YFinance data failed and is not time series data")
                     today_data = today_data_twelvedata
+                else:
+                    today_data = pd.concat([today_data_yfinance, today_data_twelvedata], ignore_index=False)
             else:
                 today_data = today_data_yfinance
 
-        
         # filter today_data up to the current_time
-        temp = []
-        for i, row in today_data.iterrows():
-            if i+timedelta(minutes=interval) <= current_time:
-                temp.append(row)
-        if temp:
-            today_data = pd.concat(temp, axis=1).T
-        else:
+        try:
+            today_data = today_data.between_time("00:00", (current_time-timedelta(minutes=interval)).time())
+        except:
+            print("[ERROR] Today_Data failed and is not time series data")
             today_data = pd.DataFrame()
 
         return today_data

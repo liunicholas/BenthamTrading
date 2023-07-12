@@ -290,6 +290,7 @@ class SilverBullet():
 
         todays_data = self.security_data["todaysData"]
         # print(todays_data.tail())
+        # print(todays_data)
 
         # only iterate through procedure on new data
         if (not todays_data.empty) and ((self.last_known_data_point is None) or (self.last_known_data_point < todays_data.index[-1])):

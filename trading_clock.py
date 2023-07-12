@@ -76,7 +76,7 @@ def is_market_open(security_type, current_datetime, VERBOSE=False):
         current_time = current_datetime.time()
         current_date = current_datetime.date()
         
-        is_tradinghour = start_time <= current_time < end_time
+        is_tradinghour = start_time <= current_time <= end_time
         is_weekend = current_date.weekday() >= 5
         is_holiday = current_date in federal_holidays
 
@@ -129,7 +129,7 @@ def get_trading_days_between(security_type, start, end):
     return days
     
 def datetime_is_between(t, start_time, end_time):
-    return parse_hour_minute(start_time) <= t.time() < parse_hour_minute(end_time)
+    return parse_hour_minute(start_time) <= t.time() <= parse_hour_minute(end_time)
 
 def parse_hour_minute(stringTime):
     splitTime = stringTime.split(":")

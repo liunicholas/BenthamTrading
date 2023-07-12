@@ -26,7 +26,7 @@ def run_day():
 def main():
     LIVE = True
     last_known_minute = -1
-    # tc.override(tc.localize(datetime(year=2023, month=7, day=7, hour=15, minute=59)))
+    # tc.override(tc.localize(datetime(year=2023, month=7, day=11, hour=15, minute=59)))
     while LIVE:
         current_time = tc.get_today()
         if current_time.minute != last_known_minute:
