@@ -1,0 +1,166 @@
+Proprietary Information of Bentham Trading 2023-07-14 
+Log file for SilverBullet on spxCFD 
+ 
+[INFO] Previous day PM high BUYSIDE liquidity line at time 2023-07-13 16:00:00 at price level 4520.14
+[INFO] Previous day PM low SELLSIDE liquidity line at time 2023-07-13 16:00:00 at price level 4502.39
+[BREACH] BUYSIDE at time 2023-07-14 09:30:00-04:00 at price level 4524.18
+[BREACH] BUYSIDE at time 2023-07-14 09:35:00-04:00 at price level 4525.68
+[BREACH] BUYSIDE at time 2023-07-14 09:40:00-04:00 at price level 4525.93
+[BREACH] BUYSIDE at time 2023-07-14 09:45:00-04:00 at price level 4524.93
+[INFO] Not a valid swing high or low at 2023-07-14 09:40:00-04:00
+[BREACH] BUYSIDE at time 2023-07-14 09:50:00-04:00 at price level 4526.68
+[INFO] Not a valid swing high or low at 2023-07-14 09:45:00-04:00
+[BREACH] BUYSIDE at time 2023-07-14 09:55:00-04:00 at price level 4526.68
+[INFO] Not a valid swing high or low at 2023-07-14 09:50:00-04:00
+[BREACH] BUYSIDE at time 2023-07-14 10:00:00-04:00 at price level 4526.18
+[INFO] Not a valid swing high or low at 2023-07-14 09:55:00-04:00
+[BREACH] BUYSIDE at time 2023-07-14 10:05:00-04:00 at price level 4524.68
+[SWING] LOW at time 2023-07-14 10:00:00-04:00 at price level 4518.68
+[BREACH] BUYSIDE at time 2023-07-14 10:10:00-04:00 at price level 4527.18
+[BREACH] BUYSIDE at time 2023-07-14 10:15:00-04:00 at price level 4529.43
+[BREACH] BUYSIDE at time 2023-07-14 10:20:00-04:00 at price level 4527.93
+[INFO] Not a valid swing high or low at 2023-07-14 10:15:00-04:00
+[BREACH] BUYSIDE at time 2023-07-14 10:25:00-04:00 at price level 4526.18
+[BREACH] BUYSIDE at time 2023-07-14 10:30:00-04:00 at price level 4522.93
+[FVG] RED at time 2023-07-14 10:35:00-04:00 at entry 4519.68 and stop loss 4520.39
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxCFD, 
+         Time Found: 2023-07-14 10:40:00-04:00, 
+         Entry Price: 4519.68, 
+         Stop Limit: 4525.93, 
+         Take Profit: 4506.64, 
+         Position Size: 4.00, 
+         Leverage Multiplier: 10, 
+
+[SWING] LOW at time 2023-07-14 10:35:00-04:00 at price level 4514.68
+[INFO] AM High BUYSIDE liquidity line at time 2023-07-14 11:00:00.000003-04:00 at price level 4529.43
+[INFO] AM Low SELLSIDE liquidity line at time 2023-07-14 11:00:00.000003-04:00 at price level 4511.18
+[SWING] LOW at time 2023-07-14 10:50:00-04:00 at price level 4511.18
+[INFO] Not a valid swing high or low at 2023-07-14 11:00:00-04:00
+[SWING] LOW at time 2023-07-14 11:05:00-04:00 at price level 4516.43
+[BREACH] BUYSIDE at time 2023-07-14 11:15:00-04:00 at price level 4520.68
+[SWING] LOW at time 2023-07-14 11:10:00-04:00 at price level 4516.43
+[BREACH] BUYSIDE at time 2023-07-14 11:20:00-04:00 at price level 4520.68
+[INFO] Not a valid swing high or low at 2023-07-14 11:15:00-04:00
+[BREACH] BUYSIDE at time 2023-07-14 11:25:00-04:00 at price level 4521.18
+[BREACH] BUYSIDE at time 2023-07-14 11:30:00-04:00 at price level 4522.68
+[SWING] LOW at time 2023-07-14 11:25:00-04:00 at price level 4517.43
+[BREACH] BUYSIDE at time 2023-07-14 11:35:00-04:00 at price level 4524.18
+[BREACH] BUYSIDE at time 2023-07-14 11:40:00-04:00 at price level 4522.68
+[INFO] Not a valid swing high or low at 2023-07-14 11:35:00-04:00
+[BREACH] BUYSIDE at time 2023-07-14 11:55:00-04:00 at price level 4521.18
+[SWING] LOW at time 2023-07-14 11:50:00-04:00 at price level 4516.68
+[BREACH] BUYSIDE at time 2023-07-14 12:00:00-04:00 at price level 4521.18
+[INFO] Not a valid swing high or low at 2023-07-14 11:55:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-14 12:00:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-14 12:20:00-04:00
+[SWING] LOW at time 2023-07-14 12:30:00-04:00 at price level 4511.93
+[INFO] Not a valid swing high or low at 2023-07-14 12:40:00-04:00
+[SWING] LOW at time 2023-07-14 12:45:00-04:00 at price level 4511.43
+[BREACH] SELLSIDE at time 2023-07-14 13:00:00-04:00 at price level 4508.93
+[INFO] Not a valid swing high or low at 2023-07-14 13:00:00-04:00
+[BREACH] SELLSIDE at time 2023-07-14 13:05:00-04:00 at price level 4507.68
+[SWING] LOW at time 2023-07-14 13:05:00-04:00 at price level 4507.68
+[BREACH] SELLSIDE at time 2023-07-14 13:10:00-04:00 at price level 4508.43
+[INFO] Not a valid swing high or low at 2023-07-14 13:05:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-14 13:15:00-04:00
+[BREACH] SELLSIDE at time 2023-07-14 13:20:00-04:00 at price level 4510.93
+[SWING] HIGH at time 2023-07-14 13:15:00-04:00 at price level 4513.68
+[BREACH] SELLSIDE at time 2023-07-14 13:25:00-04:00 at price level 4510.18
+[SWING] LOW at time 2023-07-14 13:25:00-04:00 at price level 4510.18
+[INFO] Not a valid swing high or low at 2023-07-14 13:25:00-04:00
+[SWING] LOW at time 2023-07-14 13:45:00-04:00 at price level 4513.93
+[INFO] Not a valid swing high or low at 2023-07-14 13:45:00-04:00
+[SWING] LOW at time 2023-07-14 13:55:00-04:00 at price level 4513.43
+[INFO] Not a valid swing high or low at 2023-07-14 13:55:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-14 14:15:00-04:00
+[SWING] HIGH at time 2023-07-14 14:15:00-04:00 at price level 4518.43
+[FVG] RED at time 2023-07-14 14:25:00-04:00 at entry 4513.93 and stop loss 4520.39
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxCFD, 
+         Time Found: 2023-07-14 14:30:00-04:00, 
+         Entry Price: 4513.93, 
+         Stop Limit: 4520.39, 
+         Take Profit: 4503.64, 
+         Position Size: 3.87, 
+         Leverage Multiplier: 10, 
+
+[BREACH] SELLSIDE at time 2023-07-14 14:25:00-04:00 at price level 4511.18
+[BREACH] SELLSIDE at time 2023-07-14 14:30:00-04:00 at price level 4510.68
+[FVG] RED at time 2023-07-14 14:35:00-04:00 at entry 4510.93 and stop loss 4520.39
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxCFD, 
+         Time Found: 2023-07-14 14:40:00-04:00, 
+         Entry Price: 4510.93, 
+         Stop Limit: 4520.39, 
+         Take Profit: 4500.14, 
+         Position Size: 2.64, 
+         Leverage Multiplier: 10, 
+
+[BREACH] SELLSIDE at time 2023-07-14 14:35:00-04:00 at price level 4507.93
+[SWING] LOW at time 2023-07-14 14:35:00-04:00 at price level 4507.93
+[BREACH] SELLSIDE at time 2023-07-14 14:40:00-04:00 at price level 4509.18
+[INFO] Not a valid swing high or low at 2023-07-14 14:35:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-14 14:40:00-04:00
+[BREACH] SELLSIDE at time 2023-07-14 14:45:00-04:00 at price level 4508.68
+[SWING] HIGH at time 2023-07-14 14:40:00-04:00 at price level 4511.68
+[SWING] LOW at time 2023-07-14 14:45:00-04:00 at price level 4508.68
+[BREACH] SELLSIDE at time 2023-07-14 14:50:00-04:00 at price level 4509.93
+[INFO] Not a valid swing high or low at 2023-07-14 14:45:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-14 14:50:00-04:00
+[BREACH] SELLSIDE at time 2023-07-14 14:55:00-04:00 at price level 4507.68
+[SWING] HIGH at time 2023-07-14 14:50:00-04:00 at price level 4513.68
+[BREACH] SELLSIDE at time 2023-07-14 15:00:00-04:00 at price level 4502.18
+[FVG] RED at time 2023-07-14 15:00:00-04:00 at entry 4508.43 and stop loss 4520.39
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxCFD, 
+         Time Found: 2023-07-14 15:05:00-04:00, 
+         Entry Price: 4508.43, 
+         Stop Limit: 4520.39, 
+         Take Profit: 4497.89, 
+         Position Size: 2.09, 
+         Leverage Multiplier: 10, 
+
+[BREACH] SELLSIDE at time 2023-07-14 15:05:00-04:00 at price level 4501.93
+[FVG] RED at time 2023-07-14 15:05:00-04:00 at entry 4506.93 and stop loss 4520.39
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxCFD, 
+         Time Found: 2023-07-14 15:10:00-04:00, 
+         Entry Price: 4506.93, 
+         Stop Limit: 4520.39, 
+         Take Profit: 4496.64, 
+         Position Size: 1.86, 
+         Leverage Multiplier: 10, 
+
+[INFO] Not a valid swing high or low at 2023-07-14 15:05:00-04:00
+[SWING] LOW at time 2023-07-14 15:05:00-04:00 at price level 4501.93
+[BREACH] SELLSIDE at time 2023-07-14 15:10:00-04:00 at price level 4504.93
+[BREACH] SELLSIDE at time 2023-07-14 15:15:00-04:00 at price level 4508.18
+[SWING] HIGH at time 2023-07-14 15:15:00-04:00 at price level 4510.93
+[INFO] Not a valid swing high or low at 2023-07-14 15:15:00-04:00
+[BREACH] SELLSIDE at time 2023-07-14 15:20:00-04:00 at price level 4505.93
+[BREACH] SELLSIDE at time 2023-07-14 15:25:00-04:00 at price level 4505.18
+[INFO] Not a valid swing high or low at 2023-07-14 15:25:00-04:00
+[SWING] LOW at time 2023-07-14 15:25:00-04:00 at price level 4505.18
+[BREACH] SELLSIDE at time 2023-07-14 15:30:00-04:00 at price level 4505.18
+[SWING] HIGH at time 2023-07-14 15:30:00-04:00 at price level 4507.68
+[INFO] Not a valid swing high or low at 2023-07-14 15:30:00-04:00
+[BREACH] SELLSIDE at time 2023-07-14 15:35:00-04:00 at price level 4504.93
+[BREACH] SELLSIDE at time 2023-07-14 15:40:00-04:00 at price level 4504.68
+[BREACH] SELLSIDE at time 2023-07-14 15:45:00-04:00 at price level 4501.68
+[SWING] HIGH at time 2023-07-14 15:40:00-04:00 at price level 4507.18
+[INFO] Not a valid swing high or low at 2023-07-14 15:40:00-04:00
+[BREACH] SELLSIDE at time 2023-07-14 15:50:00-04:00 at price level 4501.43
+[BREACH] SELLSIDE at time 2023-07-14 15:55:00-04:00 at price level 4501.93
+[INFO] Not a valid swing high or low at 2023-07-14 15:50:00-04:00
+[SWING] LOW at time 2023-07-14 15:50:00-04:00 at price level 4501.43

@@ -1,0 +1,113 @@
+Proprietary Information of Bentham Trading 2023-07-14 
+Summary Log file for all strategies on all securities 
+ 
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxCFD, 
+         Time Found: 2023-07-14 10:40:00-04:00, 
+         Entry Price: 4519.68, 
+         Stop Limit: 4525.93, 
+         Take Profit: 4506.64, 
+         Position Size: 4.00, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxCFD, 
+         Time Found: 2023-07-14 14:30:00-04:00, 
+         Entry Price: 4513.93, 
+         Stop Limit: 4520.39, 
+         Take Profit: 4503.64, 
+         Position Size: 3.87, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-14 14:30:00-04:00, 
+         Entry Price: 15602.70, 
+         Stop Limit: 15627.58, 
+         Take Profit: 15542.8, 
+         Position Size: 1.00, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-14 14:35:00-04:00, 
+         Entry Price: 15593.70, 
+         Stop Limit: 15607.68, 
+         Take Profit: 15542.8, 
+         Position Size: 1.79, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxCFD, 
+         Time Found: 2023-07-14 14:40:00-04:00, 
+         Entry Price: 4510.93, 
+         Stop Limit: 4520.39, 
+         Take Profit: 4500.14, 
+         Position Size: 2.64, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-14 14:40:00-04:00, 
+         Entry Price: 15585.33, 
+         Stop Limit: 15607.68, 
+         Take Profit: 15542.8, 
+         Position Size: 1.12, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxCFD, 
+         Time Found: 2023-07-14 15:05:00-04:00, 
+         Entry Price: 4508.43, 
+         Stop Limit: 4520.39, 
+         Take Profit: 4497.89, 
+         Position Size: 2.09, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-14 15:05:00-04:00, 
+         Entry Price: 15567.45, 
+         Stop Limit: 15607.68, 
+         Take Profit: 15535.8, 
+         Position Size: 0.62, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxCFD, 
+         Time Found: 2023-07-14 15:10:00-04:00, 
+         Entry Price: 4506.93, 
+         Stop Limit: 4520.39, 
+         Take Profit: 4496.64, 
+         Position Size: 1.86, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-14 15:10:00-04:00, 
+         Entry Price: 15556.95, 
+         Stop Limit: 15607.68, 
+         Take Profit: 15522.05, 
+         Position Size: 0.49, 
+         Leverage Multiplier: 10, 
+

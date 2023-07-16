@@ -7,9 +7,9 @@ Summary Log file for all strategies on all securities
          Security: spxCFD, 
          Time Found: 2023-07-12 14:15:00-04:00, 
          Entry Price: 4481.18, 
-         Stop Limit: 4477.68, 
+         Stop Limit: 4475.43, 
          Take Profit: 4491.93, 
-         Position Size: 7.14, 
+         Position Size: 4.35, 
          Leverage Multiplier: 10, 
 
 
@@ -18,9 +18,9 @@ Summary Log file for all strategies on all securities
          Security: spxCFD, 
          Time Found: 2023-07-12 14:20:00-04:00, 
          Entry Price: 4482.68, 
-         Stop Limit: 4478.43, 
+         Stop Limit: 4475.43, 
          Take Profit: 4492.68, 
-         Position Size: 5.88, 
+         Position Size: 3.45, 
          Leverage Multiplier: 10, 
 
 
@@ -29,8 +29,8 @@ Summary Log file for all strategies on all securities
          Security: ndqCFD, 
          Time Found: 2023-07-12 14:20:00-04:00, 
          Entry Price: 15329.91, 
-         Stop Limit: 15319.41, 
+         Stop Limit: 15275.91, 
          Take Profit: 15365.54, 
-         Position Size: 2.38, 
+         Position Size: 0.46, 
          Leverage Multiplier: 10, 
 

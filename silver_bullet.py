@@ -31,7 +31,7 @@ class FVGList(list):
     def __init__(self, swing):
         self.swing = swing
     
-    def append(self, threeCandles, logger):
+    def append(self, threeCandles, liquidity_line, logger):
         # FVG is during trading period 10-11, 14-15 DONE
         # After Swing High: Green FVG - 3rd low > 1st high, above swing high pl
         # After Swing Low: Red FVG - 3rd high < 1st low, below swing low pl
@@ -40,25 +40,43 @@ class FVGList(list):
         leftCandle = threeCandles[0:1]
         middleCandle = threeCandles[1:2]
         rightCandle = threeCandles[2:3]
+
+        liquidity_line_level = liquidity_line.price_level
         
         if tc.datetime_is_between(middleCandle.index.item(), trading_period_1_open, trading_period_1_close) or tc.datetime_is_between(middleCandle.index.item(), trading_period_2_open, trading_period_2_close):
             if self.swing.swing_type == "HIGH":
                 if leftCandle["High"][-1] < rightCandle["Low"][-1]:
                     if (leftCandle.index.item() >= self.swing.time):
-                        if (leftCandle["Close"][-1] > self.swing.price_level) or (middleCandle["Close"][-1] > self.swing.price_level) or (rightCandle["Close"][-1] > self.swing.price_level):
-                            green_fvg = FVG(rightCandle.index.item(
-                            ), rightCandle["Low"][-1], leftCandle["High"][-1], "GREEN")
-                            super().append(green_fvg)
-                            logger.log(str(green_fvg))
+                        if rightCandle["Low"][-1] > liquidity_line_level:
+                            if (leftCandle["Close"][-1] > self.swing.price_level) or (middleCandle["Close"][-1] > self.swing.price_level) or (rightCandle["Close"][-1] > self.swing.price_level):
+                                
+                                # experimenting with changing the stop loss value
+
+                                # green_fvg = FVG(rightCandle.index.item(), rightCandle["Low"][-1], leftCandle["High"][-1], "GREEN")
+                                green_fvg = FVG(rightCandle.index.item(
+                                ), rightCandle["Low"][-1], liquidity_line_level-0.25, "GREEN")
+
+                                super().append(green_fvg)
+                                logger.log(str(green_fvg))
 
             elif self.swing.swing_type == "LOW":
                 if leftCandle["Low"][-1] > rightCandle["High"][-1]:
                     if (leftCandle.index.item() >= self.swing.time):
-                        if (leftCandle["Close"][-1] < self.swing.price_level) or (middleCandle["Close"][-1] < self.swing.price_level) or (rightCandle["Close"][-1] < self.swing.price_level):
-                            red_fvg = FVG(rightCandle.index.item(
-                            ), rightCandle["High"][-1], leftCandle["Low"][-1], "RED")
-                            super().append(red_fvg)
-                            logger.log(str(red_fvg))
+                        if rightCandle["High"][-1] < liquidity_line_level:
+                            if (leftCandle["Close"][-1] < self.swing.price_level) or (middleCandle["Close"][-1] < self.swing.price_level) or (rightCandle["Close"][-1] < self.swing.price_level):
+                                
+                                # experimenting with changing the stop loss value
+
+                                # red_fvg = FVG(rightCandle.index.item(
+                                # ), rightCandle["High"][-1], leftCandle["Low"][-1], "RED")
+
+                                red_fvg = FVG(rightCandle.index.item(
+                                ), rightCandle["High"][-1], liquidity_line_level+0.25, "RED")
+                                super().append(red_fvg)
+                                logger.log(str(red_fvg))
+            
+            else:
+                print(f"[ERROR] Swing type error for \"{self.swing.swing_type}\"")
 
 class Swing:
     def __init__(self, time, price_level, swing_type):
@@ -298,9 +316,9 @@ class SilverBullet():
             pruned_liquidity_lines = []
             
             for liquidity_line in self.liquidity_lines:
-                if liquidity_line.liquidity_type == "BUYSIDE" and todays_data[-1:]["High"][-1]/liquidity_line.price_level > 1.02:
+                if liquidity_line.liquidity_type == "BUYSIDE" and todays_data[-1:]["High"][-1]/liquidity_line.price_level > 1.01:
                     self.logger.log(f"[INFO] Removed liquidity line: {liquidity_line}")
-                elif liquidity_line.liquidity_type == "SELLSIDE" and todays_data[-1:]["Low"][-1]/liquidity_line.price_level < 0.98:
+                elif liquidity_line.liquidity_type == "SELLSIDE" and todays_data[-1:]["Low"][-1]/liquidity_line.price_level < 0.99:
                     self.logger.log(f"[INFO] Removed liquidity line: {liquidity_line}")
                 else:
                     pruned_liquidity_lines.append(liquidity_line)
@@ -315,7 +333,8 @@ class SilverBullet():
 
                             # iterate through swings in each breach
                             for swing in breach.swing_list:
-                                swing.FVG_list.append(todays_data[-3:], self.logger)
+                                swing.FVG_list.append(
+                                    todays_data[-3:], liquidity_line, self.logger)
 
                                 # iterate through FVGs in each swing
                                 for FVG in swing.FVG_list:
