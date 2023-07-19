@@ -1,0 +1,157 @@
+Proprietary Information of Bentham Trading 2023-07-18 
+Summary Log file for all strategies on all securities 
+ 
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxCFD, 
+         Time Found: 2023-07-18 10:10:00-04:00, 
+         Entry Price: 4533.43, 
+         Stop Limit: 4521.24, 
+         Take Profit: 4543.43, 
+         Position Size: 2.05, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxCFD, 
+         Time Found: 2023-07-18 10:45:00-04:00, 
+         Entry Price: 4534.68, 
+         Stop Limit: 4521.24, 
+         Take Profit: 4544.68, 
+         Position Size: 1.86, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxCFD, 
+         Time Found: 2023-07-18 10:50:00-04:00, 
+         Entry Price: 4536.18, 
+         Stop Limit: 4521.24, 
+         Take Profit: 4546.18, 
+         Position Size: 1.67, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxCFD, 
+         Time Found: 2023-07-18 10:55:00-04:00, 
+         Entry Price: 4538.18, 
+         Stop Limit: 4521.24, 
+         Take Profit: 4548.18, 
+         Position Size: 1.48, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxCFD, 
+         Time Found: 2023-07-18 11:10:00-04:00, 
+         Entry Price: 4541.68, 
+         Stop Limit: 4521.24, 
+         Take Profit: 4551.68, 
+         Position Size: 1.22, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxCFD, 
+         Time Found: 2023-07-18 14:10:00-04:00, 
+         Entry Price: 4554.43, 
+         Stop Limit: 4521.24, 
+         Take Profit: 4564.43, 
+         Position Size: 0.75, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-18 14:10:00-04:00, 
+         Entry Price: 15839.30, 
+         Stop Limit: 15664.03, 
+         Take Profit: 15869.3, 
+         Position Size: 0.14, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxCFD, 
+         Time Found: 2023-07-18 14:15:00-04:00, 
+         Entry Price: 4555.68, 
+         Stop Limit: 4521.24, 
+         Take Profit: 4565.68, 
+         Position Size: 0.73, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-18 14:15:00-04:00, 
+         Entry Price: 15849.05, 
+         Stop Limit: 15664.03, 
+         Take Profit: 15879.05, 
+         Position Size: 0.14, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-18 14:20:00-04:00, 
+         Entry Price: 15854.43, 
+         Stop Limit: 15664.03, 
+         Take Profit: 15884.43, 
+         Position Size: 0.13, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxCFD, 
+         Time Found: 2023-07-18 14:30:00-04:00, 
+         Entry Price: 4557.93, 
+         Stop Limit: 4521.24, 
+         Take Profit: 4567.93, 
+         Position Size: 0.68, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-18 14:30:00-04:00, 
+         Entry Price: 15866.05, 
+         Stop Limit: 15664.03, 
+         Take Profit: 15896.05, 
+         Position Size: 0.12, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxCFD, 
+         Time Found: 2023-07-18 14:55:00-04:00, 
+         Entry Price: 4559.18, 
+         Stop Limit: 4521.24, 
+         Take Profit: 4569.18, 
+         Position Size: 0.66, 
+         Leverage Multiplier: 10, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ndqCFD, 
+         Time Found: 2023-07-18 14:55:00-04:00, 
+         Entry Price: 15881.55, 
+         Stop Limit: 15664.03, 
+         Take Profit: 15911.55, 
+         Position Size: 0.11, 
+         Leverage Multiplier: 10, 
+

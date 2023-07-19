@@ -6,7 +6,7 @@ class StrategyLogger:
         self.strategy_name = strategy_name
         self.date = date
         self.specific_file_path = f"trade_logs/{strategy_name}/{security}/{date}_{strategy_name}_{security}_candidate_trades.txt"
-        self.general_file_path = f"trade_logs/{date}_summary.txt"
+        self.general_file_path = f"trade_logs/{strategy_name}/{date}_summary.txt"
 
         if not os.path.exists(self.general_file_path):
             with open(self.general_file_path, "w") as f:

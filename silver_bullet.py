@@ -12,7 +12,6 @@ trading_period_2_close = "15:00"
 
 portfolio_size = 50000
 max_drawdown = 0.005*portfolio_size
-leverage_multiplier = 10
 
 SWING_INTERVAL = 5
 INTERVAL = 5  # minutes
@@ -174,7 +173,7 @@ class CandidateTrades():
         self.trade_orders = []
         self.trade_times = []
     
-    def append(self, security, take_profit_margin, stop_loss_margin, fvg, all_swing_lows, all_swing_highs, logger):
+    def append(self, security, take_profit_margin, stop_loss_margin, leverage_multiplier, fvg, all_swing_lows, all_swing_highs, logger):
         FVG_time = fvg.time + timedelta(minutes=INTERVAL)
         entry_price = fvg.entry
         stop_limit_price = fvg.stop_loss
@@ -249,13 +248,14 @@ class CandidateTrades():
             logger.sum_log(str(trade_order))
 
 class SilverBullet():
-    def __init__(self, security, security_type, take_profit_margin, stop_loss_margin, OVERRIDE=False):
+    def __init__(self, security, security_type, take_profit_margin, stop_loss_margin, leverage_multiplier, OVERRIDE=False):
         self.logger = StrategyLogger(security=security, strategy_name="SilverBullet", date=tc.get_today().date())
 
         self.security = security
         self.security_type = security_type
         self.take_profit_margin = take_profit_margin
         self.stop_loss_margin = stop_loss_margin
+        self.leverage_multiplier = leverage_multiplier
 
         self.security_data = SecurityData(security, security_type)
         self.security_data.get_day_data("yesterdata", tc.get_today(),
@@ -339,7 +339,7 @@ class SilverBullet():
                                 # iterate through FVGs in each swing
                                 for FVG in swing.FVG_list:
                                     self.candidate_trades.append(
-                                        self.security, self.take_profit_margin, self.stop_loss_margin, FVG, self.takeProfitSwingLows, self.takeProfitSwingHighs, self.logger)
+                                        self.security, self.take_profit_margin, self.stop_loss_margin, self.leverage_multiplier, FVG, self.takeProfitSwingLows, self.takeProfitSwingHighs, self.logger)
 
             self.last_known_data_point = todays_data.index[-1]
             self.liquidity_lines = pruned_liquidity_lines

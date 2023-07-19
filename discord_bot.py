@@ -3,41 +3,39 @@ import os
 from discord.ext import tasks
 import trading_clock as tc
 
-last_to_print = []
+printed_trade_orders = []
 
 intents = discord.Intents(messages=True, message_content=True, guilds=True)
 client = discord.Client(intents=intents)
 TOKEN = "MTEyMTE1MzI3MjE3MDk0NjU5Mg.G3qbyD.-IhGrjmcKp4e_d3H2A7xwlXSNzmiOVuyvKslhA"
+strategies = {"SilverBullet": 1121157472690909316}
 
 @tasks.loop(seconds=10)
 async def send_message():
-    global last_to_print
-    sum_path = f"trade_logs/{tc.get_today().date()}_summary.txt"
-    if os.path.exists(sum_path):
-        with open(sum_path, 'r') as f:
-            lines = f.readlines()
+    global printed_trade_orders
 
-        count = 0
-        for i in range(len(lines)-1,0, -1):
-            if lines[i] == "\n":
-                count += 1
-            else:
-                break
-        
-        for i in range(count):
-            lines.pop()
+    for strategy in strategies:
+        sum_path = f"trade_logs/{strategy}/{tc.get_today().date()}_summary.txt"
+        if os.path.exists(sum_path):
+            to_print = []
+            with open(sum_path, 'r') as f:
+                for line in f:
+                    if "TRADE ORDER" in line:
+                        trade_order_message = f"@everyone\nTRADE ORDER ({strategy}):\n"
+                        for _ in range(8):
+                            trade_order_message += f.readline()
 
-        if len(lines) >= 9:
-            last_lines = lines[-9:]
-            if ("[TRADE ORDER]:" in last_lines[0]) and last_to_print != last_lines:
-                channel = client.get_channel(1121157472690909316)
-                message="@everyone\n"
-                for l in last_lines:
-                    message += l
-                
-                last_to_print = last_lines
-                await channel.send(message)
-    
+                        to_print.append(trade_order_message)
+
+            for trade_order_message in to_print:
+                if trade_order_message not in printed_trade_orders:
+                    channel = client.get_channel(strategies[strategy])
+                    await channel.send(trade_order_message)
+                    printed_trade_orders.append(trade_order_message)
+
+        else:
+            print(f"[ERROR]: {sum_path} does not exist")
+
 @client.event
 async def on_ready():
     print(f'{client.user.name} has connected to Discord!')
