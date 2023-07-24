@@ -1,0 +1,102 @@
+Proprietary Information of Bentham Trading 2023-07-21 
+Summary Log file for all strategies on all securities 
+ 
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxFUTURES, 
+         Time Found: 2023-07-21 10:40:00-04:00, 
+         Entry Price: 4570.50, 
+         Stop Limit: 4581.0, 
+         Take Profit: 4557.25, 
+         Position Size: 4.76, 
+         Leverage Multiplier: 5, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqFUTURES, 
+         Time Found: 2023-07-21 10:40:00-04:00, 
+         Entry Price: 15592.25, 
+         Stop Limit: 15713.75, 
+         Take Profit: 15547.0, 
+         Position Size: 1.03, 
+         Leverage Multiplier: 2, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqFUTURES, 
+         Time Found: 2023-07-21 10:45:00-04:00, 
+         Entry Price: 15583.00, 
+         Stop Limit: 15713.75, 
+         Take Profit: 15547.0, 
+         Position Size: 0.96, 
+         Leverage Multiplier: 2, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxFUTURES, 
+         Time Found: 2023-07-21 14:20:00-04:00, 
+         Entry Price: 4579.75, 
+         Stop Limit: 4583.5, 
+         Take Profit: 4568.5, 
+         Position Size: 13.33, 
+         Leverage Multiplier: 5, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxFUTURES, 
+         Time Found: 2023-07-21 14:30:00-04:00, 
+         Entry Price: 4576.75, 
+         Stop Limit: 4581.0, 
+         Take Profit: 4565.25, 
+         Position Size: 11.76, 
+         Leverage Multiplier: 5, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqFUTURES, 
+         Time Found: 2023-07-21 14:25:00-04:00, 
+         Entry Price: 15623.25, 
+         Stop Limit: 15713.75, 
+         Take Profit: 15584.75, 
+         Position Size: 1.38, 
+         Leverage Multiplier: 2, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqFUTURES, 
+         Time Found: 2023-07-21 14:30:00-04:00, 
+         Entry Price: 15607.00, 
+         Stop Limit: 15713.75, 
+         Take Profit: 15575.0, 
+         Position Size: 1.17, 
+         Leverage Multiplier: 2, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxFUTURES, 
+         Time Found: 2023-07-21 15:10:00-04:00, 
+         Entry Price: 4576.75, 
+         Stop Limit: 4581.0, 
+         Take Profit: 4565.25, 
+         Position Size: 11.76, 
+         Leverage Multiplier: 5, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqFUTURES, 
+         Time Found: 2023-07-21 15:10:00-04:00, 
+         Entry Price: 15588.00, 
+         Stop Limit: 15713.75, 
+         Take Profit: 15555.5, 
+         Position Size: 0.99, 
+         Leverage Multiplier: 2, 
+

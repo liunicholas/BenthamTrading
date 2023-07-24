@@ -121,7 +121,7 @@ def scrape_day():
         if current_time.minute != last_known_minute:
             print(f"[INFO] Scraper Active Last At {current_time}")
             last_known_minute = current_time.minute
-        if current_time.time() >= tc.exchange_openclose["ETF"][1]:
+        if current_time.time() >= tc.NYSE_close:
             print("[INFO] Exchange Closed")
             break
 

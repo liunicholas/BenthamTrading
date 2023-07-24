@@ -7,20 +7,20 @@ Summary Log file for all strategies on all securities
          Security: spxFUTURES, 
          Time Found: 2023-07-19 14:25:00-04:00, 
          Entry Price: 4591.75, 
-         Stop Limit: 4596.75, 
-         Take Profit: 4577.5, 
-         Position Size: 10.00, 
+         Stop Limit: 4608.5, 
+         Take Profit: 4575.75, 
+         Position Size: 2.99, 
          Leverage Multiplier: 5, 
 
 
 [TRADE ORDER]: 
          Type: SHORT, 
          Security: ndqFUTURES, 
-         Time Found: 2023-07-19 14:25:00-04:00, 
-         Entry Price: 15934.25, 
-         Stop Limit: 16030.0, 
-         Take Profit: 15896.25, 
-         Position Size: 1.31, 
+         Time Found: 2023-07-19 11:10:00-04:00, 
+         Entry Price: 16006.75, 
+         Stop Limit: 16042.5, 
+         Take Profit: 15972.5, 
+         Position Size: 3.50, 
          Leverage Multiplier: 2, 
 
 
@@ -29,8 +29,8 @@ Summary Log file for all strategies on all securities
          Security: ndqFUTURES, 
          Time Found: 2023-07-19 14:50:00-04:00, 
          Entry Price: 15938.25, 
-         Stop Limit: 15920.5, 
-         Take Profit: 15980.25, 
-         Position Size: 7.04, 
+         Stop Limit: 15920.75, 
+         Take Profit: 16042.5, 
+         Position Size: 7.14, 
          Leverage Multiplier: 2, 
 

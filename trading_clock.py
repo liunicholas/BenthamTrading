@@ -3,14 +3,56 @@ import pytz
 
 new_york_tz = pytz.timezone('America/New_York')
 
+NYSE_open = time(hour=9, minute=30)
+NYSE_close = time(hour=16)
+
+# 0 is Monday
 exchange_openclose = {
-    "ETF": [time(hour=9, minute=30), time(hour=16)],
+    "ETF": {
+        0: [(time(hour=9, minute=30), time(hour=16))],
+        1: [(time(hour=9, minute=30), time(hour=16))],
+        2: [(time(hour=9, minute=30), time(hour=16))],
+        3: [(time(hour=9, minute=30), time(hour=16))],
+        4: [(time(hour=9, minute=30), time(hour=16))],
+        5: "CLOSED",
+        6: "CLOSED",
+    },
+    "CFD": {
+        0: [(time(hour=0), time(hour=23,minute=59,second=59))],
+        1: [(time(hour=0), time(hour=23, minute=59, second=59))],
+        2: [(time(hour=0), time(hour=23, minute=59, second=59))],
+        3: [(time(hour=0), time(hour=23, minute=59, second=59))],
+        4: [(time(hour=0), time(hour=17))],
+        5: "CLOSED",
+        6: [(time(hour=17), time(hour=23, minute=59, second=59))],
+    },
+    "FUTURES": {
+        0: [(time(hour=0), time(hour=17)), (time(hour=18), time(hour=23, minute=59, second=59))],
+        1: [(time(hour=0), time(hour=17)), (time(hour=18), time(hour=23, minute=59, second=59))],
+        2: [(time(hour=0), time(hour=17)), (time(hour=18), time(hour=23, minute=59, second=59))],
+        3: [(time(hour=0), time(hour=17)), (time(hour=18), time(hour=23, minute=59, second=59))],
+        4: [(time(hour=0), time(hour=17))],
+        5: "CLOSED",
+        6: [(time(hour=18), time(hour=23, minute=59, second=59))],
+    },
 }
 
-federal_holidays = [date(2023, 6, 19), date(2023, 7, 4),
-                    date(2023, 9, 4), date(2023, 10, 9),
-                    date(2023, 11, 11), date(2023, 11, 23),
-                    date(2023, 12, 25)]
+federal_holidays = {"new_years": date(2023, 1, 2),
+                    "mlk": date(2023, 1, 16),
+                    "washington": date(2023, 2, 20),
+                    "memorial": date(2023, 5, 29),
+                    "juneteenth": date(2023, 6, 19),
+                    "independence": date(2023, 7, 4),
+                    "labor": date(2023, 9, 4),
+                    "columbus": date(2023, 10, 9),
+                    "veterans": date(2023, 11, 11),
+                    "thanksgiving": date(2023, 11, 23),
+                    "christmas": date(2023, 12, 25)}
+
+half_day_before = [federal_holidays["independence"]-timedelta(days=1),
+                   federal_holidays["christmas"]-timedelta(days=1)]
+
+half_day_after = [federal_holidays["thanksgiving"]+timedelta(days=1)]
 
 def localize(dt):
     return new_york_tz.localize(dt)
@@ -67,27 +109,26 @@ def real_time():
 
 def is_market_open(security_type, current_datetime, VERBOSE=False):
     if VERBOSE:
-        print(f"[INFO] Checking time {current_datetime} for market open")
+        print(f"[INFO] Checking time {current_datetime} for market open for {security_type}")
 
-    if security_type == "ETF":
-        start_time = exchange_openclose["ETF"][0]
-        end_time = exchange_openclose["ETF"][1]
+    current_time = current_datetime.time()
+    current_date = current_datetime.date()
 
-        current_time = current_datetime.time()
-        current_date = current_datetime.date()
+    if security_type in exchange_openclose.keys():
+        this_security_market_times = exchange_openclose[security_type]
+        day_of_week = current_datetime.weekday()
+        this_day_times = this_security_market_times[day_of_week]
+
+        is_holiday = current_date in federal_holidays.values()
+        if this_day_times == "CLOSED" or is_holiday:
+            return False
+        else:
+            for open_close_pair in this_day_times:
+                if open_close_pair[0] <= current_time <= open_close_pair[1]:
+                    return True
+                
+            return False
         
-        is_tradinghour = start_time <= current_time <= end_time
-        is_weekend = current_date.weekday() >= 5
-        is_holiday = current_date in federal_holidays
-
-        return is_tradinghour and not is_weekend and not is_holiday
-    
-    elif security_type == "CFD":
-        print("[ERROR] Not Implemented Yet")
-        pass
-    elif security_type == "FUTURES":
-        print("[ERROR] Not Implemented Yet")
-        pass
     else:
         print("[ERROR] Market Times Not Available")
 

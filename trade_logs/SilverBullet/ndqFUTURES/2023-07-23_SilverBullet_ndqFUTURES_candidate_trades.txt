@@ -1,0 +1,5 @@
+Proprietary Information of Bentham Trading 2023-07-23 
+Log file for SilverBullet on ndqFUTURES 
+ 
+[INFO] Previous day high BUYSIDE liquidity line at time 2023-07-21 16:00:00-04:00 at price level 15653.25
+[INFO] Previous day low SELLSIDE liquidity line at time 2023-07-21 16:00:00-04:00 at price level 15522.25

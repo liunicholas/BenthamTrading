@@ -34,7 +34,8 @@ async def send_message():
                     printed_trade_orders.append(trade_order_message)
 
         else:
-            print(f"[ERROR]: {sum_path} does not exist")
+            if tc.is_market_open(security_type="ETF", current_datetime=tc.real_time()):
+                print(f"[ERROR]: {sum_path} does not exist")
 
 @client.event
 async def on_ready():
