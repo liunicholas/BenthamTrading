@@ -11,7 +11,7 @@ def run_day():
     while tc.is_market_open(security_type="ETF", current_datetime=tc.get_today()):
         # run cycles once a minute
         current_time = tc.get_today()
-        if current_time.minute != last_known_minute:
+        if current_time.minute != last_known_minute and current_time.minute % INTERVAL == 0:
             last_known_minute = current_time.minute
 
             snp_silver_bullet.run_cycle(current_time)
@@ -29,7 +29,7 @@ def main():
     # tc.override(tc.localize(datetime(year=2023, month=7, day=19, hour=15, minute=59)))
     while LIVE:
         current_time = tc.get_today()
-        if current_time.minute != last_known_minute:
+        if current_time.minute != last_known_minute and current_time.minute % INTERVAL == 0:
             last_known_minute = current_time.minute
 
             if tc.is_market_open(security_type="ETF", current_datetime=current_time, VERBOSE=True):

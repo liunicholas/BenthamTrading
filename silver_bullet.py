@@ -60,13 +60,14 @@ class FVGList(list):
                 print(f"[ERROR] Swing type error for \"{self.swing.swing_type}\"")
 
 class Swing:
-    def __init__(self, time, price_level, swing_type, logger):
+    def __init__(self, time, price_level, swing_type, logger=None):
         self.time = time
         self.price_level = price_level
         self.swing_type = swing_type # HIGH LOW
         self.logger = logger
 
-        self.FVG_list = FVGList(self, logger)
+        if logger is not None:
+            self.FVG_list = FVGList(self, logger)
     
     def isSwingHigh(threeCandles):
         leftCandle = threeCandles[0:1]
@@ -162,17 +163,78 @@ class LiquidityLineList(list):
         super().__init__(*args)
         self.security_type = security_type
         self.logger = logger
-        self.GOT_SECONDARY_LIQUIDITY = False
 
-        self.get_primary_liquidity(tc.get_today(), security_data)
+        self.current_queue_period = "AM_session"
+        self.queued_buyside_liquidity_line = None
+        self.queued_sellside_liquidity_line = None
+
+        self.get_primary_liquidity(security_data)
  
-    # def append(self, current_time, security_data):
-    #     update_liquidity_line_times = {
-    #         "AM_session": ("10:00", "11:00"),
-    #         "lunch_session": ("12:00", "13:30"),
-    #         # "PM_session": ("14:00", "15:00"),
-    #     }
-    #     pass
+    def append(self, todays_data):
+        # no point in looking for new liquidity lines here
+        if len(todays_data) < 3:
+            return
+        
+        if tc.datetime_is_between(tc.get_today(), "9:30", "12:05"):
+            current_time_period = "AM_session"
+        elif tc.datetime_is_between(tc.get_today(), "12:10", "13:35"):
+            current_time_period = "lunch_session"
+        elif tc.datetime_is_between(tc.get_today(), "13:40", "16:00"):
+            current_time_period = "PM_session"
+        else:
+            # no need to queue new liquidity lines
+            return
+        
+        if self.current_queue_period == "AM_session" and current_time_period == "lunch_session":
+            if self.queued_buyside_liquidity_line is not None:
+                super().append(self.queued_buyside_liquidity_line)
+                self.logger.log("[INFO] Adding AM " + str(self.queued_buyside_liquidity_line))
+            
+            if self.queued_sellside_liquidity_line is not None:
+                super().append(self.queued_sellside_liquidity_line)
+                self.logger.log("[INFO] Adding AM " + str(self.queued_sellside_liquidity_line))
+
+            self.queued_buyside_liquidity_line = None
+            self.queued_sellside_liquidity_line = None
+
+            self.current_queue_period = "lunch_session"
+        elif self.current_queue_period == "lunch_session" and current_time_period == "PM_session":
+            if self.queued_buyside_liquidity_line is not None:
+                super().append(self.queued_buyside_liquidity_line)
+                self.logger.log("[INFO] Adding Lunch " +
+                                str(self.queued_buyside_liquidity_line))
+
+            if self.queued_sellside_liquidity_line is not None:
+                super().append(self.queued_sellside_liquidity_line)
+                self.logger.log("[INFO] Adding Lunch " +
+                                str(self.queued_sellside_liquidity_line))
+
+            self.queued_buyside_liquidity_line = None
+            self.queued_sellside_liquidity_line = None
+
+            self.current_queue_period = "PM_session"
+        else:
+            pass
+        
+        # not looking for more liquidity lines
+        if self.current_queue_period == "PM_session":
+            return
+        
+        new_high_level = todays_data[-2:-1]["High"][-1]
+        new_low_level = todays_data[-2:-1]["Low"][-1]
+        new_line_time = todays_data[-2:-1].index.item()
+        if Swing.isSwingHigh(todays_data[-3:]):
+            if self.queued_buyside_liquidity_line is None or new_high_level > self.queued_buyside_liquidity_line.price_level:
+                self.queued_buyside_liquidity_line = LiquidityLine(
+                    new_line_time, new_high_level, "BUYSIDE", self.logger)
+        elif Swing.isSwingLow(todays_data[-3:]):
+            if self.queued_sellside_liquidity_line is None or new_low_level < self.queued_sellside_liquidity_line.price_level:
+                self.queued_sellside_liquidity_line = LiquidityLine(
+                    new_line_time, new_low_level, "SELLSIDE", self.logger)
+        else:
+            pass
+
+        return
 
     def prune_liquidity_lines(self, candidate_trades):
         liquidity_levels_used = []
@@ -192,58 +254,72 @@ class LiquidityLineList(list):
                  
         self = pruned_liquidity_lines
     
-    def get_primary_liquidity(self, current_time, security_data):
-        security_type = self.security_type
-        last_trading_day = tc.get_delta_trading_date(
-            security_type, current_time.date(), -1)
+    def get_primary_liquidity(self, security_data):
+        current_time = tc.get_today()
+        last_trading_day = tc.get_delta_trading_date(self.security_type, current_time.date(), -1)
 
+        # choose previous session data based on whether it was a half day or not
         dataForLiquidity = security_data["yesterdata"]
         if last_trading_day not in tc.half_day_before and last_trading_day not in tc.half_day_after:
             previous_session_data = dataForLiquidity.between_time("13:30", "16:00")
         else:
-            previous_session_data = dataForLiquidity.between_time("9:30", "13:30")
+            previous_session_data = dataForLiquidity.between_time("9:30", "13:00")
 
-        previous_high = previous_session_data["High"].max()
-        previous_low = previous_session_data["Low"].min()
+        def get_session_swings(session_data):
+            takeProfitSwingLows, takeProfitSwingHighs = [], []
 
-        dummyDatetime = tc.localize(datetime.combine(tc.get_delta_trading_date(
-            security_type, current_time.date(), -1), time(16, 00, 0)))
+            for i in session_data.index[:-2]:
+                threeCandles = session_data[i:i+timedelta(minutes=INTERVAL*2)]
+                middleCandle = threeCandles[-2:-1]
+                middleCandleTime = middleCandle.index.item()
 
-        pSellsideLiquidity = LiquidityLine(
-            dummyDatetime, previous_low, "SELLSIDE", self.logger)
-        pBuysideLiquidity = LiquidityLine(
-            dummyDatetime, previous_high, "BUYSIDE", self.logger)
+                if Swing.isSwingHigh(threeCandles):
+                    swing = Swing(middleCandleTime,
+                                  middleCandle["High"][-1], "HIGH")
+                    takeProfitSwingHighs.append(swing)
 
-        self.logger.log("[INFO] Previous day high " + str(pBuysideLiquidity))
-        self.logger.log("[INFO] Previous day low " + str(pSellsideLiquidity))
+                if Swing.isSwingLow(threeCandles):
+                    swing = Swing(middleCandleTime,
+                                  middleCandle["Low"][-1], "LOW")
+                    takeProfitSwingLows.append(swing)
 
+            return takeProfitSwingLows, takeProfitSwingHighs
+        
+        takeProfitSwingLows, takeProfitSwingHighs = get_session_swings(previous_session_data)
+
+        # get buyside liquidity line
+        takeProfitSwingHighs.sort(key=lambda swing: swing.price_level, reverse=True)
+        highest_swing_high = takeProfitSwingHighs[0]
+
+        high_time, previous_high = previous_session_data.High.idxmax(), previous_session_data.loc[previous_session_data.High.idxmax(), "High"]
+
+        buyside_level = highest_swing_high.price_level if highest_swing_high.time >= high_time else previous_high
+        buyside_time = highest_swing_high.time if highest_swing_high.time >= high_time else high_time
+
+        pBuysideLiquidity = LiquidityLine(buyside_time, buyside_level, "BUYSIDE", self.logger)
+        self.logger.log("[INFO] Previous day " + str(pBuysideLiquidity))
+        super().append(pBuysideLiquidity)
+
+        # get sellside liquidity line
+        takeProfitSwingLows.sort(key=lambda swing: swing.price_level)
+        lowest_swing_low = takeProfitSwingLows[0]
+
+        low_time, previous_low = previous_session_data.Low.idxmin(), previous_session_data.loc[previous_session_data.Low.idxmin(), "Low"]
+
+        sellside_level = lowest_swing_low.price_level if lowest_swing_low.time >= low_time else previous_low
+        sellside_time = lowest_swing_low.time if lowest_swing_low.time >= low_time else low_time
+
+        pSellsideLiquidity = LiquidityLine(sellside_time, sellside_level, "SELLSIDE", self.logger)
+        self.logger.log("[INFO] Previous day " + str(pSellsideLiquidity))
         super().append(pSellsideLiquidity)
-        super().append(pBuysideLiquidity)   
-
-    def get_secondary_liquidity(self, current_time, security_data):
-        if not self.GOT_SECONDARY_LIQUIDITY:
-            self.logger.log(f"[INFO] ADDING LIQUIDITY LINES FROM AM SESSION FOR {{self.security}}")
-            todaysData = security_data["todaysData"].between_time("10:00", "11:00")
-
-            amHigh = LiquidityLine(
-                current_time, todaysData.max()["High"], "BUYSIDE", self.logger)
-            amLow = LiquidityLine(
-                current_time, todaysData.min()["Low"], "SELLSIDE", self.logger)
-
-            self.logger.log("[INFO] AM High " + str(amHigh))
-            self.logger.log("[INFO] AM Low " + str(amLow))
-
-            super().append(amHigh)
-            super().append(amLow)
-
-            self.GOT_SECONDARY_LIQUIDITY = True     
 
 class CandidateTrades():
-    def __init__(self):
+    def __init__(self, logger):
         self.trade_orders = []
         self.trade_times = []
+        self.logger = logger
     
-    def append(self, silver_bullet_object, fvg, liquidity_lines):
+    def append(self, silver_bullet_object, fvg):
         FVG_time = fvg.time
         entry_price = fvg.entry
 
@@ -252,6 +328,7 @@ class CandidateTrades():
         stop_loss_margin = silver_bullet_object.stop_loss_margin
         leverage_multiplier = silver_bullet_object.leverage_multiplier
 
+        liquidity_lines = silver_bullet_object.liquidity_lines
         trade_type = None
 
         if fvg.FVG_type == "RED" and FVG_time not in self.trade_times:
@@ -326,9 +403,10 @@ class SilverBullet():
 
         self.liquidity_lines = LiquidityLineList(security_type, self.security_data, self.logger)
 
-        self.candidate_trades = CandidateTrades()
+        self.candidate_trades = CandidateTrades(self.logger)
         self.last_cycled_data_point, self.last_pulled_minute = None, None
 
+        # catch up system
         if not OVERRIDE and tc.real_time()-timedelta(minutes=INTERVAL) > tc.localize(datetime.combine(tc.get_today().date(), tc.NYSE_open)):
             start_time = tc.localize(datetime.combine(tc.get_today().date(), tc.NYSE_open))
             if tc.real_time() > tc.localize(datetime.combine(tc.get_today().date(), tc.NYSE_close)):
@@ -348,15 +426,27 @@ class SilverBullet():
     def run_cycle(self, current_time):
         print(f"[INFO] Cycle run at {current_time} for {self.security}")
 
+        # helper function for cycling a liquidity line on new data
+        def cycle_liquidity_line(liquidity_line, todays_data):
+            liquidity_line.breach_list.append(todays_data[-1:])
+            # iterate through breaches in each liquidity line if swings can form
+            if len(todays_data) >= 3:
+                for breach in liquidity_line.breach_list:
+                    breach.swing_list.append(todays_data[-3:])
+
+                    # iterate through swings in each breach
+                    for swing in breach.swing_list:
+                        swing.FVG_list.append(todays_data[-3:], liquidity_line)
+
+                        # iterate through FVGs in each swing
+                        for FVG in swing.FVG_list:
+                            self.candidate_trades.append(self, FVG)
+
         # only get data if the minute time is on an interval mark or data has never been pulled before
         if self.last_pulled_minute is None or (current_time.minute % INTERVAL == 0 and current_time.minute != self.last_pulled_minute):
             print(f"[INFO] Retrieving data for {self.security} at {current_time}")
             self.security_data.get_day_data("todaysData", current_time, interval=INTERVAL, delta=0)
             self.last_pulled_minute = current_time.minute
-
-        # add new liquidity lines after AM session
-        if tc.datetime_is_between(current_time, "11:00", "11:01"):
-            self.liquidity_lines.get_secondary_liquidity(current_time, self.security_data)
 
         todays_data = self.security_data["todaysData"]
         if self.VERBOSE: print(todays_data.tail())
@@ -367,44 +457,21 @@ class SilverBullet():
 
             # remove liquidity lines that have been assigned a trade
             self.liquidity_lines.prune_liquidity_lines(self.candidate_trades)
+            # incrementally add liquidity lines throughout the day depending on trading period
+            self.liquidity_lines.append(todays_data)
             
+            # cycle silver bullet on established liquidity lines
             for liquidity_line in self.liquidity_lines:
-                liquidity_line.breach_list.append(todays_data[-1:])
-                # iterate through breaches in each liquidity line if swings can form
-                if len(todays_data) >= 3:
-                    for breach in liquidity_line.breach_list:
-                        breach.swing_list.append(todays_data[-3:])
-
-                        # iterate through swings in each breach
-                        for swing in breach.swing_list:
-                            swing.FVG_list.append(todays_data[-3:], liquidity_line)
-
-                            # iterate through FVGs in each swing
-                            for FVG in swing.FVG_list:
-                                self.candidate_trades.append(self, FVG, self.liquidity_lines)
+                cycle_liquidity_line(liquidity_line, todays_data)
+            
+            # cycle silver bullet on queued liquidity lines that will be added later
+            queued_liquidity_lines = [
+                self.liquidity_lines.queued_buyside_liquidity_line,
+                self.liquidity_lines.queued_sellside_liquidity_line
+            ]
+            
+            for liquidity_line in queued_liquidity_lines:
+                if liquidity_line is not None:
+                    cycle_liquidity_line(liquidity_line, todays_data)
 
             self.last_cycled_data_point = todays_data.index[-1]
-            
-    # def get_previous_day_swings(security_data):
-    #     yesterdata = security_data["yesterdata"]
-    #     takeProfitSwingLows, takeProfitSwingHighs = [], []
-
-    #     for i in yesterdata.index[:-2]:
-    #         threeCandles = yesterdata[i:i+timedelta(minutes=INTERVAL*2)]
-    #         middleCandle = threeCandles[-2:-1]
-    #         middleCandleTime = middleCandle.index.item()
-
-    #         if Swing.isSwingHigh(threeCandles):
-    #             swing = Swing(middleCandleTime,
-    #                           middleCandle["High"][-1], "HIGH")
-    #             takeProfitSwingHighs.append(swing)
-
-    #         if Swing.isSwingLow(threeCandles):
-    #             swing = Swing(middleCandleTime,
-    #                           middleCandle["Low"][-1], "LOW")
-    #             takeProfitSwingLows.append(swing)
-
-    #     return takeProfitSwingLows, takeProfitSwingHighs
-
-    
-        

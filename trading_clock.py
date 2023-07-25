@@ -82,7 +82,7 @@ def turn_off_override():
 
     print("OVERRIDE is now False")
 
-def get_generator(gt=GENERATOR_RANGE):
+def get_generator(gt=GENERATOR_RANGE, INTERVAL=5):
     global GENERATOR_RANGE
 
     GENERATOR_RANGE = gt
@@ -93,7 +93,7 @@ def get_generator(gt=GENERATOR_RANGE):
 
     while current_datetime <= GENERATOR_RANGE[1]:
         yield current_datetime
-        current_datetime += timedelta(minutes=1)
+        current_datetime += timedelta(minutes=INTERVAL)
 
     print("Generator Done")
 

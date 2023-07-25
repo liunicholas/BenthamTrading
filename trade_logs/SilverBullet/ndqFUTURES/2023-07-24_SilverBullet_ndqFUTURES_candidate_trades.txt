@@ -1,0 +1,112 @@
+Proprietary Information of Bentham Trading 2023-07-24 
+Log file for SilverBullet on ndqFUTURES 
+ 
+[INFO] Previous day high BUYSIDE liquidity line at time 2023-07-21 14:05:00-04:00 at price level 15653.25
+[INFO] Previous day low SELLSIDE liquidity line at time 2023-07-21 15:20:00-04:00 at price level 15522.25
+[BREACH] SELLSIDE at time 2023-07-24 10:05:00-04:00 at price level 15483.75
+[BREACH] SELLSIDE at time 2023-07-24 10:10:00-04:00 at price level 15492.75
+[BREACH] SELLSIDE at time 2023-07-24 10:15:00-04:00 at price level 15501.25
+[BREACH] SELLSIDE at time 2023-07-24 10:20:00-04:00 at price level 15499.0
+[INFO] Not a valid swing high or low at 2023-07-24 10:20:00-04:00
+[SWING] HIGH at time 2023-07-24 10:40:00-04:00 at price level 15590.75
+[INFO] Not a valid swing high or low at 2023-07-24 10:45:00-04:00
+[INFO] ADDING LIQUIDITY LINES FROM AM SESSION FOR {self.security}
+[INFO] AM High BUYSIDE liquidity line at time 2023-07-24 11:00:00.000004-04:00 at price level 15590.75
+[INFO] AM Low SELLSIDE liquidity line at time 2023-07-24 11:00:00.000004-04:00 at price level 15483.75
+[INFO] Not a valid swing high or low at 2023-07-24 11:00:00-04:00
+[SWING] HIGH at time 2023-07-24 11:05:00-04:00 at price level 15572.75
+[INFO] Not a valid swing high or low at 2023-07-24 11:15:00-04:00
+[BREACH] BUYSIDE at time 2023-07-24 11:25:00-04:00 at price level 15593.0
+[SWING] HIGH at time 2023-07-24 11:25:00-04:00 at price level 15593.0
+[BREACH] SELLSIDE at time 2023-07-24 11:45:00-04:00 at price level 15520.0
+[BREACH] SELLSIDE at time 2023-07-24 11:50:00-04:00 at price level 15521.5
+[INFO] Not a valid swing high or low at 2023-07-24 11:45:00-04:00
+[SWING] LOW at time 2023-07-24 11:45:00-04:00 at price level 15520.0
+[SWING] HIGH at time 2023-07-24 12:10:00-04:00 at price level 15571.0
+[INFO] Not a valid swing high or low at 2023-07-24 12:10:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-24 12:15:00-04:00
+[SWING] LOW at time 2023-07-24 12:15:00-04:00 at price level 15551.0
+[SWING] HIGH at time 2023-07-24 12:25:00-04:00 at price level 15581.0
+[INFO] Not a valid swing high or low at 2023-07-24 12:25:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-24 12:30:00-04:00
+[SWING] LOW at time 2023-07-24 12:30:00-04:00 at price level 15537.75
+[SWING] HIGH at time 2023-07-24 12:40:00-04:00 at price level 15569.75
+[INFO] Not a valid swing high or low at 2023-07-24 12:40:00-04:00
+[SWING] HIGH at time 2023-07-24 12:55:00-04:00 at price level 15553.75
+[INFO] Not a valid swing high or low at 2023-07-24 12:55:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-24 13:00:00-04:00
+[SWING] LOW at time 2023-07-24 13:00:00-04:00 at price level 15534.5
+[SWING] HIGH at time 2023-07-24 13:05:00-04:00 at price level 15553.0
+[INFO] Not a valid swing high or low at 2023-07-24 13:05:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-24 13:10:00-04:00
+[SWING] LOW at time 2023-07-24 13:10:00-04:00 at price level 15538.5
+[INFO] Not a valid swing high or low at 2023-07-24 13:30:00-04:00
+[SWING] LOW at time 2023-07-24 13:30:00-04:00 at price level 15548.75
+[INFO] Not a valid swing high or low at 2023-07-24 13:40:00-04:00
+[SWING] LOW at time 2023-07-24 13:40:00-04:00 at price level 15544.25
+[BREACH] BUYSIDE at time 2023-07-24 14:10:00-04:00 at price level 15595.75
+[SWING] HIGH at time 2023-07-24 14:10:00-04:00 at price level 15595.75
+[BREACH] BUYSIDE at time 2023-07-24 14:15:00-04:00 at price level 15594.5
+[INFO] Not a valid swing high or low at 2023-07-24 14:10:00-04:00
+[SWING] HIGH at time 2023-07-24 14:35:00-04:00 at price level 15589.0
+[INFO] Not a valid swing high or low at 2023-07-24 14:35:00-04:00
+[FVG] RED at time 2023-07-24 14:50:00-04:00 at entry 15569.0
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqFUTURES, 
+         Time Found: 2023-07-24 14:50:00-04:00, 
+         Entry Price: 15569.00, 
+         Stop Limit: 15590.75, 
+         Take Profit: 15483.75, 
+         Position Size: 5.75, 
+         Leverage Multiplier: 2, 
+
+[INFO] BUYSIDE Liquidity Line from 2023-07-24 11:00:00.000004-04:00 at 15590.75 removed.
+[FVG] RED at time 2023-07-24 14:55:00-04:00 at entry 15564.25
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqFUTURES, 
+         Time Found: 2023-07-24 14:55:00-04:00, 
+         Entry Price: 15564.25, 
+         Stop Limit: 15590.75, 
+         Take Profit: 15483.75, 
+         Position Size: 4.72, 
+         Leverage Multiplier: 2, 
+
+[FVG] RED at time 2023-07-24 15:00:00-04:00 at entry 15554.25
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqFUTURES, 
+         Time Found: 2023-07-24 15:00:00-04:00, 
+         Entry Price: 15554.25, 
+         Stop Limit: 15590.75, 
+         Take Profit: 15483.75, 
+         Position Size: 3.42, 
+         Leverage Multiplier: 2, 
+
+[INFO] Not a valid swing high or low at 2023-07-24 14:55:00-04:00
+[SWING] LOW at time 2023-07-24 14:55:00-04:00 at price level 15540.25
+[FVG] GREEN at time 2023-07-24 15:10:00-04:00 at entry 15561.5
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ndqFUTURES, 
+         Time Found: 2023-07-24 15:10:00-04:00, 
+         Entry Price: 15561.50, 
+         Stop Limit: 15483.75, 
+         Take Profit: 15653.25, 
+         Position Size: 1.61, 
+         Leverage Multiplier: 2, 
+
+[INFO] SELLSIDE Liquidity Line from 2023-07-24 11:00:00.000004-04:00 at 15483.75 removed.
+[SWING] HIGH at time 2023-07-24 15:10:00-04:00 at price level 15573.0
+[INFO] Not a valid swing high or low at 2023-07-24 15:10:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-24 15:20:00-04:00
+[SWING] LOW at time 2023-07-24 15:20:00-04:00 at price level 15547.5
+[SWING] HIGH at time 2023-07-24 15:25:00-04:00 at price level 15560.25
+[INFO] Not a valid swing high or low at 2023-07-24 15:25:00-04:00
+[INFO] Not a valid swing high or low at 2023-07-24 15:35:00-04:00
+[SWING] LOW at time 2023-07-24 15:35:00-04:00 at price level 15526.0

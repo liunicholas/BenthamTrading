@@ -34,3 +34,80 @@ Summary Log file for all strategies on all securities
          Position Size: 7.14, 
          Leverage Multiplier: 2, 
 
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxFUTURES, 
+         Time Found: 2023-07-19 14:50:00-04:00, 
+         Entry Price: 4595.50, 
+         Stop Limit: 4591.25, 
+         Take Profit: 4608.5, 
+         Position Size: 11.76, 
+         Leverage Multiplier: 5, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxFUTURES, 
+         Time Found: 2023-07-19 14:25:00-04:00, 
+         Entry Price: 4591.75, 
+         Stop Limit: 4608.5, 
+         Take Profit: 4577.5, 
+         Position Size: 2.99, 
+         Leverage Multiplier: 5, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxFUTURES, 
+         Time Found: 2023-07-19 11:10:00-04:00, 
+         Entry Price: 4599.25, 
+         Stop Limit: 4608.5, 
+         Take Profit: 4577.5, 
+         Position Size: 5.41, 
+         Leverage Multiplier: 5, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxFUTURES, 
+         Time Found: 2023-07-19 14:25:00-04:00, 
+         Entry Price: 4591.75, 
+         Stop Limit: 4609.25, 
+         Take Profit: 4577.5, 
+         Position Size: 2.86, 
+         Leverage Multiplier: 5, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxFUTURES, 
+         Time Found: 2023-07-19 14:45:00-04:00, 
+         Entry Price: 4591.75, 
+         Stop Limit: 4577.5, 
+         Take Profit: 4609.25, 
+         Position Size: 3.51, 
+         Leverage Multiplier: 5, 
+
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: spxFUTURES, 
+         Time Found: 2023-07-19 14:50:00-04:00, 
+         Entry Price: 4595.50, 
+         Stop Limit: 4591.25, 
+         Take Profit: 4609.25, 
+         Position Size: 11.76, 
+         Leverage Multiplier: 5, 
+
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: ndqFUTURES, 
+         Time Found: 2023-07-19 11:10:00-04:00, 
+         Entry Price: 16006.75, 
+         Stop Limit: 16029.75, 
+         Take Profit: 15938.25, 
+         Position Size: 5.43, 
+         Leverage Multiplier: 2, 
+
