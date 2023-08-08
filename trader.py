@@ -25,11 +25,11 @@ def run_day():
 
 def main():
     LIVE = True
-    last_known_minute = -1
+    last_known_minute = None
     # tc.override(tc.localize(datetime(year=2023, month=7, day=19, hour=15, minute=59)))
     while LIVE:
         current_time = tc.get_today()
-        if current_time.minute != last_known_minute and current_time.minute % INTERVAL == 0:
+        if last_known_minute is None or (current_time.minute != last_known_minute and current_time.minute % INTERVAL == 0):
             last_known_minute = current_time.minute
 
             if tc.is_market_open(security_type="ETF", current_datetime=current_time, VERBOSE=True):

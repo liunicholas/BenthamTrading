@@ -1,4 +1,3 @@
-import time
 import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -6,6 +5,8 @@ import trading_clock as tc
 import datetime
 import pandas as pd
 import numpy as np
+
+from time import sleep
 
 INTERVAL = 5
 
@@ -51,48 +52,51 @@ class JackSparrow():
     def scrape_moment(self):
         while True:
             try:
-                # current_price = float(self.driver.execute_script("""
-                # return Array.prototype.slice.call(document.getElementsByClassName("last-JWoJqCpY"));
-                # """)[0].text)
+                # current_price = float(self.driver.find_element(By.CLASS_NAME, "last-JWoJqCpY").text)
+                current_price = float(self.driver.execute_script("""
+                return Array.prototype.slice.call(document.getElementsByClassName("last-JWoJqCpY"));
+                """)[0].text)
+                # current_price = float(self.driver.find_element(By.CLASS_NAME, "last-value").text)
                 # print(current_price)
-                current_price = float(self.driver.find_element(By.CLASS_NAME, "last-value").text)
+            except ValueError:
+                print("No price data available on iteration")
             except Exception as exception:
                 print("Bad price request, trying again")
                 print(exception)
-                self.driver = self.initialize_driver(self.data_url)
+                self.driver = self.initialize_driver()
             else:
                 break
 
-        current_datetime = tc.real_time()
+        data_time_index = tc.last_five_minute(tc.real_time()) - tc.timedelta(minutes=10)
         try:
             # add open price
-            if np.isnan(self.day_df["Open"][[tc.last_five_minute(
-                    tc.real_time())]].item()):
-                self.day_df["Open"][[tc.last_five_minute(
-                    tc.real_time())]] = current_price
+            if np.isnan(self.day_df["Open"][[data_time_index]].item()):
+                self.day_df["Open"][[data_time_index]] = current_price
         except:
             print("[INFO] Key error, likely last 5 minute interval of the day at 4:00")
             return
   
-        if current_price > self.day_df["High"][[tc.last_five_minute(current_datetime)]].item():
-            self.day_df["High"][[tc.last_five_minute(
-                tc.real_time())]] = current_price
-        if current_price < self.day_df["Low"][[tc.last_five_minute(current_datetime)]].item():
-            self.day_df["Low"][[tc.last_five_minute(
-                tc.real_time())]] = current_price
+        if current_price > self.day_df["High"][[data_time_index]].item():
+            self.day_df["High"][[data_time_index]] = current_price
+        if current_price < self.day_df["Low"][[data_time_index]].item():
+            self.day_df["Low"][[data_time_index]] = current_price
 
-        self.day_df["Close"][[tc.last_five_minute(
-            current_datetime)]] = current_price
+        self.day_df["Close"][[data_time_index]] = current_price
 
-        # self.day_df.dropna().to_csv(self.data_file_path )
         self.day_df.to_csv(self.data_file_path)
 
 def scrape_day():
-
     spxFUTURESscraper = JackSparrow(
-        "spxFUTURES", "https://www.cmegroup.com/markets/equities/sp/e-mini-sandp500.html")
+        "spxFUTURES", "https://www.tradingview.com/symbols/CME_MINI-ES1!/")
     ndqFUTURESscraper = JackSparrow(
-        "ndqFUTURES", "https://www.cmegroup.com/markets/equities/nasdaq/e-mini-nasdaq-100.html")
+        "ndqFUTURES", "https://www.tradingview.com/symbols/CME_MINI-NQ1!/")
+
+    # spxFUTURESscraper = JackSparrow(
+    #     "spxFUTURES", "https://www.cmegroup.com/markets/equities/sp/e-mini-sandp500.html")
+    # ndqFUTURESscraper = JackSparrow(
+    #     "ndqFUTURES", "https://www.cmegroup.com/markets/equities/nasdaq/e-mini-nasdaq-100.html")
+
+    scrapers = [spxFUTURESscraper, ndqFUTURESscraper]
     
     print("[INFO] Scraping Now")
 
@@ -105,18 +109,18 @@ def scrape_day():
         if current_time.time() >= tc.NYSE_close:
             print("[INFO] Exchange Closed")
             break
-
-        spxFUTURESscraper.scrape_moment()
-        ndqFUTURESscraper.scrape_moment()
+        
+        for scraper in scrapers:
+            scraper.scrape_moment()
 
     print("[INFO] Finished Scraping Day")
         
 def main():
     LIVE = True
-    last_known_minute = -1
+    last_known_minute = None
     while LIVE:
         current_time = tc.real_time()
-        if current_time.minute != last_known_minute and current_time.minute % INTERVAL == 0:
+        if last_known_minute is None or (current_time.minute != last_known_minute and current_time.minute % INTERVAL == 0):
             last_known_minute = current_time.minute
 
             if tc.is_market_open(security_type="ETF", current_datetime=current_time, VERBOSE=True):
