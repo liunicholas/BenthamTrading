@@ -39,7 +39,7 @@ async def send_message():
         print("SPX", spx_entry)
         await channel.send(f"spx futures: {spx_entry}")
 
-        ndq_image = image[488:503, 538:803, :]
+        ndq_image = image[488:503, 350:614, :]
         ndq_text = pytesseract.image_to_string(ndq_image, config="--psm 6")
         ndq_data = ndq_text.split(" ")
         ndq_entry = {"Open": float(ndq_data[0][1:]), "High": float(
@@ -47,7 +47,7 @@ async def send_message():
         print("NDQ", ndq_entry)
         await channel.send(f"ndq futures: {ndq_entry}")
     except:
-        print("STUPID SHIT HERE")
+        print("STOP GO BACK")
 
 @client.event
 async def on_ready():

@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import discord
 from discord.ext import tasks
+import asyncio
 import re
 import ast
 
@@ -17,7 +18,7 @@ spxFUTURESdata = None
 ndqFUTURESdata = None
 
 @client.event
-async def harden_stepback(message):
+async def on_message(message):
     def get_dict_from_string(s):
         # Extract the dictionary string using regular expressions
         match = re.search(r'\{.*\}', s)
@@ -33,12 +34,22 @@ async def harden_stepback(message):
     global spxFUTURESdata
     global ndqFUTURESdata
     is_market_open = tc.is_market_open(security_type="ETF", current_datetime=tc.real_time())
+    spx_not_up_to_date = spxFUTURESdata is None or spxFUTURESdata.date != tc.real_time().date()
+    ndq_not_up_to_date = ndqFUTURESdata is None or ndqFUTURESdata.date != tc.real_time().date()
+    if is_market_open and (spx_not_up_to_date or ndq_not_up_to_date):
+        print(f"[INFO] Initializing data objects for {tc.real_time().date()}")
+        spxFUTURESdata = ScottBarnes("spxFUTURES")
+        ndqFUTURESdata = ScottBarnes("ndqFUTURES")
+
     if (message.channel.id==1138302357927641098) and is_market_open:
+        message = message.content
         security = message.split(":")[0].strip()
         security_data = get_dict_from_string(message)
         data_time_index = tc.last_five_minute(tc.real_time())
+        print(
+            f"Data Stream Found at {tc.real_time().replace(microsecond=0)} for {security} at interval {data_time_index}")
         # try updating spxFUTURESdata
-        if security == "spx futures" and spxFUTURESdata.date == tc.real_time().date():
+        if security == "spx futures":
             spxFUTURESdata.day_df["Open"][[data_time_index]] = security_data["Open"]
             spxFUTURESdata.day_df["High"][[data_time_index]] = security_data["High"]
             spxFUTURESdata.day_df["Low"][[data_time_index]] = security_data["Low"]
@@ -47,13 +58,13 @@ async def harden_stepback(message):
             spxFUTURESdata.day_df.to_csv(spxFUTURESdata.data_file_path)
 
         #try updating ndqFUTURESdata
-        elif security == "ndq futures" and ndqFUTURESdata.date == tc.real_time().date():  
+        elif security == "ndq futures":  
             ndqFUTURESdata.day_df["Open"][[data_time_index]] = security_data["Open"]
             ndqFUTURESdata.day_df["High"][[data_time_index]] = security_data["High"]
             ndqFUTURESdata.day_df["Low"][[data_time_index]] = security_data["Low"]
             ndqFUTURESdata.day_df["Close"][[data_time_index]] = security_data["Close"]
 
-            ndqFUTURESdata.day_df.to_csv(spxFUTURESdata.data_file_path)
+            ndqFUTURESdata.day_df.to_csv(ndqFUTURESdata.data_file_path)
 
         else:
             print("[ERROR] data retrieval flopped")
@@ -65,11 +76,11 @@ class ScottBarnes():
         self.data_file_path = f"data/{self.name}_{tc.real_time().date()}.csv"
         
         if os.path.exists(self.data_file_path):
-            print(f"[INFO] Reading Already Made DataFrame for {name} \n")
+            print(f"[INFO] Reading Already Made DataFrame for {name}")
             self.day_df = pd.read_csv(self.data_file_path, index_col=0, parse_dates=True)
         
         else:
-            print(f"[INFO] Making New DataFrame for {name} \n")
+            print(f"[INFO] Making New DataFrame for {name}")
             date = tc.real_time().date()
             start = tc.localize(datetime.datetime.combine(date, datetime.time(9, 30, 0)))
             date_range = pd.date_range(start, start + datetime.timedelta(hours=6, minutes=25), freq=datetime.timedelta(minutes=INTERVAL))
@@ -84,42 +95,8 @@ class ScottBarnes():
             close[:] = np.nan
 
             self.day_df = pd.DataFrame({'Date': date_range, 'Open': open, "High": high, "Low": low, "Close": close}).set_index('Date')  
+            self.day_df.to_csv(self.data_file_path)
 
-def scrape_day():
-    global spxFUTURESdata 
-    spxFUTURESdata = ScottBarnes("spxFUTURES")
-    global ndqFUTURESdata 
-    ndqFUTURESdata = ScottBarnes("ndqFUTURES")
-
-    print("[INFO] Starting to Scrape Day")
-
-    last_known_minute = -1
-    while tc.is_market_open(security_type="ETF", current_datetime=tc.real_time()):
-        current_time = tc.real_time()
-        if current_time.minute != last_known_minute and current_time.minute % INTERVAL == 0:
-            print(f"[INFO] Scraper Active Last At {current_time}")
-            last_known_minute = current_time.minute
-        if current_time.time() >= tc.NYSE_close:
-            print("[INFO] Exchange Closed")
-            break
-
-    print("[INFO] Finished Scraping Day")
-        
-def main():
-    LIVE = True
-    last_known_minute = None
-    while LIVE:
-        client.run(TOKEN)
-        current_time = tc.real_time()
-        if last_known_minute is None or (current_time.minute != last_known_minute and current_time.minute % INTERVAL == 0):
-            last_known_minute = current_time.minute
-
-            if tc.is_market_open(security_type="ETF", current_datetime=current_time, VERBOSE=True):
-                print("MARKET OPENED")
-                scrape_day()
-
-            else:
-                print("MARKET CLOSED")
-
-if __name__ == "__main__":
-    main()
+print("[INFO] Starting Scott Barnes")
+client.run(TOKEN)
+      
