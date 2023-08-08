@@ -18,38 +18,36 @@ TOKEN = "MTEyMTE1MzI3MjE3MDk0NjU5Mg.G3qbyD.-IhGrjmcKp4e_d3H2A7xwlXSNzmiOVuyvKslh
 
 @tasks.loop(seconds=1)
 async def send_message():
-    image = pyautogui.screenshot()
-    
-    image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-    width = image.shape[1]
-    height = image.shape[0]
-    image = image[:450, :600]
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    image = cv2.threshold(
-        image, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+    channel = client.get_channel(1138302357927641098)
 
-    image = cv2.GaussianBlur(image, (3, 3), 0)
+    image = pyautogui.screenshot()
+    image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    
+    # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # image = cv2.threshold(
+    #     image, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+
+    # image = cv2.GaussianBlur(image, (3, 3) 0)
     cv2.imwrite("tradingview.png", image)
-    text = pytesseract.image_to_string(image, config="--psm 6")
 
     try:
-        text = text.replace("uso", "usd")
-        percent_index = text.lower().find("usd")
-        if percent_index == -1:
-            raise KeyError
-        current_price = ""
-        for char in text[percent_index-1:0:-1]:
-            # print(char)
-            if char.isdigit() or char in [" ", "."]:
-                current_price = char + current_price
-            else:
-                current_price = current_price.strip().replace(" ","")
-                break 
-        # print(current_price)
-        channel = client.get_channel(1138302357927641098)
-        await channel.send(f"spx futures: {current_price}")
+        spx_image = image[120:140, 320:570, :]
+        spx_text = pytesseract.image_to_string(spx_image, config="--psm 6")
+        spx_data = spx_text.split(" ")
+        spx_entry = {"Open": float(spx_data[0][1:]), "High": float(
+            spx_data[1][1:]), "Low": float(spx_data[2][1:]), "Close": float(spx_data[3][1:])}
+        print("SPX", spx_entry)
+        await channel.send(f"spx futures: {spx_entry}")
+
+        ndq_image = image[488:503, 538:803, :]
+        ndq_text = pytesseract.image_to_string(ndq_image, config="--psm 6")
+        ndq_data = ndq_text.split(" ")
+        ndq_entry = {"Open": float(ndq_data[0][1:]), "High": float(
+            ndq_data[1][1:]), "Low": float(ndq_data[2][1:]), "Close": float(ndq_data[3][1:])}
+        print("NDQ", ndq_entry)
+        await channel.send(f"ndq futures: {ndq_entry}")
     except:
-        pass
+        print("STUPID SHIT HERE")
 
 @client.event
 async def on_ready():
