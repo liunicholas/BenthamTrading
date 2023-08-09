@@ -402,7 +402,7 @@ class SilverBullet():
         self.security_data.get_day_data("yesterdata", tc.get_today(), interval=INTERVAL, delta=-1)
 
         self.liquidity_lines = LiquidityLineList(security_type, self.security_data, self.logger)
-
+        
         self.candidate_trades = CandidateTrades(self.logger)
         self.last_cycled_data_point, self.last_pulled_minute = None, None
 

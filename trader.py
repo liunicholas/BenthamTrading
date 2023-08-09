@@ -2,10 +2,14 @@ import trading_clock as tc
 from silver_bullet import *
     
 def run_day():
-    snp_silver_bullet = SilverBullet(
-        security="spxFUTURES", security_type="ETF", take_profit_margin=10, stop_loss_margin=3, leverage_multiplier=5)
-    ndq_silver_bullet = SilverBullet(
-        security="ndqFUTURES", security_type="ETF", take_profit_margin=30, stop_loss_margin=10, leverage_multiplier=2)
+    try:
+        snp_silver_bullet = SilverBullet(
+            security="spxFUTURES", security_type="ETF", take_profit_margin=10, stop_loss_margin=3, leverage_multiplier=5)
+        ndq_silver_bullet = SilverBullet(
+            security="ndqFUTURES", security_type="ETF", take_profit_margin=30, stop_loss_margin=10, leverage_multiplier=2)
+    except Exception as e:
+        print(f"[ERROR] Failure to initialize Silver Bullet objects likely due to missing data from previous trading day ({e})")
+        return
 
     last_known_minute = -1
     while tc.is_market_open(security_type="ETF", current_datetime=tc.get_today()):
