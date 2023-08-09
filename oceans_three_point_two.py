@@ -16,7 +16,7 @@ intents = discord.Intents(messages=True, message_content=True, guilds=True)
 client = discord.Client(intents=intents)
 TOKEN = "MTEyMTE1MzI3MjE3MDk0NjU5Mg.G3qbyD.-IhGrjmcKp4e_d3H2A7xwlXSNzmiOVuyvKslhA"
 
-@tasks.loop(seconds=1)
+@tasks.loop(seconds=10)
 async def send_message():
     if tc.is_market_open(security_type="FUTURES", current_datetime=tc.real_time()):
         channel = client.get_channel(1138302357927641098)

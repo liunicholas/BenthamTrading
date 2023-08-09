@@ -42,10 +42,11 @@ async def on_message(message):
         ndqFUTURESdata = ScottBarnes("ndqFUTURES")
 
     if (message.channel.id==1138302357927641098) and is_market_open:
+        data_time_index = tc.last_five_minute(tc.tz_to_ny(message.created_at))
         message = message.content
         security = message.split(":")[0].strip()
         security_data = get_dict_from_string(message)
-        data_time_index = tc.last_five_minute(tc.real_time())
+        # data_time_index = tc.last_five_minute(tc.real_time())
         print(
             f"Data Stream Found at {tc.real_time().replace(microsecond=0)} for {security} at interval {data_time_index}")
         # try updating spxFUTURESdata
@@ -58,7 +59,7 @@ async def on_message(message):
             spxFUTURESdata.day_df.to_csv(spxFUTURESdata.data_file_path)
 
         #try updating ndqFUTURESdata
-        elif security == "ndq futures":  
+        elif security == "ndq futures":
             ndqFUTURESdata.day_df["Open"][[data_time_index]] = security_data["Open"]
             ndqFUTURESdata.day_df["High"][[data_time_index]] = security_data["High"]
             ndqFUTURESdata.day_df["Low"][[data_time_index]] = security_data["Low"]
@@ -74,11 +75,11 @@ class ScottBarnes():
         self.name = name
         self.date = tc.real_time().date()
         self.data_file_path = f"data/{self.name}_{tc.real_time().date()}.csv"
-        
+
         if os.path.exists(self.data_file_path):
             print(f"[INFO] Reading Already Made DataFrame for {name}")
             self.day_df = pd.read_csv(self.data_file_path, index_col=0, parse_dates=True)
-        
+
         else:
             print(f"[INFO] Making New DataFrame for {name}")
             date = tc.real_time().date()
@@ -94,9 +95,8 @@ class ScottBarnes():
             close = np.empty((len(date_range)))
             close[:] = np.nan
 
-            self.day_df = pd.DataFrame({'Date': date_range, 'Open': open, "High": high, "Low": low, "Close": close}).set_index('Date')  
+            self.day_df = pd.DataFrame({'Date': date_range, 'Open': open, "High": high, "Low": low, "Close": close}).set_index('Date')
             self.day_df.to_csv(self.data_file_path)
 
 print("[INFO] Starting Scott Barnes")
 client.run(TOKEN)
-      
