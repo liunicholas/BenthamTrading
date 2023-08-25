@@ -1,0 +1,14 @@
+Proprietary Information of Bentham Trading 2023-08-10 
+Summary Log file for all strategies on all securities 
+ 
+
+[TRADE ORDER]: 
+         Type: LONG, 
+         Security: ndqFUTURES, 
+         Time Found: 2023-08-10 14:20:00-04:00, 
+         Entry Price: 15199.25, 
+         Stop Limit: 15183.75, 
+         Take Profit: 15280.75, 
+         Position Size: 8.06, 
+         Leverage Multiplier: 2, 
+

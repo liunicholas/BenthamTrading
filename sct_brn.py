@@ -47,8 +47,7 @@ async def on_message(message):
         security = message.split(":")[0].strip()
         security_data = get_dict_from_string(message)
         # data_time_index = tc.last_five_minute(tc.real_time())
-        print(
-            f"Data Stream Found at {tc.real_time().replace(microsecond=0)} for {security} at interval {data_time_index}")
+        print(f"Data Stream Found at {tc.real_time().replace(microsecond=0)} for {security} at interval {data_time_index}")
         # try updating spxFUTURESdata
         if security == "spx futures":
             spxFUTURESdata.day_df["Open"][[data_time_index]] = security_data["Open"]

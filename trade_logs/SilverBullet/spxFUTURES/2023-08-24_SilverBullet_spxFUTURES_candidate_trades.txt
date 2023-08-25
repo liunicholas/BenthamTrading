@@ -1,0 +1,180 @@
+Proprietary Information of Bentham Trading 2023-08-24 
+Log file for SilverBullet on spxFUTURES 
+ 
+[INFO] Previous day BUYSIDE liquidity line at time 2023-08-23 13:50:00-04:00 at price level 4455.25
+[INFO] Previous day SELLSIDE liquidity line at time 2023-08-23 15:00:00-04:00 at price level 4442.25
+[BREACH] BUYSIDE at time 2023-08-24 09:30:00-04:00 at price level 4467.0
+[BREACH] BUYSIDE at time 2023-08-24 09:35:00-04:00 at price level 4457.75
+[BREACH] BUYSIDE at time 2023-08-24 09:40:00-04:00 at price level 4456.75
+[BREACH] BUYSIDE at time 2023-08-24 09:45:00-04:00 at price level 4456.5
+[BREACH] BUYSIDE at time 2023-08-24 09:50:00-04:00 at price level 4460.25
+[SWING] LOW at time 2023-08-24 09:45:00-04:00 at price level 4451.0
+[BREACH] BUYSIDE at time 2023-08-24 09:55:00-04:00 at price level 4466.5
+[BREACH] BUYSIDE at time 2023-08-24 10:00:00-04:00 at price level 4468.75
+[BREACH] BUYSIDE at time 2023-08-24 10:05:00-04:00 at price level 4465.75
+[INFO] Not a valid swing high or low at 2023-08-24 10:00:00-04:00
+[FVG] RED at time 2023-08-24 10:15:00-04:00 at entry 4453.75
+[INFO] No Valid Take Proft/Stop Limit For FVG at 2023-08-24 10:15:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 10:10:00-04:00 at price level 4446.75
+[FVG] RED at time 2023-08-24 10:20:00-04:00 at entry 4449.5
+[INFO] No Valid Take Proft/Stop Limit For FVG at 2023-08-24 10:20:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 10:15:00-04:00 at price level 4444.5
+[BREACH] SELLSIDE at time 2023-08-24 10:20:00-04:00 at price level 4441.5
+[INFO] Not a valid swing high or low at 2023-08-24 10:20:00-04:00
+[FVG] RED at time 2023-08-24 10:30:00-04:00 at entry 4444.25
+[INFO] No Valid Take Proft/Stop Limit For FVG at 2023-08-24 10:30:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 10:25:00-04:00 at price level 4439.0
+[FVG] RED at time 2023-08-24 10:35:00-04:00 at entry 4439.0
+[INFO] No Valid Take Proft/Stop Limit For FVG at 2023-08-24 10:35:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 10:30:00-04:00 at price level 4431.0
+[SWING] LOW at time 2023-08-24 10:30:00-04:00 at price level 4431.0
+[FVG] RED at time 2023-08-24 10:40:00-04:00 at entry 4438.25
+[INFO] No Valid Take Proft/Stop Limit For FVG at 2023-08-24 10:40:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 10:35:00-04:00 at price level 4432.75
+[INFO] Not a valid swing high or low at 2023-08-24 10:30:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 10:40:00-04:00 at price level 4428.75
+[INFO] Not a valid swing high or low at 2023-08-24 10:40:00-04:00
+[FVG] RED at time 2023-08-24 10:50:00-04:00 at entry 4430.75
+[INFO] No Valid Take Proft/Stop Limit For FVG at 2023-08-24 10:50:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 10:45:00-04:00 at price level 4426.75
+[SWING] LOW at time 2023-08-24 10:45:00-04:00 at price level 4426.75
+[BREACH] SELLSIDE at time 2023-08-24 10:50:00-04:00 at price level 4427.75
+[INFO] Not a valid swing high or low at 2023-08-24 10:45:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 10:55:00-04:00 at price level 4426.75
+[INFO] Not a valid swing high or low at 2023-08-24 10:55:00-04:00
+[FVG] RED at time 2023-08-24 11:05:00-04:00 at entry 4427.5
+[INFO] No Valid Take Proft/Stop Limit For FVG at 2023-08-24 11:05:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 11:00:00-04:00 at price level 4419.5
+[FVG] RED at time 2023-08-24 11:10:00-04:00 at entry 4425.75
+[INFO] No Valid Take Proft/Stop Limit For FVG at 2023-08-24 11:10:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 11:05:00-04:00 at price level 4419.0
+[BREACH] SELLSIDE at time 2023-08-24 11:10:00-04:00 at price level 4418.5
+[SWING] LOW at time 2023-08-24 11:10:00-04:00 at price level 4418.5
+[BREACH] SELLSIDE at time 2023-08-24 11:15:00-04:00 at price level 4419.75
+[INFO] Not a valid swing high or low at 2023-08-24 11:10:00-04:00
+[INFO] Not a valid swing high or low at 2023-08-24 11:15:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 11:20:00-04:00 at price level 4419.75
+[BREACH] SELLSIDE at time 2023-08-24 11:25:00-04:00 at price level 4417.25
+[SWING] LOW at time 2023-08-24 11:25:00-04:00 at price level 4417.25
+[BREACH] SELLSIDE at time 2023-08-24 11:30:00-04:00 at price level 4417.25
+[INFO] Not a valid swing high or low at 2023-08-24 11:25:00-04:00
+[INFO] Not a valid swing high or low at 2023-08-24 11:30:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 11:35:00-04:00 at price level 4414.0
+[BREACH] SELLSIDE at time 2023-08-24 11:40:00-04:00 at price level 4412.75
+[BREACH] SELLSIDE at time 2023-08-24 11:45:00-04:00 at price level 4410.75
+[BREACH] SELLSIDE at time 2023-08-24 11:50:00-04:00 at price level 4409.25
+[BREACH] SELLSIDE at time 2023-08-24 11:55:00-04:00 at price level 4407.75
+[BREACH] SELLSIDE at time 2023-08-24 12:00:00-04:00 at price level 4407.0
+[INFO] Adding AM BUYSIDE liquidity line at time 2023-08-24 10:00:00-04:00 at price level 4468.75
+[INFO] Adding AM SELLSIDE liquidity line at time 2023-08-24 11:25:00-04:00 at price level 4417.25
+[SWING] LOW at time 2023-08-24 12:00:00-04:00 at price level 4407.0
+
+[TRADE ORDER]: 
+         Type: SHORT, 
+         Security: spxFUTURES, 
+         Time Found: 2023-08-24 10:15:00-04:00, 
+         Entry Price: 4453.75, 
+         Stop Limit: 4468.75, 
+         Take Profit: 4442.25, 
+         Position Size: 3.33, 
+         Leverage Multiplier: 5, 
+
+[BREACH] SELLSIDE at time 2023-08-24 12:05:00-04:00 at price level 4409.25
+[INFO] Not a valid swing high or low at 2023-08-24 12:00:00-04:00
+[INFO] BUYSIDE Liquidity Line from 2023-08-24 10:00:00-04:00 at 4468.75 removed.
+[BREACH] SELLSIDE at time 2023-08-24 12:10:00-04:00 at price level 4412.75
+[BREACH] SELLSIDE at time 2023-08-24 12:15:00-04:00 at price level 4415.5
+[BREACH] SELLSIDE at time 2023-08-24 12:20:00-04:00 at price level 4416.75
+[INFO] Not a valid swing high or low at 2023-08-24 12:20:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 12:25:00-04:00 at price level 4415.0
+[SWING] HIGH at time 2023-08-24 12:20:00-04:00 at price level 4420.5
+[SWING] LOW at time 2023-08-24 12:25:00-04:00 at price level 4415.0
+[BREACH] SELLSIDE at time 2023-08-24 12:30:00-04:00 at price level 4415.0
+[INFO] Not a valid swing high or low at 2023-08-24 12:25:00-04:00
+[SWING] LOW at time 2023-08-24 12:30:00-04:00 at price level 4415.0
+[BREACH] SELLSIDE at time 2023-08-24 12:35:00-04:00 at price level 4416.75
+[INFO] Not a valid swing high or low at 2023-08-24 12:30:00-04:00
+[BREACH] BUYSIDE at time 2023-08-24 12:35:00-04:00 at price level 4421.0
+[BREACH] SELLSIDE at time 2023-08-24 12:40:00-04:00 at price level 4419.75
+[BREACH] BUYSIDE at time 2023-08-24 12:40:00-04:00 at price level 4424.25
+[INFO] Not a valid swing high or low at 2023-08-24 12:40:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 12:45:00-04:00 at price level 4419.25
+[SWING] HIGH at time 2023-08-24 12:40:00-04:00 at price level 4424.25
+[BREACH] SELLSIDE at time 2023-08-24 12:50:00-04:00 at price level 4418.25
+[BREACH] SELLSIDE at time 2023-08-24 12:55:00-04:00 at price level 4414.5
+[BREACH] SELLSIDE at time 2023-08-24 13:00:00-04:00 at price level 4410.75
+[SWING] LOW at time 2023-08-24 13:00:00-04:00 at price level 4410.75
+[BREACH] SELLSIDE at time 2023-08-24 13:05:00-04:00 at price level 4411.25
+[INFO] Not a valid swing high or low at 2023-08-24 13:00:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 13:10:00-04:00 at price level 4412.25
+[INFO] Not a valid swing high or low at 2023-08-24 13:10:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 13:15:00-04:00 at price level 4410.25
+[BREACH] SELLSIDE at time 2023-08-24 13:20:00-04:00 at price level 4409.5
+[BREACH] SELLSIDE at time 2023-08-24 13:25:00-04:00 at price level 4406.0
+[SWING] LOW at time 2023-08-24 13:25:00-04:00 at price level 4406.0
+[BREACH] SELLSIDE at time 2023-08-24 13:30:00-04:00 at price level 4406.5
+[INFO] Not a valid swing high or low at 2023-08-24 13:25:00-04:00
+[INFO] Adding Lunch BUYSIDE liquidity line at time 2023-08-24 12:40:00-04:00 at price level 4424.25
+[INFO] Adding Lunch SELLSIDE liquidity line at time 2023-08-24 12:00:00-04:00 at price level 4407.0
+[BREACH] SELLSIDE at time 2023-08-24 13:35:00-04:00 at price level 4407.0
+[BREACH] SELLSIDE at time 2023-08-24 13:40:00-04:00 at price level 4408.25
+[INFO] Not a valid swing high or low at 2023-08-24 13:40:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 13:45:00-04:00 at price level 4408.75
+[SWING] HIGH at time 2023-08-24 13:40:00-04:00 at price level 4413.0
+[BREACH] SELLSIDE at time 2023-08-24 13:50:00-04:00 at price level 4408.0
+[BREACH] SELLSIDE at time 2023-08-24 13:55:00-04:00 at price level 4406.5
+[SWING] LOW at time 2023-08-24 13:55:00-04:00 at price level 4406.5
+[BREACH] SELLSIDE at time 2023-08-24 14:00:00-04:00 at price level 4409.25
+[INFO] Not a valid swing high or low at 2023-08-24 13:55:00-04:00
+[INFO] Not a valid swing high or low at 2023-08-24 14:00:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 14:05:00-04:00 at price level 4408.25
+[SWING] HIGH at time 2023-08-24 14:00:00-04:00 at price level 4414.0
+[SWING] LOW at time 2023-08-24 14:05:00-04:00 at price level 4408.25
+[BREACH] SELLSIDE at time 2023-08-24 14:10:00-04:00 at price level 4410.25
+[INFO] Not a valid swing high or low at 2023-08-24 14:05:00-04:00
+[INFO] Not a valid swing high or low at 2023-08-24 14:10:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 14:15:00-04:00 at price level 4407.0
+[SWING] HIGH at time 2023-08-24 14:10:00-04:00 at price level 4415.0
+[SWING] LOW at time 2023-08-24 14:15:00-04:00 at price level 4407.0
+[BREACH] SELLSIDE at time 2023-08-24 14:20:00-04:00 at price level 4407.0
+[INFO] Not a valid swing high or low at 2023-08-24 14:15:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 14:25:00-04:00 at price level 4406.0
+[SWING] LOW at time 2023-08-24 14:25:00-04:00 at price level 4406.0
+[BREACH] SELLSIDE at time 2023-08-24 14:30:00-04:00 at price level 4407.0
+[INFO] Not a valid swing high or low at 2023-08-24 14:25:00-04:00
+[INFO] Not a valid swing high or low at 2023-08-24 14:30:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 14:35:00-04:00 at price level 4402.5
+[SWING] HIGH at time 2023-08-24 14:30:00-04:00 at price level 4410.0
+[FVG] RED at time 2023-08-24 14:45:00-04:00 at entry 4404.5
+[INFO] No Valid Take Proft/Stop Limit For FVG at 2023-08-24 14:45:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 14:40:00-04:00 at price level 4401.25
+[SWING] LOW at time 2023-08-24 14:40:00-04:00 at price level 4401.25
+[BREACH] SELLSIDE at time 2023-08-24 14:45:00-04:00 at price level 4401.5
+[INFO] Not a valid swing high or low at 2023-08-24 14:40:00-04:00
+[INFO] Not a valid swing high or low at 2023-08-24 14:45:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 14:50:00-04:00 at price level 4401.75
+[BREACH] SELLSIDE at time 2023-08-24 14:55:00-04:00 at price level 4401.25
+[SWING] LOW at time 2023-08-24 14:55:00-04:00 at price level 4401.25
+[BREACH] SELLSIDE at time 2023-08-24 15:00:00-04:00 at price level 4404.25
+[INFO] Not a valid swing high or low at 2023-08-24 14:55:00-04:00
+[INFO] Not a valid swing high or low at 2023-08-24 15:00:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 15:05:00-04:00 at price level 4403.25
+[SWING] HIGH at time 2023-08-24 15:00:00-04:00 at price level 4408.25
+[BREACH] SELLSIDE at time 2023-08-24 15:10:00-04:00 at price level 4402.25
+[SWING] LOW at time 2023-08-24 15:10:00-04:00 at price level 4402.25
+[BREACH] SELLSIDE at time 2023-08-24 15:15:00-04:00 at price level 4404.75
+[INFO] Not a valid swing high or low at 2023-08-24 15:10:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 15:20:00-04:00 at price level 4403.5
+[INFO] Not a valid swing high or low at 2023-08-24 15:20:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 15:25:00-04:00 at price level 4401.5
+[SWING] HIGH at time 2023-08-24 15:20:00-04:00 at price level 4409.5
+[BREACH] SELLSIDE at time 2023-08-24 15:30:00-04:00 at price level 4400.75
+[INFO] Not a valid swing high or low at 2023-08-24 15:30:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 15:35:00-04:00 at price level 4396.5
+[BREACH] SELLSIDE at time 2023-08-24 15:40:00-04:00 at price level 4393.5
+[BREACH] SELLSIDE at time 2023-08-24 15:45:00-04:00 at price level 4387.5
+[SWING] LOW at time 2023-08-24 15:45:00-04:00 at price level 4387.5
+[BREACH] SELLSIDE at time 2023-08-24 15:50:00-04:00 at price level 4390.0
+[INFO] Not a valid swing high or low at 2023-08-24 15:45:00-04:00
+[INFO] Not a valid swing high or low at 2023-08-24 15:50:00-04:00
+[BREACH] SELLSIDE at time 2023-08-24 15:55:00-04:00 at price level 4385.0
